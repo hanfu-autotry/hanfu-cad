@@ -72,6 +72,9 @@ runtime\                 随包 Python 3.13（embeddable + ezdxf/numpy/Pillow/sh
   git config core.hooksPath .githooks
   ```
 - 推之前再全量扫一次（含历史）：`python tools/check_secrets.py --history`
+- 素材图的 EXIF（相机型号/GPS）**是原拍摄方（博物馆/微博作者）的**，不含本项目使用者信息；
+  为不损失量图精度，**不重编码**这些图。对外再分发时请自行去元数据（`exiftool -all= 图`）。
+
 - 规矩：**页面快照不入库**（含会话 token），只留 `.md` 正文摘录；文档/生成物里不写本机绝对路径；
   打包产物（`dist/`、`runtime/`）一律 ignore。
 
