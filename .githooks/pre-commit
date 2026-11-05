@@ -1,0 +1,16 @@
+#!/bin/sh
+# 信息安全闸门：提交前扫暂存区。装法（克隆后做一次）：
+#   git config core.hooksPath .githooks
+# 跳过（不推荐）：git commit --no-verify
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+PY="$ROOT/hanfu-studio/dist/runtime/python.exe"
+[ -x "$PY" ] || PY="$(command -v python3 || command -v python)"
+if [ -z "$PY" ]; then
+    echo "[check_secrets] 找不到 python，跳过检查（请装 python 或保留 dist/runtime/）" >&2
+    exit 0
+fi
+"$PY" "$ROOT/tools/check_secrets.py" --staged || {
+    echo ""
+    echo "!! 上面是敏感内容，先把它们改掉再提交（详细规则见 tools/check_secrets.py）" >&2
+    exit 1
+}

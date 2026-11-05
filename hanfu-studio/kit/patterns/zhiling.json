@@ -1,0 +1,103 @@
+{
+ "id": "zhiling",
+ "label": "原始直领交襟衣",
+ "cut": "通裁",
+ "project": "hanfu-shenyi",
+ "project_dir": "hanfu-shenyi",
+ "script": "pattern/build.py",
+ "script_exists": true,
+ "run": {
+  "kind": "params",
+  "fixtures": {
+   "V1": {}
+  }
+ },
+ "modes": [
+  {
+   "id": "V1",
+   "label": "原衣 V1",
+   "note": "衣长 624（对折线上下各一段）；无裳"
+  }
+ ],
+ "mode_kind": "fixture",
+ "ease": null,
+ "knobs": [
+  {
+   "key": "HALF_L",
+   "label": "对折后衣长",
+   "min": 400,
+   "max": 900,
+   "step": 4,
+   "unit": "mm"
+  },
+  {
+   "key": "SLIT_HALF",
+   "label": "前中剪开半间距",
+   "min": 40,
+   "max": 120,
+   "step": 5,
+   "unit": "mm"
+  },
+  {
+   "key": "LAPEL_FOLD",
+   "label": "领条压边（每边可见）",
+   "min": 20,
+   "max": 60,
+   "step": 5,
+   "unit": "mm"
+  }
+ ],
+ "extras": [
+  "whole_dxf",
+  "cmp"
+ ],
+ "gates": {
+  "fab_w": 500,
+  "max_panels": 4,
+  "min_radius": 10,
+  "invariants": [
+   {
+    "name": "slit",
+    "width": 160
+   },
+   {
+    "name": "piece_names",
+    "expect": [
+     "领条"
+    ]
+   }
+  ],
+  "reference": [
+   {
+    "name": "三步图对照",
+    "cmd": "（harness 量图：sources/fig_原始直领交襟衣_三步.png）",
+    "where": "hanfu-shenyi/sources/",
+    "last": "前中开口贯通、领条绕颈后"
+   }
+  ],
+  "parent": null,
+  "delta": {},
+  "seam_ledger": []
+ },
+ "scripts": {
+  "pattern": [
+   "build.py",
+   "build_pieces_shenyi.py",
+   "build_shenyi.py",
+   "export_dxf.py",
+   "export_dxf_whole.py",
+   "export_dxf_whole_v1.py",
+   "make_cmp.py",
+   "preview.py"
+  ],
+  "verification": []
+ },
+ "docs": [
+  "README.md",
+  "archive/V1_原始直领交襟衣_定稿/STATUS.md",
+  "archive/V2_深衣型矩领_定稿/README.md",
+  "verification/形制核对表.md",
+  "直交一体_盲区解说.md"
+ ],
+ "subject": "03-原始直领交襟衣_通裁"
+}

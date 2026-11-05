@@ -1,0 +1,4 @@
+{
+ "python": "",
+ "_python_note": "留空＝自动找（HANFU_PY 环境变量 → ~/.workbuddy/.../envs/hanfu → sys.executable）；换机只改这里或设环境变量"
+}

@@ -1,0 +1,28 @@
+# ── 读图中间产物：_ref/ 下是 A–E 系列的裁切放大图，用完不留 ──
+_ref/
+
+# ── out/ 里 `_` 开头的是调试 / 比对用的中间图（真正要交付的只有
+#    对穿交 XX.svg｜.dxf｜.pieces.json 和 预览_XX.png）──
+out/_*
+# 例外：V2↔V3 对照图是对外引用过的交付物（核对表 §八）
+!out/_cmp_v2_v3.png
+
+# ── Python ──
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# ── 编辑器 / 系统 ──
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── 临时 ──
+*.log
+*.tmp
+~$*
+*_bak.*

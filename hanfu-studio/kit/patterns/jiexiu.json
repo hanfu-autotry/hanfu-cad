@@ -1,0 +1,90 @@
+{
+ "id": "jiexiu",
+ "label": "对穿交接袖",
+ "cut": "分裁",
+ "project": "hanfu-jiexiu",
+ "project_dir": "hanfu-jiexiu",
+ "script": "pattern/make.py",
+ "script_exists": true,
+ "run": {
+  "kind": "make",
+  "argstyle": "--sex {sex} --size {size} --ease {ease} --profile {profile} --out {out}"
+ },
+ "modes": [
+  {
+   "id": "artifact",
+   "label": "文物基准",
+   "note": "按钱氏墓形制图反推（女装默认）"
+  },
+  {
+   "id": "vendor",
+   "label": "厂商基准",
+   "note": "按厂商号型表（男装默认）；接袖×4"
+  }
+ ],
+ "mode_kind": "profile",
+ "ease": [
+  "紧身",
+  "合体",
+  "宽松"
+ ],
+ "knobs": [],
+ "extras": [],
+ "gates": {
+  "fab_w": 500,
+  "max_panels": 4,
+  "min_radius": 10,
+  "invariants": [
+   {
+    "name": "lapel",
+    "half": 135
+   },
+   {
+    "name": "piece_names",
+    "expect": [
+     "后片半",
+     "前片",
+     "接袖",
+     "领缘条"
+    ]
+   }
+  ],
+  "reference": [
+   {
+    "name": "形制核对表（接袖版）",
+    "cmd": "python verification/verify.py",
+    "where": "hanfu-jiexiu/",
+    "last": "28 项全过、FAILS 0（2026-11-02）"
+   }
+  ],
+  "parent": null,
+  "delta": {},
+  "seam_ledger": []
+ },
+ "scripts": {
+  "pattern": [
+   "assembly.py",
+   "build.py",
+   "export_dxf.py",
+   "make.py",
+   "preview.py",
+   "sizing.py"
+  ],
+  "verification": [
+   "fit.py",
+   "overlay.py",
+   "report.py",
+   "verify.py",
+   "verify_接袖.py"
+  ]
+ },
+ "docs": [
+  "pattern/使用说明.md",
+  "pattern/变更记录.md",
+  "pattern/裁片清单.md",
+  "verification/像素比对报告.md",
+  "verification/尺码资料核验.md",
+  "verification/形制核对表.md"
+ ],
+ "subject": "01-无锡钱樟夫妇墓_对穿交"
+}

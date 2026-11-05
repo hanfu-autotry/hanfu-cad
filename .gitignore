@@ -1,0 +1,45 @@
+# ── Python 缓存 ──
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+
+# ── 父程序（hanfu-studio）的生成物：不进仓库 ──
+/hanfu-studio/dist/
+/hanfu-studio/build/
+/hanfu-studio/logs/
+/hanfu-studio/out/
+/hanfu-studio/library/_project_catalog.json
+/hanfu-studio/*.spec
+
+# ── 子程序里早期父程序留下的残留（归口未清，先排除）──
+**/out/studio/
+**/out/_smoke/
+
+# ── 编辑器 / 系统 ──
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── 临时 ──
+*.log
+*.tmp
+~$*
+*_bak.*
+
+# 游离副本：与 hanfu-cad/archive/v3_文物原尺寸_含接袖/对穿交_右衽_裁片图_v3.svg 同 md5
+/hanfu-cad/archive/pattern/
+
+# ── 无头浏览器的临时 profile（含 Cookies/Login Data，绝不入库）──
+**/_edge_profile/
+
+# ── 量图派生裁切 / 我留下的临时图 ──
+**/_ref/
+**/out/_*.png
+**/out/_zoom/
+
+# ── 回滚快照 / 素材包产物 ──
+**/_rollback_*/
+/hanfu-studio/kit/out/

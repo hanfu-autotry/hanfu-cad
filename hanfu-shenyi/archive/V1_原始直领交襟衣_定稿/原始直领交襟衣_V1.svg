@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2400mm" height="3697mm" viewBox="0 0 2400 3697">
+<title>原始直领交襟衣 · 裁片与制作（V1）</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g id="CLOTH" stroke="#1a1a1a" stroke-width="3" fill="none">
+  <path d="M 200.0 330.0 L 2200.0 330.0 L 2200.0 1578.0 L 200.0 1578.0 Z"/>
+</g>
+<g id="SEAM" stroke="#1a4d8f" stroke-width="2" fill="none" stroke-dasharray="26 10">
+  <path d="M 700.0 330.0 L 700.0 1578.0"/>
+  <path d="M 1200.0 330.0 L 1200.0 1578.0"/>
+  <path d="M 1700.0 330.0 L 1700.0 1578.0"/>
+</g>
+<g id="FOLD" stroke="#b85400" stroke-width="2.6" fill="none" stroke-dasharray="46 16 10 16">
+  <path d="M 175.0 954.0 L 2225.0 954.0"/>
+</g>
+<g id="SLIT" stroke="#b3241c" stroke-width="3.4" fill="none">
+  <path d="M 1120.0 954.0 L 1120.0 1578.0"/>
+  <path d="M 1280.0 954.0 L 1280.0 1578.0"/>
+</g>
+<g stroke="#b3241c" stroke-width="2.4" fill="none"><path d="M 1106.0 924.0 L 1124.0 944.0 M 1134.0 924.0 L 1116.0 944.0"/><circle cx="1103.0" cy="919.0" r="6"/><circle cx="1137.0" cy="919.0" r="6"/></g>
+<g stroke="#b3241c" stroke-width="2.4" fill="none"><path d="M 1266.0 924.0 L 1284.0 944.0 M 1294.0 924.0 L 1276.0 944.0"/><circle cx="1263.0" cy="919.0" r="6"/><circle cx="1297.0" cy="919.0" r="6"/></g>
+<g id="LAPELFOLD" stroke="#1d6b3a" stroke-width="2.6" fill="none" stroke-dasharray="18 12">
+  <path d="M 1160.0 954.0 L 1160.0 1578.0"/>
+  <path d="M 1120.0 1074.0 L 1160.0 1074.0"/>
+  <path d="M 1240.0 954.0 L 1240.0 1578.0"/>
+  <path d="M 1280.0 1074.0 L 1240.0 1074.0"/>
+</g>
+<g id="GRAIN" stroke="#6f6f6f" stroke-width="2.2" fill="none">
+  <path d="M 450.0 1253.5 L 450.0 654.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+  <path d="M 950.0 1253.5 L 950.0 654.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+  <path d="M 1450.0 1253.5 L 1450.0 654.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+  <path d="M 1950.0 1253.5 L 1950.0 654.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+</g>
+<g font-family="sans-serif" fill="#1a1a1a">
+  <text x="150.0" y="96.0" font-size="52" font-weight="600">原始直领交襟衣 · ① 材料与 ② 制作（V1）</text>
+  <text x="150.0" y="150.0" font-size="32" fill="#6f6f6f">4 匹拼幅 · 整块不裁肩 · 上下对折成前后 · 前中剪开 160 · 两襟各向里折 40（中间露出后片 80）· 上领条</text>
+  <text x="150.0" y="200.0" font-size="30" fill="#6f6f6f">通袖 2000 ＝ 4 幅 × 500 ｜ 布片高 1248 ＝ 对折线上下各 624 ｜ 成衣衣长 624 ｜ 剪口间距 160</text>
+</g>
+<g font-family="sans-serif" font-size="30" fill="#1a4d8f"><text x="150.0" y="1708.0">┄ 拼幅缝（4 匹横拼）</text></g>
+<g font-family="sans-serif" font-size="30" fill="#b85400"><text x="150.0" y="1754.0">┈ 上下对折线（肩线折出，不另裁前片后片）</text></g>
+<g font-family="sans-serif" font-size="30" fill="#b3241c"><text x="150.0" y="1800.0">— 前中剪开线（从对折线剪到下摆，两道）</text></g>
+<g font-family="sans-serif" font-size="30" fill="#1d6b3a"><text x="150.0" y="1846.0">┈ 折边线（各向里折 40，布边落在 ±40，折边即领条缝位）</text></g>
+<g id="FLAT" stroke="#1a1a1a" stroke-width="3" fill="none">
+  <path d="M 200.0 2198.0 L 200.0 2822.0 L 2200.0 2822.0 L 2200.0 2198.0"/>
+  <path d="M 200.0 2198.0 L 1120.0 2198.0"/>
+  <path d="M 1160.0 2198.0 L 1240.0 2198.0"/>
+  <path d="M 1280.0 2198.0 L 2200.0 2198.0"/>
+  <path d="M 700.0 2198.0 L 700.0 2822.0" stroke-width="1.8"/>
+  <path d="M 1200.0 2198.0 L 1200.0 2822.0" stroke-width="1.8"/>
+  <path d="M 1700.0 2198.0 L 1700.0 2822.0" stroke-width="1.8"/>
+</g>
+<g id="CENTER" stroke="#1a1a1a" fill="none">
+  <path d="M 1120.0 2198.0 L 1120.0 2822.0" stroke-width="3"/>
+  <path d="M 1280.0 2198.0 L 1280.0 2822.0" stroke-width="3"/>
+  <path d="M 1160.0 2121.0 L 1160.0 2822.0" stroke-width="1.8"/>
+  <path d="M 1240.0 2121.0 L 1240.0 2822.0" stroke-width="1.8"/>
+  <path d="M 1200.0 2198.0 L 1200.0 2822.0" stroke-width="1.8" stroke-dasharray="26 14"/>
+</g>
+<g id="COLLAR" stroke="#1a1a1a" stroke-width="3" fill="none">
+  <path d="M 1120.0 2198.0 L 1155.5 2121.0 L 1244.5 2121.0 L 1280.0 2198.0 Z"/>
+</g>
+<g font-family="sans-serif" fill="#1a1a1a">
+  <text x="150.0" y="2927.0" font-size="52" font-weight="600">③ 成衣平铺：领襟一体，连肩接袖</text>
+  <text x="150.0" y="2977.0" font-size="30" fill="#6f6f6f">平铺高 624 ｜ 通袖 2000 ｜ 前中：| 领条 40 | 露出后片 80（后中缝居中）| 领条 40 | ｜ 顶部 = 领条在领口向上折转（底 160 → 顶 89，露出 77）</text>
+</g>
+<g id="CUT" stroke="#1a1a1a" stroke-width="3" fill="none">
+  <path d="M 150.0 3342.0 L 1850.0 3342.0 L 1850.0 3247.0 L 150.0 3247.0 Z"/>
+</g>
+<g font-family="sans-serif" fill="#1a1a1a">
+  <text x="150.0" y="3217.0" font-size="34" font-weight="600">④ 领条 ×1 ｜ 1700 × 95 ｜ 一条直的，成型后呈倒 U：左襟 → 绕颈 → 右襟</text>
+</g>
+<g id="SCALE" stroke="#1a1a1a" stroke-width="2.4" fill="none">
+  <path d="M 150.0 3597.0 L 150.0 3567.0"/>
+  <path d="M 250.0 3597.0 L 250.0 3581.0"/>
+  <path d="M 350.0 3597.0 L 350.0 3581.0"/>
+  <path d="M 450.0 3597.0 L 450.0 3581.0"/>
+  <path d="M 550.0 3597.0 L 550.0 3581.0"/>
+  <path d="M 650.0 3597.0 L 650.0 3567.0"/>
+  <path d="M 750.0 3597.0 L 750.0 3581.0"/>
+  <path d="M 850.0 3597.0 L 850.0 3581.0"/>
+  <path d="M 950.0 3597.0 L 950.0 3581.0"/>
+  <path d="M 1050.0 3597.0 L 1050.0 3581.0"/>
+  <path d="M 1150.0 3597.0 L 1150.0 3567.0"/>
+  <path d="M 150.0 3597.0 L 1150.0 3597.0"/>
+</g>
+<text x="150.0" y="3643.0" font-family="sans-serif" font-size="26" fill="#1a1a1a">100mm 校验标尺（打印后实测，误差应 ≤0.5mm）</text>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#6f6f6f" stroke-width="1.4"/></marker></defs>
+</svg>

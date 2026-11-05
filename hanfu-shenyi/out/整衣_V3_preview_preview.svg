@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2709" height="1388" viewBox="0 0 4370 2240">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<polyline points="750 2060 1170 2060 1170 1290 1330 1290 1330 2060 1750 2060 1750 1485 2250 1485 2250 1095 1750 1095 1750 520 750 520 750 1095 250 1095 250 1485 750 1485" stroke="#111111" stroke-width="6.99" fill="none" stroke-linejoin="round"/>
+<polyline points="2550 2060 4250 2060 4250 1965 2550 1965" stroke="#111111" stroke-width="6.99" fill="none" stroke-linejoin="round"/>
+<line x1="750.0" y1="1485.0" x2="750.0" y2="1095.0" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="1750.0" y1="1485.0" x2="1750.0" y2="1095.0" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="1250.0" y1="2060.0" x2="1250.0" y2="1485.0" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="1250.0" y1="1095.0" x2="1250.0" y2="520.0" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="1250.0" y1="1290.0" x2="1250.0" y2="520.0" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="750.0" y1="1485.0" x2="1170.0" y2="1485.0" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="1330.0" y1="1485.0" x2="1750.0" y2="1485.0" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="750.0" y1="1095.0" x2="1750.0" y2="1095.0" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="750.0" y1="1485.0" x2="250.0" y2="1485.0" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="880.0" y1="1485.0" x2="880.0" y2="1422.5" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="1750.0" y1="1485.0" x2="2250.0" y2="1485.0" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="1620.0" y1="1485.0" x2="1620.0" y2="1422.5" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="750.0" y1="1095.0" x2="250.0" y2="1095.0" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="880.0" y1="1095.0" x2="880.0" y2="1157.5" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="1750.0" y1="1095.0" x2="2250.0" y2="1095.0" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<line x1="1620.0" y1="1095.0" x2="1620.0" y2="1157.5" stroke="#1a4d8f" stroke-width="3.76" fill="none" stroke-dasharray="26 10"/>
+<polyline points="880 1463.12 879.183 1464.99 876.813 1466.89 873.016 1468.8 867.914 1470.7 861.631 1472.56 854.292 1474.37 846.019 1476.11 836.938 1477.75 827.17 1479.28 816.841 1480.67 806.074 1481.91 794.992 1482.97 783.72 1483.82 772.382 1484.46 761.1 1484.86 750 1485" stroke="#1a4d8f" stroke-width="6.99" fill="none" stroke-linejoin="round"/>
+<polyline points="1620 1463.12 1620.82 1464.99 1623.19 1466.89 1626.98 1468.8 1632.09 1470.7 1638.37 1472.56 1645.71 1474.37 1653.98 1476.11 1663.06 1477.75 1672.83 1479.28 1683.16 1480.67 1693.93 1481.91 1705.01 1482.97 1716.28 1483.82 1727.62 1484.46 1738.9 1484.86 1750 1485" stroke="#1a4d8f" stroke-width="6.99" fill="none" stroke-linejoin="round"/>
+<polyline points="880 1116.88 879.183 1115.01 876.813 1113.11 873.016 1111.2 867.914 1109.3 861.631 1107.44 854.292 1105.63 846.019 1103.89 836.938 1102.25 827.17 1100.72 816.841 1099.33 806.074 1098.09 794.992 1097.03 783.72 1096.18 772.382 1095.54 761.1 1095.14 750 1095" stroke="#1a4d8f" stroke-width="6.99" fill="none" stroke-linejoin="round"/>
+<polyline points="1620 1116.88 1620.82 1115.01 1623.19 1113.11 1626.98 1111.2 1632.09 1109.3 1638.37 1107.44 1645.71 1105.63 1653.98 1103.89 1663.06 1102.25 1672.83 1100.72 1683.16 1099.33 1693.93 1098.09 1705.01 1097.03 1716.28 1096.18 1727.62 1095.54 1738.9 1095.14 1750 1095" stroke="#1a4d8f" stroke-width="6.99" fill="none" stroke-linejoin="round"/>
+<line x1="250.0" y1="1290.0" x2="1170.0" y2="1290.0" stroke="#b85400" stroke-width="5.92" fill="none" stroke-dasharray="46 16 10 16"/>
+<line x1="1330.0" y1="1290.0" x2="2250.0" y2="1290.0" stroke="#b85400" stroke-width="5.92" fill="none" stroke-dasharray="46 16 10 16"/>
+<line x1="1170.0" y1="1290.0" x2="1210.0" y2="1290.0" stroke="#b85400" stroke-width="5.92" fill="none" stroke-dasharray="46 16 10 16"/>
+<line x1="1330.0" y1="1290.0" x2="1290.0" y2="1290.0" stroke="#b85400" stroke-width="5.92" fill="none" stroke-dasharray="46 16 10 16"/>
+<line x1="1170.0" y1="2060.0" x2="1170.0" y2="1290.0" stroke="#b3241c" stroke-width="6.99" fill="none"/>
+<line x1="1330.0" y1="2060.0" x2="1330.0" y2="1290.0" stroke="#b3241c" stroke-width="6.99" fill="none"/>
+<polyline points="1170 1290 1205.5 1213 1294.5 1213 1330 1290" stroke="#1d6b3a" stroke-width="6.99" fill="none" stroke-linejoin="round"/>
+<line x1="500.0" y1="1365.0" x2="500.0" y2="1215.0" stroke="#8a8a8a" stroke-width="2.96" fill="none"/>
+<line x1="1000.0" y1="1365.0" x2="1000.0" y2="1215.0" stroke="#8a8a8a" stroke-width="2.96" fill="none"/>
+<line x1="1500.0" y1="1365.0" x2="1500.0" y2="1215.0" stroke="#8a8a8a" stroke-width="2.96" fill="none"/>
+<line x1="2000.0" y1="1365.0" x2="2000.0" y2="1215.0" stroke="#8a8a8a" stroke-width="2.96" fill="none"/>
+<line x1="1000.0" y1="1940.0" x2="1000.0" y2="1605.0" stroke="#8a8a8a" stroke-width="2.96" fill="none"/>
+<line x1="1000.0" y1="975.0" x2="1000.0" y2="640.0" stroke="#8a8a8a" stroke-width="2.96" fill="none"/>
+<line x1="1500.0" y1="1940.0" x2="1500.0" y2="1605.0" stroke="#8a8a8a" stroke-width="2.96" fill="none"/>
+<line x1="1500.0" y1="975.0" x2="1500.0" y2="640.0" stroke="#8a8a8a" stroke-width="2.96" fill="none"/>
+<path d="M 872.0 1414.5 L 888.0 1430.5 M 872.0 1430.5 L 888.0 1414.5" stroke="#b3241c" stroke-width="4.30"/>
+<path d="M 1612.0 1414.5 L 1628.0 1430.5 M 1612.0 1430.5 L 1628.0 1414.5" stroke="#b3241c" stroke-width="4.30"/>
+<path d="M 872.0 1149.5 L 888.0 1165.5 M 872.0 1165.5 L 888.0 1149.5" stroke="#b3241c" stroke-width="4.30"/>
+<path d="M 1612.0 1149.5 L 1628.0 1165.5 M 1612.0 1165.5 L 1628.0 1149.5" stroke="#b3241c" stroke-width="4.30"/>
+<g font-family="sans-serif" fill="#111111">
+<text x="60" y="70" font-size="42" font-weight="600">通裁 · 整衣铺开一片（V3窄袖）｜ 一条连续外轮廓：裳后 + 衣(中段对折) + 裳前</text>
+<text x="60" y="130" font-size="27" fill="#444444">通袖 2000 ＝ 4 幅 × 500 ｜ 布片高 1540 ＝ 中段 390（对折＝上衣，衣长 195＝袖口）＋ 裳 575 × 2</text>
+<text x="60" y="174" font-size="27" fill="#444444">裳·前 / 裳·后：另一块布（同料），各 2 幅宽，缝于腰线（衣身接缝）→ 缝合成深衣</text>
+<text x="60" y="218" font-size="27" fill="#444444">前中开口 160 贯通到摆：两襟独立可滑（左右衣襟活动）；交襟＝系出来的，几何里没有'交'</text>
+<text x="60" y="262" font-size="27" fill="#444444">领条压边可见 40（中间露出后片 80）；领条另裁 1700 × 95，直条绕颈后</text>
+<text x="60" y="306" font-size="27" fill="#444444">外轮廓各段角色：裳摆=自由边 ｜ 裳两侧=侧缝(与镜像缝合) ｜ 腰线台阶段(±500~1000)=袖底缝(与镜像缝合) ｜ ±1000=袖口(自由) ｜ ±80=前中剪开 ｜ 肩线=折线</text>
+<text x="60" y="350" font-size="27" fill="#444444">衣裳分开：衣底边 ±370 以内＝衣身摆线（接收褶的裳：裳腰 1000 收褶接 740，比≈2:1，推算）；幅缝 ±500 到袖口 ±1000＝袖底缝（与镜像缝合，沿外幅整条）；本图不画褶线</text>
+<text x="60" y="394" font-size="27" fill="#444444">净版未含缝份 ｜ 单位 mm ｜ 裳半宽 500 ＜ 布片半宽 1000 → 腰线处台阶（剪裁图实测上/下块各 2 幅）</text>
+<text x="2550" y="1951" font-size="28">领条 ×1（另裁）</text>
+</g>
+<text x="60" y="2210" font-size="24" fill="#8a8a8a">预览：CUT 黑 / 拼缝·腰线·袖底 蓝虚 / 折线·压边 橙点划 / 剪开 红 / 领条 绿 / 布纹 灰</text>
+</svg>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="3100mm" height="7431mm" viewBox="0 0 3100 7431">
+<title>深衣型矩领 · 裁片与制作（V2）</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g font-family="sans-serif" fill="#1a1a1a">
+  <text x="150.0" y="100.0" font-size="52" font-weight="600">深衣型矩领 · ① 材料与 ② 制作（V2）</text>
+  <text x="150.0" y="158.0" font-size="32" fill="#6f6f6f">4 匹拼幅 × 3 段 · 中段对折＝上衣（衣长 624）· 上下两段折过来＝下裳（各 1248 高）· 前中剪开 160、两襟各折 40 · 上领条</text>
+  <text x="150.0" y="210.0" font-size="30" fill="#6f6f6f">通袖 2000 ＝ 4 幅 × 500 ｜ 布片高 3744 ＝ 3 段 × 1248 ｜ 腰线（衣身接缝）＝ 中段上下边 = 齐胸高腰 ｜ 腋点 ±370</text>
+</g>
+<g id="CLOTH" stroke="#1a1a1a" stroke-width="3" fill="none">
+  <path d="M 550.0 360.0 L 2550.0 360.0 L 2550.0 4104.0 L 550.0 4104.0 Z"/>
+</g>
+<g id="SEAM" stroke="#1a4d8f" stroke-width="2" fill="none" stroke-dasharray="26 10">
+  <path d="M 1050.0 360.0 L 1050.0 4104.0"/>
+  <path d="M 1550.0 360.0 L 1550.0 4104.0"/>
+  <path d="M 2050.0 360.0 L 2050.0 4104.0"/>
+</g>
+<g id="SEGBD" stroke="#6a2c91" stroke-width="1.8" fill="none" stroke-dasharray="34 12" opacity="0.45">
+  <path d="M 520.0 2856.0 L 2580.0 2856.0"/>
+  <path d="M 520.0 1608.0 L 2580.0 1608.0"/>
+</g>
+<g font-family="sans-serif" font-size="28" fill="#6a2c91" text-anchor="end">
+  <text x="505.0" y="734.4">上段（折下来＝裳·后）</text>
+  <text x="505.0" y="1718.0">中段（对折＝上衣前后）</text>
+  <text x="505.0" y="2966.0">下段（折上去＝裳·前）</text>
+</g>
+<g id="FOLD" stroke="#b85400" stroke-width="3" fill="none" stroke-dasharray="46 16 10 16">
+  <path d="M 495.0 2232.0 L 2605.0 2232.0"/>
+</g>
+<text x="505.0" y="2266.0" font-family="sans-serif" font-size="28" fill="#b85400" text-anchor="end">对折线（中段正中）→ 折后即肩线，衣长 624</text>
+<path d="M 420.0 390.0 C 335.0 974.0 335.0 974.0 420.0 1558.0" stroke="#6f6f6f" stroke-width="6" fill="none" marker-end="url(#arr)" opacity="0.5"/>
+<path d="M 420.0 4074.0 C 335.0 3490.0 335.0 3490.0 420.0 2906.0" stroke="#6f6f6f" stroke-width="6" fill="none" marker-end="url(#arr)" opacity="0.5"/>
+<path d="M 2680.0 390.0 C 2765.0 974.0 2765.0 974.0 2680.0 1558.0" stroke="#6f6f6f" stroke-width="6" fill="none" marker-end="url(#arr)" opacity="0.5"/>
+<path d="M 2680.0 4074.0 C 2765.0 3490.0 2765.0 3490.0 2680.0 2906.0" stroke="#6f6f6f" stroke-width="6" fill="none" marker-end="url(#arr)" opacity="0.5"/>
+<g id="SLIT" stroke="#b3241c" stroke-width="3.6" fill="none">
+  <path d="M 1470.0 2232.0 L 1470.0 4104.0"/>
+  <path d="M 1630.0 2232.0 L 1630.0 4104.0"/>
+</g>
+<g stroke="#b3241c" stroke-width="2.4" fill="none"><path d="M 1456.0 2202.0 L 1474.0 2222.0 M 1484.0 2202.0 L 1466.0 2222.0"/><circle cx="1453.0" cy="2197.0" r="6"/><circle cx="1487.0" cy="2197.0" r="6"/></g>
+<g stroke="#b3241c" stroke-width="2.4" fill="none"><path d="M 1616.0 2202.0 L 1634.0 2222.0 M 1644.0 2202.0 L 1626.0 2222.0"/><circle cx="1613.0" cy="2197.0" r="6"/><circle cx="1647.0" cy="2197.0" r="6"/></g>
+<g id="LAPELFOLD" stroke="#1d6b3a" stroke-width="2.6" fill="none" stroke-dasharray="18 12">
+  <path d="M 1510.0 2232.0 L 1510.0 4104.0"/>
+  <path d="M 1470.0 2362.0 L 1510.0 2362.0"/>
+  <path d="M 1590.0 2232.0 L 1590.0 4104.0"/>
+  <path d="M 1630.0 2362.0 L 1590.0 2362.0"/>
+</g>
+<g id="ARMPIT" stroke="#1d6b3a" stroke-width="3" fill="none">
+  <path d="M 1180.0 2856.0 L 1180.0 2656.0"/>
+  <path d="M 1180.0 2786.0 C 1180.0 2817.5 1147.0 2856.0 1120.0 2856.0"/>
+  <path d="M 1180.0 1608.0 L 1180.0 1808.0"/>
+  <path d="M 1180.0 1678.0 C 1180.0 1646.5 1147.0 1608.0 1120.0 1608.0"/>
+  <path d="M 1920.0 2856.0 L 1920.0 2656.0"/>
+  <path d="M 1920.0 2786.0 C 1920.0 2817.5 1953.0 2856.0 1980.0 2856.0"/>
+  <path d="M 1920.0 1608.0 L 1920.0 1808.0"/>
+  <path d="M 1920.0 1678.0 C 1920.0 1646.5 1953.0 1608.0 1980.0 1608.0"/>
+</g>
+<g id="SLEEVESEAM" stroke="#1d6b3a" stroke-width="4" fill="none" opacity="0.8">
+  <path d="M 1120.0 2856.0 L 550.0 2856.0"/>
+  <path d="M 1980.0 2856.0 L 2550.0 2856.0"/>
+  <path d="M 1120.0 1608.0 L 550.0 1608.0"/>
+  <path d="M 1980.0 1608.0 L 2550.0 1608.0"/>
+</g>
+<g id="GRAIN" stroke="#6f6f6f" stroke-width="2.2" fill="none" opacity="0.9">
+  <path d="M 800.0 2736.0 L 800.0 1728.0" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <path d="M 1300.0 2736.0 L 1300.0 1728.0" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <path d="M 1800.0 2736.0 L 1800.0 1728.0" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <path d="M 2300.0 2736.0 L 2300.0 1728.0" marker-start="url(#arr)" marker-end="url(#arr)"/>
+</g>
+<g font-family="sans-serif" font-size="30" fill="#1a1a1a">
+  <text x="150.0" y="4254.0" fill="#1a4d8f">┄ 拼幅缝（4 匹横拼，通袖 2000）</text>
+  <text x="150.0" y="4298.0" fill="#6a2c91">┄ 段的分界（折过来即成腰线：衣身接缝 ＝ 齐胸高腰）</text>
+  <text x="150.0" y="4342.0" fill="#b85400">┈ 对折线（中段正中；折后即肩线，衣长 624）</text>
+  <text x="150.0" y="4386.0" fill="#b3241c">— 前中剪开线（两道，间距 160；从折线剪到腰线）</text>
+  <text x="150.0" y="4430.0" fill="#1d6b3a">┈ 折边线（两襟各向里折 40，中间露出后片 80）</text>
+  <text x="150.0" y="4474.0" fill="#1d6b3a">— 躯干衣身边缘（竖段）：自腰线往上 200，另一端即腋点（与裳无关）</text>
+  <text x="150.0" y="4518.0" fill="#1d6b3a">— 袖底缝（腰线 ±430 以外到袖口，前后片缝合）：与竖段在腋点共顶点 → 不加＝敞口(侧视倒U)，加了＝闭成 0</text>
+</g>
+<g id="FLAT" stroke="#1a1a1a" stroke-width="3" fill="none">
+  <path d="M 550.0 4864.0 L 550.0 5488.0 L 2550.0 5488.0"/>
+  <path d="M 2550.0 5488.0 L 2550.0 4864.0"/>
+  <path d="M 550.0 4864.0 L 1470.0 4864.0"/>
+  <path d="M 1510.0 4864.0 L 1590.0 4864.0"/>
+  <path d="M 1630.0 4864.0 L 2550.0 4864.0"/>
+  <path d="M 1050.0 4864.0 L 1050.0 5488.0" stroke-width="1.8"/>
+  <path d="M 1550.0 4864.0 L 1550.0 5488.0" stroke-width="1.8"/>
+  <path d="M 2050.0 4864.0 L 2050.0 5488.0" stroke-width="1.8"/>
+  <path d="M 1180.0 5488.0 L 1010.0 6736.0 L 2090.0 6736.0 L 1920.0 5488.0"/>
+</g>
+<g id="CENTER" stroke="#1a1a1a" fill="none">
+  <path d="M 1470.0 4864.0 L 1470.0 6736.0" stroke-width="3"/>
+  <path d="M 1630.0 4864.0 L 1630.0 6736.0" stroke-width="3"/>
+  <path d="M 1510.0 4787.0 L 1510.0 6736.0" stroke-width="1.8"/>
+  <path d="M 1590.0 4787.0 L 1590.0 6736.0" stroke-width="1.8"/>
+  <path d="M 1550.0 4864.0 L 1550.0 6736.0" stroke-width="1.8" stroke-dasharray="26 14"/>
+</g>
+<g id="COLLAR" stroke="#1a1a1a" stroke-width="3" fill="none">
+  <path d="M 1470.0 4864.0 L 1505.5 4787.0 L 1594.5 4787.0 L 1630.0 4864.0 Z"/>
+</g>
+<g id="ARMPIT_FLAT" stroke="#1d6b3a" stroke-width="3" fill="none">
+  <path d="M 1180.0 5488.0 L 1180.0 5288.0"/>
+  <path d="M 1180.0 5418.0 C 1180.0 5449.5 1147.0 5488.0 1120.0 5488.0"/>
+  <path d="M 1920.0 5488.0 L 1920.0 5288.0"/>
+  <path d="M 1920.0 5418.0 C 1920.0 5449.5 1953.0 5488.0 1980.0 5488.0"/>
+</g>
+<g stroke="#6f6f6f" stroke-width="2" fill="none">
+  <path d="M 550.0 4744.0 L 2550.0 4744.0 M 550.0 4732.0 L 550.0 4756.0 M 2550.0 4732.0 L 2550.0 4756.0"/>
+</g>
+<g font-family="sans-serif" font-size="28" fill="#1a1a1a">
+  <text x="1550.0" y="4728.0" text-anchor="middle">通袖 2000</text>
+  <text x="2590.0" y="5207.2">衣长 624</text>
+  <text x="2590.0" y="6112.0">裳 1248</text>
+  <text x="520.0" y="5498.0" text-anchor="end">腰宽 740</text>
+  <text x="520.0" y="6730.0" text-anchor="end">摆宽 1080</text>
+  <text x="510.0" y="5296.0" font-size="24" fill="#1d6b3a" text-anchor="end">腋点 ±370 ｜ 垂线 200 ｜ 外弯 60</text>
+</g>
+<g font-family="sans-serif">
+  <text x="150.0" y="6844.0" font-size="52" font-weight="600" fill="#1a1a1a">③ 平铺：矩领对襟 · 上衣连袖 + 下裳</text>
+  <text x="150.0" y="6894.0" font-size="30" fill="#6f6f6f">袖带高 624（＝衣长）｜裳高 1248｜腰线即衣身接缝（齐胸高腰）｜前中 | 领条 40 | 后片 80（后中缝居中）| 领条 40 | 贯通到摆｜裳为正面轮廓，本体是 4 幅 × 1248</text>
+</g>
+<g id="CUT" stroke="#1a1a1a" stroke-width="3" fill="none">
+  <path d="M 150.0 7036.0 L 4054.0 7036.0 L 4054.0 7131.0 L 150.0 7131.0 Z"/>
+</g>
+<g font-family="sans-serif" fill="#1a1a1a">
+  <text x="150.0" y="7010.0" font-size="34" font-weight="600">④ 领条 ×1 ｜ 3904 × 95 ｜ 一条直的，成型后呈倒 U：左襟 → 绕颈 → 右襟（长度待核）</text>
+</g>
+<g id="SCALE" stroke="#1a1a1a" stroke-width="2.4" fill="none">
+  <path d="M 150.0 7331.0 L 150.0 7301.0"/>
+  <path d="M 250.0 7331.0 L 250.0 7315.0"/>
+  <path d="M 350.0 7331.0 L 350.0 7315.0"/>
+  <path d="M 450.0 7331.0 L 450.0 7315.0"/>
+  <path d="M 550.0 7331.0 L 550.0 7315.0"/>
+  <path d="M 650.0 7331.0 L 650.0 7301.0"/>
+  <path d="M 750.0 7331.0 L 750.0 7315.0"/>
+  <path d="M 850.0 7331.0 L 850.0 7315.0"/>
+  <path d="M 950.0 7331.0 L 950.0 7315.0"/>
+  <path d="M 1050.0 7331.0 L 1050.0 7315.0"/>
+  <path d="M 1150.0 7331.0 L 1150.0 7301.0"/>
+  <path d="M 150.0 7331.0 L 1150.0 7331.0"/>
+</g>
+<text x="150.0" y="7377.0" font-family="sans-serif" font-size="26" fill="#1a1a1a">100mm 校验标尺（打印后实测，误差应 ≤0.5mm）</text>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#6f6f6f" stroke-width="1.6"/></marker></defs>
+</svg>

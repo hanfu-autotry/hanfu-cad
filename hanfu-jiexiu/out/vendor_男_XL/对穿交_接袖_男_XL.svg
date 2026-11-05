@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2220mm" height="2310mm" viewBox="0 0 2220 2310">
+<title>对穿交 · 钱氏墓 鸟衔花枝纹缎夹袄 · 裁片图（右衽·单层·净版·mm·接袖）</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g id="OUTLINE" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linejoin="round">
+  <path id="后片半_ot" data-qty="2" d="M 120.0 1000.0 C 320.0 995.0 520.0 970.0 575.0 940.0 L 462.2 493.9 C 455.9 469.1 463.9 421.2 488.6 414.9 L 663.7 370.2 L 663.7 123.1 L 445.0 120.0 L 170.0 120.0 L 120.0 120.0 Z"/>
+  <path id="前片_ot" data-qty="2" d="M 1417.4 120.0 L 1502.4 1000.0 C 1167.4 995.0 967.4 970.0 912.4 940.0 L 1025.2 493.9 C 1031.5 469.1 1023.5 421.2 998.8 414.9 L 823.7 370.2 L 823.7 123.1 L 1042.4 120.0 L 1417.4 120.0 Z"/>
+  <path id="接袖_ot" data-qty="4" d="M 1662.4 367.2 L 2023.7 275.0 L 2023.7 125.0 L 1662.4 120.0 Z"/>
+  <path id="领缘条_ot" data-qty="1" d="M 120.0 1230.0 L 2008.2 1230.0 L 2008.2 1160.0 L 120.0 1160.0 Z"/>
+  <path id="三角拼接 A_ot" data-qty="1" d="M 120.0 1560.0 L 215.0 1560.0 L 120.0 1390.0 Z"/>
+  <path id="三角拼接 B_ot" data-qty="1" d="M 620.0 1530.0 L 715.0 1530.0 L 620.0 1390.0 Z"/>
+  <path id="系带_ot" data-qty="2" d="M 1120.0 1410.0 L 1320.0 1410.0 L 1320.0 1390.0 L 1120.0 1390.0 Z"/>
+  <path id="下摆绢衬条_ot" data-qty="1" d="M 120.0 1750.0 L 1030.0 1750.0 L 1030.0 1720.0 L 120.0 1720.0 Z"/>
+</g>
+<g id="SEAM" stroke="#1f5fa8" stroke-width="1.2" fill="none" stroke-dasharray="18 8">
+  <path d="M 120.0 1000.0 L 120.0 120.0"/>
+</g>
+<g id="GRAIN" stroke="#1a1a1a" stroke-width="1.4" fill="none">
+  <path d="M 391.9 723.1 L 391.9 396.9"/>
+  <path d="M 377.9 390.9 L 391.9 396.9 M 391.9 396.9 L 405.9 390.9"/>
+  <path d="M 1130.1 359.1 L 1196.0 760.9"/>
+  <path d="M 1182.0 754.9 L 1196.0 760.9 M 1196.0 760.9 L 1210.0 754.9"/>
+  <path d="M 1768.9 243.6 L 1917.2 243.6"/>
+  <path d="M 1903.2 237.6 L 1917.2 243.6 M 1917.2 243.6 L 1931.2 237.6"/>
+  <path d="M 1028.1 1195.0 L 1100.1 1195.0"/>
+  <path d="M 1086.1 1189.0 L 1100.1 1195.0 M 1100.1 1195.0 L 1114.1 1189.0"/>
+  <path d="M 167.5 1511.0 L 167.5 1439.0"/>
+  <path d="M 153.5 1433.0 L 167.5 1439.0 M 167.5 1439.0 L 181.5 1433.0"/>
+  <path d="M 667.5 1496.0 L 667.5 1424.0"/>
+  <path d="M 653.5 1418.0 L 667.5 1424.0 M 667.5 1424.0 L 681.5 1418.0"/>
+  <path d="M 1184.0 1400.0 L 1256.0 1400.0"/>
+  <path d="M 1242.0 1394.0 L 1256.0 1400.0 M 1256.0 1400.0 L 1270.0 1394.0"/>
+  <path d="M 539.0 1735.0 L 611.0 1735.0"/>
+  <path d="M 597.0 1729.0 L 611.0 1735.0 M 611.0 1735.0 L 625.0 1729.0"/>
+</g>
+<g id="NOTCH" stroke="#c0392b" stroke-width="2.4">
+  <path d="M 436.0 417.0 L 454.0 435.0"/>
+  <path d="M 111.0 991.0 L 129.0 1009.0"/>
+  <path d="M 1033.4 417.0 L 1051.4 435.0"/>
+  <path d="M 1408.4 111.0 L 1426.4 129.0"/>
+  <path d="M 1653.4 358.2 L 1671.4 376.2"/>
+  <path d="M 1653.4 111.0 L 1671.4 129.0"/>
+  <path d="M 995.1 1221.0 L 1013.1 1239.0"/>
+  <path d="M 1095.1 1221.0 L 1113.1 1239.0"/>
+</g>
+<g id="DIM" stroke="#8a8a8a" stroke-width="0.9" fill="#8a8a8a" font-family="sans-serif" font-size="26">
+  <path d="M 120.0 1000.0 L 120.0 120.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="140.0" y="560.0" text-anchor="middle" transform="rotate(-90.0 120.0 560.0)">后中长 880</text>
+  <path d="M 120.0 940.0 L 575.0 940.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="347.5" y="970.0" text-anchor="middle" transform="rotate(0.0 347.5 940.0)">摆半宽 455 / 起翘 60</text>
+  <path d="M 445.0 426.0 L 445.0 120.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="465.0" y="273.0" text-anchor="middle" transform="rotate(-90.0 445.0 273.0)">腋深 306</text>
+  <path d="M 707.7 370.2 L 707.7 123.1" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="727.7" y="246.6" text-anchor="middle" transform="rotate(-90.0 707.7 246.6)">袖根 247</text>
+  <path d="M 445.0 120.0 L 663.7 123.1" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="554.4" y="151.5" text-anchor="middle" transform="rotate(0.8 554.4 121.5)">衣身袖长 219</text>
+  <path d="M 912.4 1060.0 L 1502.4 1060.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="1207.4" y="1090.0" text-anchor="middle" transform="rotate(0.0 1207.4 1060.0)">单边摆宽 590</text>
+  <path d="M 1502.4 1130.0 L 1367.4 1130.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="1454.9" y="1130.0" text-anchor="middle" transform="rotate(360.0 1434.9 1130.0)">越中 135</text>
+  <path d="M 1417.4 120.0 L 1502.4 1000.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="1479.9" y="560.0" text-anchor="middle" transform="rotate(264.5 1459.9 560.0)">门襟斜 5.5°</text>
+  <path d="M 1417.4 120.0 L 1367.4 120.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="1412.4" y="120.0" text-anchor="middle" transform="rotate(360.0 1392.4 120.0)">预开领半 50</text>
+  <path d="M 1662.4 367.2 L 1662.4 120.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="1682.4" y="243.6" text-anchor="middle" transform="rotate(-90.0 1662.4 243.6)">袖根 247</text>
+  <path d="M 2023.7 275.0 L 2023.7 125.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="2043.7" y="200.0" text-anchor="middle" transform="rotate(-90.0 2023.7 200.0)">腕口 150</text>
+  <path d="M 1662.4 367.2 L 2023.7 275.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="1843.1" y="351.1" text-anchor="middle" transform="rotate(-14.3 1843.1 321.1)">接袖长 361</text>
+  <path d="M 120.0 1230.0 L 2008.2 1230.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="1064.1" y="1260.0" text-anchor="middle" transform="rotate(0.0 1064.1 1230.0)">总长 1888 × 宽 70</text>
+  <path d="M 120.0 1560.0 L 120.0 1390.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="140.0" y="1475.0" text-anchor="middle" transform="rotate(-90.0 120.0 1475.0)">高 170</text>
+  <path d="M 620.0 1530.0 L 620.0 1390.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="640.0" y="1460.0" text-anchor="middle" transform="rotate(-90.0 620.0 1460.0)">高 140</text>
+  <path d="M 1120.0 1410.0 L 1320.0 1410.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="1220.0" y="1440.0" text-anchor="middle" transform="rotate(0.0 1220.0 1410.0)">长 200</text>
+  <path d="M 120.0 1750.0 L 1030.0 1750.0" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="575.0" y="1780.0" text-anchor="middle" transform="rotate(0.0 575.0 1750.0)">长 910 × 宽 30</text>
+</g>
+<g id="LABEL" fill="#1a1a1a" font-family="sans-serif">
+  <text x="120.0" y="90.0" font-size="30" font-weight="500">01 后片半 ×2</text>
+  <text x="823.7" y="90.0" font-size="30" font-weight="500">02 前片 ×2</text>
+  <text x="1662.4" y="90.0" font-size="30" font-weight="500">03 接袖 ×4</text>
+  <text x="120.0" y="1130.0" font-size="30" font-weight="500">04 领缘条 ×1</text>
+  <text x="120.0" y="1360.0" font-size="30" font-weight="500">05 三角拼接 A ×1</text>
+  <text x="620.0" y="1360.0" font-size="30" font-weight="500">06 三角拼接 B ×1</text>
+  <text x="1120.0" y="1360.0" font-size="30" font-weight="500">07 系带 ×2</text>
+  <text x="120.0" y="1690.0" font-size="30" font-weight="500">08 下摆绢衬条 ×1</text>
+</g>
+<g id="BLOCK" stroke="#1a1a1a" stroke-width="1.6" fill="none">
+  <rect x="120.0" y="1798.0" width="1980.0" height="360.0"/>
+</g>
+<g font-family="sans-serif" fill="#1a1a1a">
+  <text x="150.0" y="1858.0" font-size="38" font-weight="500">对穿交 · 明制 鸟衔花枝纹缎夹袄（右衽）裁片图 · 接袖版</text>
+  <text x="150.0" y="1903.0" font-size="26">依据：无锡七房桥钱樟夫妇墓出土实物 · 中国丝绸博物馆修复报告   ｜   单位 mm   ｜   净版（未含缝份）   ｜   单层   ｜   掩腕长窄袖·加接袖   ｜   v7.0</text>
+  <text x="150.0" y="1943.0" font-size="26">衣长 880   ｜   平铺摆宽 910（放量 1.00）   ｜   单边摆宽 590   ｜   交叠 270   ｜   通袖 1810 ＝ 肩点 325 ＋ 衣身袖 219 ＋ 接袖 361（×2）</text>
+  <text x="150.0" y="1983.0" font-size="26">袖根 247（接袖根＝衣身袖口）   ｜   腕口 150   ｜   预开领 100   ｜   领缘宽 70   ｜   腋深 306   ｜   袖底缘为一条直线（14.31°）</text>
+</g>
+<g id="SCALE" stroke="#1a1a1a" stroke-width="2" fill="none">
+  <path d="M 150.0 2073.0 L 150.0 2047.0"/>
+  <path d="M 250.0 2073.0 L 250.0 2059.0"/>
+  <path d="M 350.0 2073.0 L 350.0 2059.0"/>
+  <path d="M 450.0 2073.0 L 450.0 2059.0"/>
+  <path d="M 550.0 2073.0 L 550.0 2059.0"/>
+  <path d="M 650.0 2073.0 L 650.0 2047.0"/>
+  <path d="M 750.0 2073.0 L 750.0 2059.0"/>
+  <path d="M 850.0 2073.0 L 850.0 2059.0"/>
+  <path d="M 950.0 2073.0 L 950.0 2059.0"/>
+  <path d="M 1050.0 2073.0 L 1050.0 2059.0"/>
+  <path d="M 1150.0 2073.0 L 1150.0 2047.0"/>
+  <path d="M 150.0 2073.0 L 1150.0 2073.0"/>
+</g>
+<text x="150.0" y="2115.0" font-family="sans-serif" font-size="24" fill="#1a1a1a">100mm 校验标尺（打印后实测，误差应 ≤0.5mm）</text>
+<defs><marker id="a" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#8a8a8a" stroke-width="1.2"/></marker></defs>
+</svg>

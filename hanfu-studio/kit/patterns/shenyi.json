@@ -1,0 +1,130 @@
+{
+ "id": "shenyi",
+ "label": "深衣",
+ "cut": "通裁",
+ "project": "hanfu-shenyi",
+ "project_dir": "hanfu-shenyi",
+ "script": "pattern/build_shenyi.py",
+ "script_exists": true,
+ "run": {
+  "kind": "params",
+  "fixtures": {
+   "V2": {
+    "L_BODY": 624.0,
+    "GARMENT_L": 1872.0,
+    "N_SHANG": 3
+   },
+   "V3": {
+    "L_BODY": 195.0,
+    "GARMENT_L": 770.0,
+    "N_SHANG": 2
+   }
+  }
+ },
+ "modes": [
+  {
+   "id": "V2",
+   "label": "宽袖礼服",
+   "note": "衣长 624（=袖口），总长 1872 及踝；裳 3 幅（摆 1080 够走路）"
+  },
+  {
+   "id": "V3",
+   "label": "窄袖便服",
+   "note": "衣长 195，总长 770（厂商实测男 M）；裳 2 幅（直筒窄摆）"
+  }
+ ],
+ "mode_kind": "fixture",
+ "ease": null,
+ "knobs": [
+  {
+   "key": "L_BODY",
+   "label": "衣长（＝袖肥＝袖口）",
+   "min": 120,
+   "max": 700,
+   "step": 5,
+   "unit": "mm"
+  },
+  {
+   "key": "GARMENT_L",
+   "label": "成衣总长",
+   "min": 600,
+   "max": 2000,
+   "step": 10,
+   "unit": "mm"
+  },
+  {
+   "key": "SLIT_HALF",
+   "label": "前中剪开半间距",
+   "min": 40,
+   "max": 120,
+   "step": 5,
+   "unit": "mm"
+  },
+  {
+   "key": "LAPEL_FOLD",
+   "label": "领条压边（每边可见）",
+   "min": 20,
+   "max": 60,
+   "step": 5,
+   "unit": "mm"
+  }
+ ],
+ "extras": [
+  "whole_dxf",
+  "cmp"
+ ],
+ "gates": {
+  "fab_w": 500,
+  "max_panels": 4,
+  "min_radius": 10,
+  "invariants": [
+   {
+    "name": "panels",
+    "n": 4,
+    "fab_w": 500
+   },
+   {
+    "name": "slit",
+    "width": 160
+   },
+   {
+    "name": "piece_names",
+    "expect": [
+     "领条"
+    ]
+   }
+  ],
+  "reference": [
+   {
+    "name": "剪裁图对照（幅数/前中开口/领条）",
+    "cmd": "（harness 量图：sources/fig_深衣_剪裁与平铺.jpg）",
+    "where": "hanfu-shenyi/sources/",
+    "last": "4 幅带 + 上/下块各 3 幅、开口 160 已对齐"
+   }
+  ],
+  "parent": null,
+  "delta": {},
+  "seam_ledger": []
+ },
+ "scripts": {
+  "pattern": [
+   "build.py",
+   "build_pieces_shenyi.py",
+   "build_shenyi.py",
+   "export_dxf.py",
+   "export_dxf_whole.py",
+   "export_dxf_whole_v1.py",
+   "make_cmp.py",
+   "preview.py"
+  ],
+  "verification": []
+ },
+ "docs": [
+  "README.md",
+  "archive/V1_原始直领交襟衣_定稿/STATUS.md",
+  "archive/V2_深衣型矩领_定稿/README.md",
+  "verification/形制核对表.md",
+  "直交一体_盲区解说.md"
+ ],
+ "subject": "02-深衣_通裁"
+}

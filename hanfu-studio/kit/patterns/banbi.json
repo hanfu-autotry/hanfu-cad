@@ -1,0 +1,104 @@
+{
+ "id": "banbi",
+ "label": "对穿交半臂",
+ "cut": "分裁",
+ "project": "hanfu-cad",
+ "project_dir": "hanfu-cad",
+ "script": "pattern/make.py",
+ "script_exists": true,
+ "run": {
+  "kind": "make",
+  "argstyle": "--sex {sex} --size {size} --ease {ease} --profile {profile} --out {out}"
+ },
+ "modes": [
+  {
+   "id": "artifact",
+   "label": "文物基准",
+   "note": "按钱氏墓形制图反推（女装默认）；叠合闸门对标官图"
+  },
+  {
+   "id": "vendor",
+   "label": "厂商基准",
+   "note": "按厂商号型表（男装默认）；含接袖/长袖等实物尺寸"
+  }
+ ],
+ "mode_kind": "profile",
+ "ease": [
+  "紧身",
+  "合体",
+  "宽松"
+ ],
+ "knobs": [],
+ "extras": [],
+ "gates": {
+  "fab_w": 500,
+  "max_panels": 4,
+  "min_radius": 10,
+  "invariants": [
+   {
+    "name": "lapel",
+    "half": 135
+   },
+   {
+    "name": "piece_names",
+    "expect": [
+     "后片半",
+     "前片",
+     "领缘条",
+     "系带"
+    ]
+   }
+  ],
+  "reference": [
+   {
+    "name": "像素叠合（可叠合判定）",
+    "cmd": "python verification/overlay.py front back",
+    "where": "hanfu-cad/",
+    "last": "正视 0.8793 / 背视 0.8996（2026-11-02 实测）"
+   },
+   {
+    "name": "形制核对表",
+    "cmd": "python verification/verify.py",
+    "where": "hanfu-cad/",
+    "last": "叠合根＝archive/v3 含接袖原尺寸版"
+   }
+  ],
+  "parent": null,
+  "delta": {},
+  "seam_ledger": []
+ },
+ "scripts": {
+  "pattern": [
+   "build.py",
+   "export_dxf.py",
+   "make.py",
+   "sizing.py"
+  ],
+  "verification": [
+   "fit.py",
+   "overlay.py",
+   "report.py",
+   "verify.py"
+  ]
+ },
+ "docs": [
+  "PLAN.md",
+  "README.md",
+  "archive/v3_文物原尺寸_含接袖/README.md",
+  "archive/v3_文物原尺寸_含接袖/像素比对报告.md",
+  "archive/v3_文物原尺寸_含接袖/形制核对表.md",
+  "archive/v3_文物原尺寸_含接袖/裁片清单_v3.md",
+  "archive/v6_半臂_放量092/README.md",
+  "archive/v6_半臂_放量092/变更记录.md",
+  "archive/v6_半臂_放量092/形制核对表.md",
+  "archive/v6_半臂_放量092/裁片清单.md",
+  "pattern/使用说明.md",
+  "pattern/变更记录.md",
+  "pattern/裁片清单.md",
+  "skill/garment-pattern-cad/SKILL.md",
+  "verification/像素比对报告.md",
+  "verification/尺码资料核验.md",
+  "verification/形制核对表.md"
+ ],
+ "subject": "01-无锡钱樟夫妇墓_对穿交"
+}
