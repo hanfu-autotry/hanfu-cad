@@ -152,8 +152,31 @@ def find_edge():
     raise FileNotFoundError("找不到 Edge/Chromium：可设环境变量 HANFU_EDGE")
 
 
+def registry_file():
+    """patterns.json 的**实际**位置。
+
+    源码运行：就是本目录的 patterns.json。
+    打包（frozen）：**优先用仓库里那份**（exe 在 <ws>/hanfu-studio/dist/ 下，往上找
+    同级的 patterns.json），这样新注册的版型不必重新打包就能出现在视窗里。
+    找不到才退回随包打进 _MEIPASS 的那份副本（便携单文件时才走这条）。
+
+    ⚠️ 曾经直接读 HERE（frozen 时 = _MEIPASS），结果是：打包之后新注册的版型
+    在被打开也不会出现 —— 「唐圆领」项目因此显示成空项目（2026-11-09 的事实）。
+    """
+    here = os.path.join(HERE, "patterns.json")
+    if not getattr(sys, "frozen", False):
+        return here
+    d = os.path.dirname(os.path.abspath(sys.executable))     # …/hanfu-studio/dist
+    for _ in range(5):
+        c = os.path.join(d, "patterns.json")
+        if os.path.isfile(c):
+            return c
+        d = os.path.dirname(d)
+    return resource_path("patterns.json")
+
+
 def registry():
-    with open(os.path.join(HERE, "patterns.json"), encoding="utf-8") as fh:
+    with open(registry_file(), encoding="utf-8") as fh:
         return json.load(fh)
 
 
@@ -625,7 +648,11 @@ def register_pattern(rec):
     bad = [c for c in checks if not c[1]]
     if bad:
         raise ValueError("预检未过：" + "；".join("%s（%s）" % (c[0], c[2]) for c in bad))
-    path = os.path.join(HERE, "patterns.json")
+    path = registry_file()
+    if getattr(sys, "frozen", False) and path.startswith(
+            os.path.join(getattr(sys, "_MEIPASS", "\0"), "")):
+        raise ValueError("打包运行且找不到仓库里的 patterns.json，无法登记"
+                         "（登记会写进临时解包目录，重启即丢）")
     d = json.load(open(path, encoding="utf-8"))
     item = dict(rec)
     item["custom"] = True
@@ -639,7 +666,7 @@ def register_pattern(rec):
 
 def unregister_pattern(pid):
     """注销：只允许删除 custom 登记的版型（源码不在工作室里，删登记而已）。"""
-    path = os.path.join(HERE, "patterns.json")
+    path = registry_file()
     d = json.load(open(path, encoding="utf-8"))
     keep, drop = [], None
     for p in d["patterns"]:
