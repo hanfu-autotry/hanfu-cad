@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="3240mm" height="3457mm" viewBox="0 0 3240 3457">
+<title>明制高交领 · 裁片图 · 本案</title>
+<rect width="100%%" height="100%%" fill="#ffffff"/>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#8a8a8a" stroke-width="1.1"/></marker></defs>
+<g id="OUTLINE" stroke="#1a1a1a" stroke-width="2.2" fill="none" stroke-linejoin="round">
+  <path id="前片（中缝右边）_ot" data-qty="1" d="M 420.0 550.0 C 426.9 540.0 433.4 529.7 439.5 519.2 C 445.7 508.8 451.5 498.1 456.9 487.2 C 462.3 476.3 467.4 465.3 472.1 454.1 C 476.8 442.9 481.1 431.5 485.0 420.0 L 705.0 420.0 L 970.0 423.7 L 970.0 627.3 L 748.5 685.7 C 723.7 692.3 715.6 740.2 721.7 765.2 L 819.0 1160.0 C 820.0 1190.0 620.0 1215.0 420.0 1220.0 Z"/>
+  <path id="内襟（前片镜像）_ot" data-qty="1" d="M 1720.0 550.0 C 1713.1 540.0 1706.6 529.7 1700.5 519.2 C 1694.3 508.8 1688.5 498.1 1683.1 487.2 C 1677.7 476.3 1672.6 465.3 1667.9 454.1 C 1663.2 442.9 1658.9 431.5 1655.0 420.0 L 1435.0 420.0 L 1170.0 423.7 L 1170.0 627.3 L 1391.5 685.7 C 1416.3 692.3 1424.4 740.2 1418.3 765.2 L 1321.0 1160.0 C 1320.0 1190.0 1520.0 1215.0 1720.0 1220.0 Z"/>
+  <path id="续衽（中缝左边）_ot" data-qty="1" d="M 1920.0 1098.0 L 2017.3 703.2 L 2035.3 629.9 C 2063.9 621.0 2091.8 609.6 2118.5 596.1 C 2145.2 582.5 2170.8 566.7 2194.9 548.9 C 2219.0 531.1 2241.5 511.2 2262.3 489.6 C 2283.1 468.1 2302.1 444.8 2319.0 420.0 L 2319.0 420.0 L 2319.0 1158.0 C 2119.0 1153.0 1919.0 1128.0 1920.0 1098.0 Z"/>
+  <path id="内襟续衽（续衽镜像）_ot" data-qty="1" d="M 819.0 2098.0 L 721.7 1703.2 L 703.7 1629.9 C 675.1 1621.0 647.2 1609.6 620.5 1596.1 C 593.8 1582.5 568.2 1566.7 544.1 1548.9 C 520.0 1531.1 497.5 1511.2 476.7 1489.6 C 455.9 1468.1 436.9 1444.8 420.0 1420.0 L 420.0 1420.0 L 420.0 2158.0 C 620.0 2153.0 820.0 2128.0 819.0 2098.0 Z"/>
+  <path id="后片（半·模板原样）_ot" data-qty="2" d="M 1019.0 2220.0 C 1219.0 2215.0 1419.0 2190.0 1418.0 2160.0 L 1320.7 1765.2 C 1314.6 1740.2 1322.7 1692.3 1347.5 1685.7 L 1569.0 1627.3 L 1569.0 1423.7 L 1304.0 1420.0 L 1069.0 1420.0 L 1019.0 1420.0 Z"/>
+  <path id="领缘条（高交领·全衣一条）_ot" data-qty="1" d="M 420.0 2517.1 L 1598.3 2517.1 L 1598.3 2420.0 L 420.0 2420.0 Z"/>
+</g>
+<g id="NOTCH" stroke="#c0392b" stroke-width="2.6">
+  <path d="M 410.0 540.0 L 430.0 560.0 M 410.0 560.0 L 430.0 540.0"/>
+  <path d="M 1710.0 540.0 L 1730.0 560.0 M 1710.0 560.0 L 1730.0 540.0"/>
+  <path d="M 2309.0 1148.0 L 2329.0 1168.0 M 2309.0 1168.0 L 2329.0 1148.0"/>
+  <path d="M 410.0 2148.0 L 430.0 2168.0 M 410.0 2168.0 L 430.0 2148.0"/>
+  <path d="M 1294.0 1687.2 L 1314.0 1707.2 M 1294.0 1707.2 L 1314.0 1687.2"/>
+  <path d="M 1009.0 2210.0 L 1029.0 2230.0 M 1009.0 2230.0 L 1029.0 2210.0"/>
+</g>
+<g id="MARK" stroke="#1f5fa8" stroke-width="1.6" stroke-dasharray="16 10" fill="none">
+  <path d="M 2017.3 703.2 L 2039.9 696.4 L 2062.3 688.7 L 2084.2 680.0 L 2105.8 670.3 L 2127.0 659.7 L 2147.6 648.1 L 2167.7 635.7 L 2187.3 622.4 L 2206.2 608.3 L 2224.5 593.3 L 2242.1 577.5 L 2259.1 561.0 L 2275.2 543.8 L 2290.6 525.8 L 2305.2 507.2 L 2319.0 488.0"/>
+  <path d="M 721.7 1703.2 L 699.1 1696.4 L 676.7 1688.7 L 654.8 1680.0 L 633.2 1670.3 L 612.0 1659.7 L 591.4 1648.1 L 571.3 1635.7 L 551.7 1622.4 L 532.8 1608.3 L 514.5 1593.3 L 496.9 1577.5 L 479.9 1561.0 L 463.8 1543.8 L 448.4 1525.8 L 433.8 1507.2 L 420.0 1488.0"/>
+</g>
+<g id="AUX_PATH" stroke="#8a8a8a" stroke-width="1.3" fill="none">
+</g>
+<g id="GRAIN" stroke="#1e7a4a" stroke-width="1.6">
+  <path d="M 695.0 971.2 L 695.0 668.8" marker-end="url(#ar)"/>
+  <path d="M 1445.0 971.2 L 1445.0 668.8" marker-end="url(#ar)"/>
+  <path d="M 2119.5 898.7 L 2119.5 679.3" marker-end="url(#ar)"/>
+  <path d="M 619.5 1898.7 L 619.5 1679.3" marker-end="url(#ar)"/>
+  <path d="M 1294.0 1971.2 L 1294.0 1668.8" marker-end="url(#ar)"/>
+  <path d="M 965.2 2468.5 L 1053.2 2468.5" marker-end="url(#ar)"/>
+</g>
+<g id="DIM" stroke="#8a8a8a" stroke-width="0.9" fill="#8a8a8a" font-family="sans-serif" font-size="26">
+  <path d="M 1019.0 2220.0 L 939.0 2220.0 M 1019.0 1420.0 L 939.0 1420.0" fill="none" stroke-width="0.7"/>
+  <path d="M 939.0 2220.0 L 939.0 1420.0" marker-start="url(#ar)" marker-end="url(#ar)" fill="none"/>
+  <text x="939.0" y="1820.0" text-anchor="middle" transform="rotate(-90.0 939.0 1820.0)" stroke="none">后中长 800</text>
+  <path d="M 420.0 2517.1 L 420.0 2597.1 M 1598.3 2517.1 L 1598.3 2597.1" fill="none" stroke-width="0.7"/>
+  <path d="M 420.0 2597.1 L 1598.3 2597.1" marker-start="url(#ar)" marker-end="url(#ar)" fill="none"/>
+  <text x="1009.2" y="2597.1" text-anchor="middle" transform="rotate(0.0 1009.2 2597.1)" stroke="none">领条长 1178.3</text>
+  <path d="M 1598.3 2517.1 L 1678.3 2517.1 M 1598.3 2420.0 L 1678.3 2420.0" fill="none" stroke-width="0.7"/>
+  <path d="M 1678.3 2517.1 L 1678.3 2420.0" marker-start="url(#ar)" marker-end="url(#ar)" fill="none"/>
+  <text x="1678.3" y="2468.5" text-anchor="middle" transform="rotate(-90.0 1678.3 2468.5)" stroke="none">领宽 97.1</text>
+</g>
+<g id="LABEL" fill="#1a1a1a" font-family="sans-serif">
+  <text x="420.0" y="374.0" font-size="34" font-weight="600">01 前片（中缝右边） ×1</text>
+  <text x="420.0" y="406.0" font-size="24" fill="#8a8a8a">左缘＝中缝（x=0，实线）；领口/肩/袖/侧缝/摆照旧</text>
+  <text x="1170.0" y="374.0" font-size="34" font-weight="600">02 内襟（前片镜像） ×1</text>
+  <text x="1170.0" y="406.0" font-size="24" fill="#8a8a8a">左缘＝中缝（x=0，实线）；领口/肩/袖/侧缝/摆照旧</text>
+  <text x="1920.0" y="374.0" font-size="34" font-weight="600">03 续衽（中缝左边） ×1</text>
+  <text x="1920.0" y="406.0" font-size="24" fill="#8a8a8a">右缘＝中缝；左外缘 摆角→P2→P'2→l'→P'1；虚线 l 为辅助线</text>
+  <text x="420.0" y="1374.0" font-size="34" font-weight="600">04 内襟续衽（续衽镜像） ×1</text>
+  <text x="420.0" y="1406.0" font-size="24" fill="#8a8a8a">右缘＝中缝；左外缘 摆角→P2→P'2→l'→P'1；虚线 l 为辅助线</text>
+  <text x="1019.0" y="1374.0" font-size="34" font-weight="600">05 后片（半·模板原样） ×2</text>
+  <text x="1019.0" y="1406.0" font-size="24" fill="#8a8a8a">jiexiu 模板原样；×2 镜像</text>
+  <text x="420.0" y="2374.0" font-size="34" font-weight="600">06 领缘条（高交领·全衣一条） ×1</text>
+  <text x="420.0" y="2406.0" font-size="24" fill="#8a8a8a">反推：长＝2×L弧(524.2)＋后领段(130.0)＝1178.3；宽＝AA′＝PB＝97.1（B 重合）</text>
+</g>
+<g id="BLOCK" stroke="#1a1a1a" stroke-width="1.6" fill="none">
+  <rect x="420.0" y="2727.1" width="2400.0" height="410.0"/>
+</g>
+<g font-family="sans-serif" fill="#1a1a1a">
+  <text x="460.0" y="2805.1" font-size="44" font-weight="600">明制高交领 · 裁片图 · 本案</text>
+  <text x="460.0" y="2855.1" font-size="26" fill="#8a8a8a">底片＝jiexiu 模板后片　｜　净版　mm　｜　女装</text>
+  <text x="460.0" y="2905.1" font-size="27">前片（中缝右边）×1：左缘＝中缝；领口宽 65 ／ 深 130；肩/袖/侧缝/摆沿用模板</text>
+  <text x="460.0" y="2945.1" font-size="27">后片（半·模板原样）×2：jiexiu 原样复制</text>
+  <text x="460.0" y="2985.1" font-size="27">续衽（中缝左边）×1：外缘 摆角→P2→P'2→l'→P'1，右缘＝中缝</text>
+  <text x="460.0" y="3025.1" font-size="27">领缘条（高交领·全衣一条）×1：长方形，长由领口 L 弧＋后领段反推；宽＝AA′＝PB＝97.1（B 重合）</text>
+  <text x="460.0" y="3065.1" font-size="27">接袖、三角拼接、系带、下摆绢衬条已删除；本版共 6 片</text>
+</g>
+<g id="SCALE" stroke="#1a1a1a" stroke-width="2.2" fill="none">
+  <path d="M 460.0 3097.1 L 460.0 3067.1"/>
+  <path d="M 560.0 3097.1 L 560.0 3081.1"/>
+  <path d="M 660.0 3097.1 L 660.0 3081.1"/>
+  <path d="M 760.0 3097.1 L 760.0 3081.1"/>
+  <path d="M 860.0 3097.1 L 860.0 3081.1"/>
+  <path d="M 960.0 3097.1 L 960.0 3067.1"/>
+  <path d="M 1060.0 3097.1 L 1060.0 3081.1"/>
+  <path d="M 1160.0 3097.1 L 1160.0 3081.1"/>
+  <path d="M 1260.0 3097.1 L 1260.0 3081.1"/>
+  <path d="M 1360.0 3097.1 L 1360.0 3081.1"/>
+  <path d="M 1460.0 3097.1 L 1460.0 3067.1"/>
+  <path d="M 460.0 3097.1 L 1460.0 3097.1"/>
+</g>
+<text x="460.0" y="3141.1" font-family="sans-serif" font-size="25" fill="#1a1a1a">100mm 校验标尺（1:1 打印后实测，误差应 ≤0.5mm）</text>
+</svg>

@@ -157,6 +157,20 @@ def registry():
         return json.load(fh)
 
 
+def studio_config():
+    """读 config.json（缺文件/坏 JSON 一律返回空字典，不要让界面起不来）。"""
+    try:
+        with open(os.path.join(HERE, "config.json"), encoding="utf-8") as fh:
+            return json.load(fh)
+    except Exception:
+        return {}
+
+
+def default_pattern():
+    """视窗打开时默认选中的版型 id；未配置则保持原来的「取第一个」。"""
+    return (studio_config().get("default_pattern") or "").strip() or None
+
+
 def resource_path(name):
     """源码目录或 PyInstaller 解包目录里的文件。"""
     return os.path.join(getattr(sys, "_MEIPASS", HERE), name)
@@ -917,11 +931,21 @@ def build_svg(pid, size, sex="女", overrides=None, use_cache=True, profile=None
             log("build.fail", pid=pid, size=size, rc=r.returncode,
                 stderr=(r.stderr or "")[-600:], stdout=(r.stdout or "")[-300:])
             raise RuntimeError("脚本失败：%s" % (r.stderr or r.stdout)[-500:])
-        cands = [f for f in glob.glob(os.path.join(tmp, "**", "*.svg"), recursive=True)
-                 if "拼合平铺图" not in os.path.basename(f)]
+        cands = glob.glob(os.path.join(tmp, "**", "*.svg"), recursive=True)
         if not cands:
             raise RuntimeError("没有生成 SVG")
-        svg = open(sorted(cands)[0], encoding="utf-8").read()
+        # 预览必须用「主裁片图」：优先与 .pieces.json 同名的那张。
+        # 不能按文件名字序取第一个 —— 「平铺线稿.svg」会排在「明制高交领…」前面，
+        # 结果预览显示成一堆构造线（A/A′/L2/P/B），而不是裁片。
+        stems = {os.path.splitext(os.path.basename(f))[0]
+                 for f in glob.glob(os.path.join(tmp, "**", "*.pieces.json"), recursive=True)}
+        main = [f for f in cands
+                if os.path.splitext(os.path.basename(f))[0] in stems]
+        if not main:                       # 没出 pieces.json 时，退而排除已知辅助稿
+            main = [f for f in cands
+                    if not any(k in os.path.basename(f)
+                               for k in ("平铺线稿", "拼合平铺图", "预览"))]
+        svg = open(sorted(main or cands)[0], encoding="utf-8").read()
         params = {}
     else:
         params = dict(spec["run"]["fixtures"].get(size, {}))

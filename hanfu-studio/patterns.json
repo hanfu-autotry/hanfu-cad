@@ -400,6 +400,71 @@
     "delta": {},
     "seam_ledger": []
    }
+  },
+  {
+   "id": "minggaojiaoling",
+   "label": "明制高交领（高交领·分裁）",
+   "cut": "分裁",
+   "project": "ming-gaojiaoling",
+   "script": "pattern/make.py",
+   "run": {
+    "kind": "make",
+    "argstyle": "--sex {sex} --size {size} --out {out}"
+   },
+   "sexes": [
+    "—"
+   ],
+   "sizes": {
+    "—": [
+     "本案"
+    ]
+   },
+   "modes": [
+    {
+     "id": "case",
+     "label": "图纸本案",
+     "note": "用户手绘标准图：后中845／腋深328／摆半585／起翘80／肩点570／衣身袖270／袖根208／接袖265／袖口130／前单边摆722／门襟276／开领条宽98／领缘条1178.3×97.1（反推）"
+    }
+   ],
+   "ease": [
+    "合体"
+   ],
+   "knobs": [],
+   "gates": {
+    "fab_w": 600.0,
+    "max_panels": 4,
+    "min_radius": 10,
+    "invariants": [
+     {
+      "name": "slit",
+      "width": 274.0,
+      "note": "前中开口 274 贯通（＝续衽越中 137 ×2）；前片轮廓上应有 x=±137"
+     },
+     {
+      "name": "piece_names",
+      "expect": [
+       "后片半",
+       "前片",
+       "接袖",
+       "领缘条",
+       "系带（长）",
+       "系带（短）"
+      ]
+     }
+    ],
+    "reference": [
+     {
+      "name": "拼合自检",
+      "cmd": "python pattern/check.py",
+      "where": "ming-gaojiaoling/",
+      "last": "领条 1178.3×97.1／B 重合／6 片全 PASS（2026-11-08）"
+     }
+    ],
+    "parent": null,
+    "delta": {},
+    "seam_ledger": []
+   },
+   "custom": true
   }
  ]
 }

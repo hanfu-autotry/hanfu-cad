@@ -295,7 +295,9 @@ class Studio(tk.Tk):
                         self._iid_pid[miid] = p["id"]
                         self._iid_mode[miid] = m["id"]
         target = None
-        want = select_pid or old_pid
+        # 首次打开（无历史选择）时按 config.json 的 default_pattern 选，
+        # 否则会落到 A.projects() 的第一项 = hanfu-cad 的对穿交半臂模板。
+        want = select_pid or old_pid or A.default_pattern()
         if want:
             target = self._find_iid(want)
         if not target and select_project:
@@ -316,8 +318,14 @@ class Studio(tk.Tk):
         return None
 
     def select_first(self):
+        # 启动时沿用 _fill_tree 已按 default_pattern 选好的项，别再强行选第一个
+        if self.tree.selection():
+            self.tree.see(self.tree.selection()[0])
+            return
         if self._iid_pid:
-            iid = next(iter(self._iid_pid))
+            want = A.default_pattern()
+            iid = self._find_iid(want) if want else None
+            iid = iid or next(iter(self._iid_pid))
             self.tree.selection_set(iid)
             self.tree.see(iid)
 

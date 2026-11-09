@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="3240mm" height="3160mm" viewBox="0 0 3240 3160">
+<title>明制高交领（横卧领）· 裁片图 · 本案</title>
+<rect width="100%%" height="100%%" fill="#ffffff"/>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#8a8a8a" stroke-width="1.1"/></marker></defs>
+<g id="OUTLINE" stroke="#1a1a1a" stroke-width="2.2" fill="none" stroke-linejoin="round">
+  <path id="前片（中缝右边）_ot" data-qty="1" d="M 420.0 550.0 C 431.4 539.8 442.7 529.4 453.8 518.9 C 465.0 508.3 475.9 497.6 486.8 486.8 C 497.6 475.9 508.3 465.0 518.9 453.8 C 529.4 442.7 539.8 431.4 550.0 420.0 L 705.0 420.0 L 970.0 423.7 L 970.0 627.3 L 748.5 685.7 C 723.7 692.3 715.6 740.2 721.7 765.2 L 819.0 1160.0 C 820.0 1190.0 620.0 1215.0 420.0 1220.0 Z"/>
+  <path id="内襟（前片镜像）_ot" data-qty="1" d="M 1720.0 550.0 C 1708.6 539.8 1697.3 529.4 1686.2 518.9 C 1675.0 508.3 1664.1 497.6 1653.2 486.8 C 1642.4 475.9 1631.7 465.0 1621.1 453.8 C 1610.6 442.7 1600.2 431.4 1590.0 420.0 L 1435.0 420.0 L 1170.0 423.7 L 1170.0 627.3 L 1391.5 685.7 C 1416.3 692.3 1424.4 740.2 1418.3 765.2 L 1321.0 1160.0 C 1320.0 1190.0 1520.0 1215.0 1720.0 1220.0 Z"/>
+  <path id="续衽（中缝左边）_ot" data-qty="1" d="M 1920.0 1098.0 L 2017.3 703.2 L 2036.7 624.1 C 2061.9 609.7 2086.8 594.5 2111.2 578.7 C 2135.6 562.9 2159.6 546.5 2183.2 529.4 C 2206.8 512.4 2229.9 494.7 2252.5 476.5 C 2275.2 458.2 2297.3 439.4 2319.0 420.0 L 2319.0 420.0 L 2319.0 1158.0 C 2119.0 1153.0 1919.0 1128.0 1920.0 1098.0 Z"/>
+  <path id="内襟续衽（续衽镜像）_ot" data-qty="1" d="M 819.0 2098.0 L 721.7 1703.2 L 702.3 1624.1 C 677.1 1609.7 652.2 1594.5 627.8 1578.7 C 603.4 1562.9 579.4 1546.5 555.8 1529.4 C 532.2 1512.4 509.1 1494.7 486.5 1476.5 C 463.8 1458.2 441.7 1439.4 420.0 1420.0 L 420.0 1420.0 L 420.0 2158.0 C 620.0 2153.0 820.0 2128.0 819.0 2098.0 Z"/>
+  <path id="后片（半·模板原样）_ot" data-qty="2" d="M 1019.0 2220.0 C 1219.0 2215.0 1419.0 2190.0 1418.0 2160.0 L 1320.7 1765.2 C 1314.6 1740.2 1322.7 1692.3 1347.5 1685.7 L 1569.0 1627.3 L 1569.0 1423.7 L 1304.0 1420.0 L 1069.0 1420.0 L 1019.0 1420.0 Z"/>
+</g>
+<g id="NOTCH" stroke="#c0392b" stroke-width="2.6">
+  <path d="M 410.0 540.0 L 430.0 560.0 M 410.0 560.0 L 430.0 540.0"/>
+  <path d="M 1710.0 540.0 L 1730.0 560.0 M 1710.0 560.0 L 1730.0 540.0"/>
+  <path d="M 2309.0 1148.0 L 2329.0 1168.0 M 2309.0 1168.0 L 2329.0 1148.0"/>
+  <path d="M 410.0 2148.0 L 430.0 2168.0 M 410.0 2168.0 L 430.0 2148.0"/>
+  <path d="M 1294.0 1687.2 L 1314.0 1707.2 M 1294.0 1707.2 L 1314.0 1687.2"/>
+  <path d="M 1009.0 2210.0 L 1029.0 2230.0 M 1009.0 2230.0 L 1029.0 2210.0"/>
+</g>
+<g id="MARK" stroke="#1f5fa8" stroke-width="1.6" stroke-dasharray="16 10" fill="none">
+</g>
+<g id="AUX_PATH" stroke="#8a8a8a" stroke-width="1.3" fill="none">
+</g>
+<g id="GRAIN" stroke="#1e7a4a" stroke-width="1.6">
+  <path d="M 695.0 971.2 L 695.0 668.8" marker-end="url(#ar)"/>
+  <path d="M 1445.0 971.2 L 1445.0 668.8" marker-end="url(#ar)"/>
+  <path d="M 2119.5 898.7 L 2119.5 679.3" marker-end="url(#ar)"/>
+  <path d="M 619.5 1898.7 L 619.5 1679.3" marker-end="url(#ar)"/>
+  <path d="M 1294.0 1971.2 L 1294.0 1668.8" marker-end="url(#ar)"/>
+</g>
+<g id="DIM" stroke="#8a8a8a" stroke-width="0.9" fill="#8a8a8a" font-family="sans-serif" font-size="26">
+  <path d="M 1019.0 2220.0 L 939.0 2220.0 M 1019.0 1420.0 L 939.0 1420.0" fill="none" stroke-width="0.7"/>
+  <path d="M 939.0 2220.0 L 939.0 1420.0" marker-start="url(#ar)" marker-end="url(#ar)" fill="none"/>
+  <text x="939.0" y="1820.0" text-anchor="middle" transform="rotate(-90.0 939.0 1820.0)" stroke="none">后中长 800</text>
+</g>
+<g id="LABEL" fill="#1a1a1a" font-family="sans-serif">
+  <text x="420.0" y="374.0" font-size="34" font-weight="600">01 前片（中缝右边） ×1</text>
+  <text x="420.0" y="406.0" font-size="24" fill="#8a8a8a">左缘＝中缝（x=0，实线）；领口/肩/袖/侧缝/摆照旧</text>
+  <text x="1170.0" y="374.0" font-size="34" font-weight="600">02 内襟（前片镜像） ×1</text>
+  <text x="1170.0" y="406.0" font-size="24" fill="#8a8a8a">左缘＝中缝（x=0，实线）；领口/肩/袖/侧缝/摆照旧</text>
+  <text x="1920.0" y="374.0" font-size="34" font-weight="600">03 续衽（中缝左边） ×1</text>
+  <text x="1920.0" y="406.0" font-size="24" fill="#8a8a8a">右缘＝中缝（x=0）；左外缘 摆角→P2→P'2→l'→P'1</text>
+  <text x="420.0" y="1374.0" font-size="34" font-weight="600">04 内襟续衽（续衽镜像） ×1</text>
+  <text x="420.0" y="1406.0" font-size="24" fill="#8a8a8a">右缘＝中缝（x=0）；左外缘 摆角→P2→P'2→l'→P'1</text>
+  <text x="1019.0" y="1374.0" font-size="34" font-weight="600">05 后片（半·模板原样） ×2</text>
+  <text x="1019.0" y="1406.0" font-size="24" fill="#8a8a8a">jiexiu 模板原样；×2 镜像</text>
+</g>
+<g id="BLOCK" stroke="#1a1a1a" stroke-width="1.6" fill="none">
+  <rect x="420.0" y="2430.0" width="2400.0" height="410.0"/>
+</g>
+<g font-family="sans-serif" fill="#1a1a1a">
+  <text x="460.0" y="2508.0" font-size="44" font-weight="600">明制高交领（横卧领）· 裁片图 · 本案</text>
+  <text x="460.0" y="2558.0" font-size="26" fill="#8a8a8a">底片＝jiexiu 模板后片　｜　净版　mm　｜　女装</text>
+  <text x="460.0" y="2608.0" font-size="27">前片（中缝右边）×1：左缘＝中缝；领口宽 130 ／ 深 130；肩/袖/侧缝/摆沿用模板</text>
+  <text x="460.0" y="2648.0" font-size="27">后片（半·模板原样）×2：jiexiu 原样复制</text>
+  <text x="460.0" y="2688.0" font-size="27">续衽（中缝左边）×1：外缘 摆角→P2→P'2→l'→P'1，右缘＝中缝</text>
+  <text x="460.0" y="2728.0" font-size="27">本版只出 前片／后片／续衽 三件；接袖、领缘条、三角拼接、系带、下摆衬条已删除</text>
+</g>
+<g id="SCALE" stroke="#1a1a1a" stroke-width="2.2" fill="none">
+  <path d="M 460.0 2800.0 L 460.0 2770.0"/>
+  <path d="M 560.0 2800.0 L 560.0 2784.0"/>
+  <path d="M 660.0 2800.0 L 660.0 2784.0"/>
+  <path d="M 760.0 2800.0 L 760.0 2784.0"/>
+  <path d="M 860.0 2800.0 L 860.0 2784.0"/>
+  <path d="M 960.0 2800.0 L 960.0 2770.0"/>
+  <path d="M 1060.0 2800.0 L 1060.0 2784.0"/>
+  <path d="M 1160.0 2800.0 L 1160.0 2784.0"/>
+  <path d="M 1260.0 2800.0 L 1260.0 2784.0"/>
+  <path d="M 1360.0 2800.0 L 1360.0 2784.0"/>
+  <path d="M 1460.0 2800.0 L 1460.0 2770.0"/>
+  <path d="M 460.0 2800.0 L 1460.0 2800.0"/>
+</g>
+<text x="460.0" y="2844.0" font-family="sans-serif" font-size="25" fill="#1a1a1a">100mm 校验标尺（1:1 打印后实测，误差应 ≤0.5mm）</text>
+</svg>

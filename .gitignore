@@ -43,3 +43,9 @@ desktop.ini
 # ── 回滚快照 / 素材包产物 ──
 **/_rollback_*/
 /hanfu-studio/kit/out/
+
+# 预览截图用的临时壳（html 包 svg + 截图 png），由出图流程随手生成，不入库
+**/.s/
+
+# 自建项目登记＝运行时状态（README 已注明运行时生成），且含本机绝对路径，不入库
+/hanfu-studio/projects.json
