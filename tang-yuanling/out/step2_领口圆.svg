@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g stroke="#1a1a1a" stroke-width="2" fill="none">
+  <path d="M 500.0 900.0 L 500.0 100.0"/>
+  <path d="M 101.0 100.0 L 899.0 100.0"/>
+</g>
+<circle cx="500.0" cy="100.0" r="80.0" fill="none" stroke="#8a8a8a" stroke-width="1.6" stroke-dasharray="10 7"/>
+<path d="M 420.0 100.0 L 580.0 100.0" stroke="#1f5fa8" stroke-width="1.2" stroke-dasharray="10 6" fill="none"/>
+<polyline points="420.0,100.0 420.1,103.9 420.4,107.8 420.9,111.7 421.5,115.6 422.4,119.4 423.4,123.2 424.7,127.0 426.1,130.6 427.7,134.2 429.4,137.7 431.4,141.1 433.5,144.4 435.7,147.7 438.2,150.8 440.7,153.7 443.4,156.6 446.3,159.3 449.2,161.8 452.3,164.3 455.6,166.5 458.9,168.6 462.3,170.6 465.8,172.3 469.4,173.9 473.0,175.3 476.8,176.6 480.6,177.6 484.4,178.5 488.3,179.1 492.2,179.6 496.1,179.9 500.0,180.0 503.9,179.9 507.8,179.6 511.7,179.1 515.6,178.5 519.4,177.6 523.2,176.6 527.0,175.3 530.6,173.9 534.2,172.3 537.7,170.6 541.1,168.6 544.4,166.5 547.7,164.3 550.8,161.8 553.7,159.3 556.6,156.6 559.3,153.7 561.8,150.8 564.3,147.7 566.5,144.4 568.6,141.1 570.6,137.7 572.3,134.2 573.9,130.6 575.3,127.0 576.6,123.2 577.6,119.4 578.5,115.6 579.1,111.7 579.6,107.8 579.9,103.9 580.0,100.0" fill="none" stroke="#1a1a1a" stroke-width="3.4" stroke-linejoin="round"/>
+<path d="M 571.0 91.0 L 589.0 109.0 M 571.0 109.0 L 589.0 91.0" stroke="#c0392b" stroke-width="2.0" fill="none"/>
+<path d="M 411.0 91.0 L 429.0 109.0 M 411.0 109.0 L 429.0 91.0" stroke="#c0392b" stroke-width="2.0" fill="none"/>
+<path d="M 494.0 94.0 L 506.0 106.0 M 494.0 106.0 L 506.0 94.0" stroke="#8a8a8a" stroke-width="1.6" fill="none"/>
+<text x="594.0" y="86.0" font-family="sans-serif" font-size="26" fill="#c0392b" text-anchor="start">P (80.0, 800.0)</text>
+<text x="406.0" y="86.0" font-family="sans-serif" font-size="26" fill="#c0392b" text-anchor="end">P′ (-80.0, 800.0)</text>
+<text x="590.0" y="170.0" font-family="sans-serif" font-size="26" fill="#1a1a1a" text-anchor="start">下半圆 ＝ 领口</text>
+<path d="M 584.0 164.0 L 508.0 176.0" stroke="#1a1a1a" stroke-width="1.4" fill="none"/>
+<text x="30.0" y="38.0" font-family="sans-serif" font-size="22" fill="#1a1a1a" text-anchor="start">第 2 步 · 下半圆为领口</text>
+<text x="700.0" y="38.0" font-family="sans-serif" font-size="22" fill="#8a8a8a" text-anchor="start">整圆 r = 80.0（辅助虚线）</text>
+<text x="30.0" y="225.0" font-family="sans-serif" font-size="22" fill="#8a8a8a" text-anchor="start">P 右移 30mm → P (80.0, 800.0)　P′ (-80.0, 800.0)　圆心 C (0.0, 800.0) 不动</text>
+<text x="30.0" y="255.0" font-family="sans-serif" font-size="22" fill="#8a8a8a" text-anchor="start">直径 |PP′| = 160.0　r = 80.0　领口最低点 y = 720.0</text>
+<rect x="630" y="345" width="360" height="375" fill="#ffffff" stroke="#8a8a8a" stroke-width="1.6"/>
+<text x="640.0" y="335.0" font-family="sans-serif" font-size="22" fill="#1a1a1a" text-anchor="start">领口局部 · 1.88×（粗实线为领口）</text>
+<g stroke="#1a1a1a" stroke-width="2" fill="none">
+  <path d="M 810.0 350 L 810.0 680"/>
+  <path d="M 635 520.0 L 985 520.0"/>
+</g>
+<circle cx="810.0" cy="520.0" r="150.0" fill="none" stroke="#8a8a8a" stroke-width="2.0" stroke-dasharray="14 10"/>
+<path d="M 660.0 520.0 L 960.0 520.0" stroke="#1f5fa8" stroke-width="1.6" stroke-dasharray="12 8" fill="none"/>
+<polyline points="660.0,520.0 660.2,527.4 660.7,534.7 661.6,542.0 662.9,549.3 664.5,556.4 666.5,563.5 668.8,570.5 671.4,577.4 674.4,584.1 677.7,590.7 681.3,597.1 685.3,603.3 689.5,609.4 694.0,615.2 698.9,620.7 703.9,626.1 709.3,631.1 714.8,636.0 720.6,640.5 726.7,644.7 732.9,648.7 739.3,652.3 745.9,655.6 752.6,658.6 759.5,661.2 766.5,663.5 773.6,665.5 780.7,667.1 788.0,668.4 795.3,669.3 802.6,669.8 810.0,670.0 817.4,669.8 824.7,669.3 832.0,668.4 839.3,667.1 846.4,665.5 853.5,663.5 860.5,661.2 867.4,658.6 874.1,655.6 880.7,652.3 887.1,648.7 893.3,644.7 899.4,640.5 905.2,636.0 910.7,631.1 916.1,626.1 921.1,620.7 926.0,615.2 930.5,609.4 934.7,603.3 938.7,597.1 942.3,590.7 945.6,584.1 948.6,577.4 951.2,570.5 953.5,563.5 955.5,556.4 957.1,549.3 958.4,542.0 959.3,534.7 959.8,527.4 960.0,520.0" fill="none" stroke="#1a1a1a" stroke-width="4.0" stroke-linejoin="round"/>
+<path d="M 949.0 509.0 L 971.0 531.0 M 949.0 531.0 L 971.0 509.0" stroke="#c0392b" stroke-width="2.4" fill="none"/>
+<path d="M 649.0 509.0 L 671.0 531.0 M 649.0 531.0 L 671.0 509.0" stroke="#c0392b" stroke-width="2.4" fill="none"/>
+<path d="M 803.0 513.0 L 817.0 527.0 M 803.0 527.0 L 817.0 513.0" stroke="#8a8a8a" stroke-width="1.8" fill="none"/>
+<text x="948.0" y="506.0" font-family="sans-serif" font-size="24" fill="#c0392b" text-anchor="end">P</text>
+<text x="672.0" y="506.0" font-family="sans-serif" font-size="24" fill="#c0392b" text-anchor="start">P′</text>
+<text x="824.0" y="508.0" font-family="sans-serif" font-size="22" fill="#8a8a8a" text-anchor="start">C</text>
+<text x="645.0" y="705.0" font-family="sans-serif" font-size="22" fill="#1f5fa8" text-anchor="start">直径 PP′ = 160.0　/　r = 80.0</text>
+<g stroke="#1a1a1a" stroke-width="2" fill="none">
+  <path d="M 120 960 L 120 946"/>
+  <path d="M 220 960 L 220 946"/>
+  <path d="M 320 960 L 320 946"/>
+  <path d="M 420 960 L 420 946"/>
+  <path d="M 520 960 L 520 946"/>
+  <path d="M 620 960 L 620 946"/>
+  <path d="M 120 960 L 620 960"/>
+</g>
+<text x="120.0" y="990.0" font-family="sans-serif" font-size="22" fill="#1a1a1a" text-anchor="start">100mm 校验标尺</text>
+</svg>

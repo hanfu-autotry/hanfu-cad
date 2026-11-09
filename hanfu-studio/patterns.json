@@ -679,6 +679,172 @@
    },
    "custom": true,
    "knob_note": "袖根是输入、腕口是派生：改袖根会让腕口跟着直线袖底走（当前算得 131.3，标准图 130）。后片由接袖版（谱系父）的构造直接生成，不再读模板坐标。"
+  },
+  {
+   "id": "tangyuanling",
+   "label": "唐圆领（分裁·本案）",
+   "cut": "分裁",
+   "project": "tang-yuanling",
+   "script": "pattern/make.py",
+   "run": {
+    "kind": "make",
+    "argstyle": "--sex {sex} --size {size} --out {out}"
+   },
+   "sexes": [
+    "—"
+   ],
+   "sizes": {
+    "—": [
+     "本案"
+    ]
+   },
+   "modes": [
+    {
+     "id": "case",
+     "label": "本案",
+     "note": "逐步绘图定稿：P/P' 直径圆取下半圆为领口；续衽左缘斜率可调；领子三段连续不闭合；四片裁片（后片按模板后片半 ×2，不挖领）"
+    }
+   ],
+   "ease": [
+    "合体"
+   ],
+   "knobs": [
+    {
+     "key": "P_SHIFT",
+     "label": "领口点右移",
+     "min": 0,
+     "max": 80,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "COLLAR_W",
+     "label": "领宽",
+     "min": 30,
+     "max": 120,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "COLLAR_SPLIT",
+     "label": "P′ 在 AB 上的位置",
+     "min": 0.2,
+     "max": 0.8,
+     "step": 0.05,
+     "unit": ""
+    },
+    {
+     "key": "XUREN_TILT_DEG",
+     "label": "续衽左缘倾角",
+     "min": 5,
+     "max": 21,
+     "step": 1,
+     "unit": "°"
+    }
+   ],
+   "gates": {
+    "fab_w": 600.0,
+    "max_panels": 4,
+    "min_radius": 10,
+    "invariants": [],
+    "reference": [
+     {
+      "name": "四片裁片自检",
+      "cmd": "python pattern/step6.py",
+      "where": "tang-yuanling/",
+      "last": "领条/前片原生/前片续衽/后片（半·模板原样）×2（2026-11-09，出图走 sheet.write_sheet）"
+     }
+    ],
+    "parent": null,
+    "delta": {},
+    "seam_ledger": []
+   },
+   "product": "四片：领条（三段连续开放长条）／前片原生／前片续衽／后片（半·模板原样）×2；另有平铺预览、领子完整数据、续衽分段积分数据",
+   "knob_note": "照 ming-gaojiaoling 的 make 契约；只暴露改动后几何确实联动的四个量，CASE 里的模板只读参数不挂滑杆。",
+   "custom": true
+  },
+  {
+   "id": "zhilingduijin",
+   "label": "直领对襟（分裁·本案）",
+   "cut": "分裁",
+   "project": "hanfu-zhidui",
+   "script": "pattern/make.py",
+   "run": {
+    "kind": "make",
+    "argstyle": "--sex {sex} --size {size} --out {out}"
+   },
+   "sexes": [
+    "—"
+   ],
+   "sizes": {
+    "—": [
+     "本案"
+    ]
+   },
+   "modes": [
+    {
+     "id": "case",
+     "label": "本案",
+     "note": "逐步绘图定稿：先只留领条与后片、后片复制成前片；再按通裁·原始直领 V1 开领宽 160、装领条（压边 40，中间露出后片 80，后领立起 77）"
+    }
+   ],
+   "ease": [
+    "合体"
+   ],
+   "knobs": [
+    {
+     "key": "NECK_W",
+     "label": "开领宽",
+     "min": 80,
+     "max": 240,
+     "step": 10,
+     "unit": "mm"
+    },
+    {
+     "key": "COLLAR_W",
+     "label": "领条宽",
+     "min": 60,
+     "max": 140,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "LAPEL_FOLD",
+     "label": "领条压边（可见）",
+     "min": 20,
+     "max": 60,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "NECK_H",
+     "label": "领条立起高",
+     "min": 40,
+     "max": 120,
+     "step": 5,
+     "unit": "mm"
+    }
+   ],
+   "gates": {
+    "fab_w": 600.0,
+    "max_panels": 4,
+    "min_radius": 10,
+    "invariants": [],
+    "reference": [
+     {
+      "name": "裁片自检",
+      "cmd": "python pattern/step2.py",
+      "where": "hanfu-zhidui/",
+      "last": "领条 1803.9×95 ／ 开领宽 160 ／ 压边 40 ／ 立起 77（2026-11-09）"
+     }
+    ],
+    "parent": null,
+    "delta": {},
+    "seam_ledger": []
+   },
+   "product": "三片：领条（全衣一条，长＝2×前襟＋开领宽）／前片（开领 80）／后片（模板原样）；另有正面平铺线稿",
+   "knob_note": "领条长由 2×前襟剪口边长＋开领宽 现算，不挂旋钮；折转段顶半宽照 V1 固定 44.5。",
+   "custom": true
   }
  ]
 }

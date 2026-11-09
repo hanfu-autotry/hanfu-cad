@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="3240mm" height="2425mm" viewBox="0 0 3240 2425">
+<title>直领对襟 · 第 1 步 · 只留领条与后片</title>
+<rect width="100%%" height="100%%" fill="#ffffff"/>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#8a8a8a" stroke-width="1.1"/></marker></defs>
+<g id="OUTLINE" stroke="#1a1a1a" stroke-width="2.2" fill="none" stroke-linejoin="round">
+  <path id="领条_ot" data-qty="1" d="M 420.0 460.0 L 2270.0 460.0 L 2270.0 420.0 L 420.0 420.0 Z"/>
+  <path id="后片_ot" data-qty="2" d="M 420.0 1485.0 C 620.0 1480.0 820.0 1455.0 995.0 1425.0 L 855.1 1038.8 C 847.1 1016.8 852.5 969.6 875.6 965.1 C 1004.1 940.3 1145.2 896.7 1226.4 866.0 C 1235.8 862.4 1245.0 848.8 1245.0 838.7 L 1245.0 683.7 C 1245.0 675.0 1233.7 663.5 1225.0 663.4 L 980.0 660.0 L 515.0 660.0 L 420.0 660.0 Z"/>
+  <path id="前片_ot" data-qty="2" d="M 1445.0 1485.0 C 1645.0 1480.0 1845.0 1455.0 2020.0 1425.0 L 1880.1 1038.8 C 1872.1 1016.8 1877.5 969.6 1900.6 965.1 C 2029.1 940.3 2170.2 896.7 2251.4 866.0 C 2260.8 862.4 2270.0 848.8 2270.0 838.7 L 2270.0 683.7 C 2270.0 675.0 2258.7 663.5 2250.0 663.4 L 2005.0 660.0 L 1540.0 660.0 L 1445.0 660.0 Z"/>
+</g>
+<g id="NOTCH" stroke="#c0392b" stroke-width="2.6">
+  <path d="M 1235.0 450.0 L 1255.0 470.0 M 1235.0 470.0 L 1255.0 450.0"/>
+  <path d="M 1435.0 450.0 L 1455.0 470.0 M 1435.0 470.0 L 1455.0 450.0"/>
+  <path d="M 821.2 963.0 L 841.2 983.0 M 821.2 983.0 L 841.2 963.0"/>
+  <path d="M 410.0 1475.0 L 430.0 1495.0 M 410.0 1495.0 L 430.0 1475.0"/>
+  <path d="M 1846.2 963.0 L 1866.2 983.0 M 1846.2 983.0 L 1866.2 963.0"/>
+  <path d="M 1435.0 1475.0 L 1455.0 1495.0 M 1435.0 1495.0 L 1455.0 1475.0"/>
+</g>
+<g id="MARK" stroke="#1f5fa8" stroke-width="1.6" stroke-dasharray="16 10" fill="none">
+</g>
+<g id="AUX_PATH" stroke="#8a8a8a" stroke-width="1.3" fill="none">
+</g>
+<g id="GRAIN" stroke="#1e7a4a" stroke-width="1.6">
+  <path d="M 1301.0 440.0 L 1389.0 440.0" marker-end="url(#ar)"/>
+  <path d="M 832.5 1299.4 L 832.5 845.6" marker-end="url(#ar)"/>
+  <path d="M 1857.5 1299.4 L 1857.5 845.6" marker-end="url(#ar)"/>
+</g>
+<g id="DIM" stroke="#8a8a8a" stroke-width="0.9" fill="#8a8a8a" font-family="sans-serif" font-size="26">
+  <path d="M 420.0 460.0 L 420.0 540.0 M 2270.0 460.0 L 2270.0 540.0" fill="none" stroke-width="0.7"/>
+  <path d="M 420.0 540.0 L 2270.0 540.0" marker-start="url(#ar)" marker-end="url(#ar)" fill="none"/>
+  <text x="1345.0" y="540.0" text-anchor="middle" transform="rotate(0.0 1345.0 540.0)" stroke="none">领条长 1850</text>
+  <path d="M 2270.0 460.0 L 2350.0 460.0 M 2270.0 420.0 L 2350.0 420.0" fill="none" stroke-width="0.7"/>
+  <path d="M 2350.0 460.0 L 2350.0 420.0" marker-start="url(#ar)" marker-end="url(#ar)" fill="none"/>
+  <text x="2350.0" y="440.0" text-anchor="middle" transform="rotate(-90.0 2350.0 440.0)" stroke="none">宽 40</text>
+  <path d="M 420.0 1485.0 L 340.0 1485.0 M 420.0 660.0 L 340.0 660.0" fill="none" stroke-width="0.7"/>
+  <path d="M 340.0 1485.0 L 340.0 660.0" marker-start="url(#ar)" marker-end="url(#ar)" fill="none"/>
+  <text x="340.0" y="1072.5" text-anchor="middle" transform="rotate(-90.0 340.0 1072.5)" stroke="none">后中长 825</text>
+  <path d="M 1445.0 1485.0 L 1365.0 1485.0 M 1445.0 660.0 L 1365.0 660.0" fill="none" stroke-width="0.7"/>
+  <path d="M 1365.0 1485.0 L 1365.0 660.0" marker-start="url(#ar)" marker-end="url(#ar)" fill="none"/>
+  <text x="1365.0" y="1072.5" text-anchor="middle" transform="rotate(-90.0 1365.0 1072.5)" stroke="none">前襟 825</text>
+</g>
+<g id="LABEL" fill="#1a1a1a" font-family="sans-serif">
+  <text x="420.0" y="374.0" font-size="34" font-weight="600">01 领条 ×1</text>
+  <text x="420.0" y="406.0" font-size="24" fill="#8a8a8a">后领段 160＝开领宽</text>
+  <text x="420.0" y="614.0" font-size="34" font-weight="600">02 后片 ×2</text>
+  <text x="420.0" y="646.0" font-size="24" fill="#8a8a8a">模板后片半原样</text>
+  <text x="1445.0" y="614.0" font-size="34" font-weight="600">03 前片 ×2</text>
+  <text x="1445.0" y="646.0" font-size="24" fill="#8a8a8a">＝后片复制，几何相同</text>
+</g>
+<g id="BLOCK" stroke="#1a1a1a" stroke-width="1.6" fill="none">
+  <rect x="420.0" y="1695.0" width="2400.0" height="410.0"/>
+</g>
+<g font-family="sans-serif" fill="#1a1a1a">
+  <text x="460.0" y="1773.0" font-size="44" font-weight="600">直领对襟 · 第 1 步 · 只留领条与后片</text>
+  <text x="460.0" y="1823.0" font-size="26" fill="#8a8a8a">底＝hanfu-cad 对穿交半臂裁片（只读）　｜　净版　mm　｜　几何未改</text>
+  <text x="460.0" y="1873.0" font-size="27">① 在现有模板基础上移除所有，只留领条（＝模板领缘条 1804×95）与后片（＝模板后片半）</text>
+  <text x="460.0" y="1913.0" font-size="27">② 后片复制一份，③ 复制件命名为前片 —— 两者几何完全相同，没有做任何修改</text>
+  <text x="460.0" y="1953.0" font-size="27">本步共 3 种片：领条 ×1 ／ 后片 ×2 ／ 前片 ×2</text>
+  <text x="460.0" y="1993.0" font-size="27">已移除：模板前片、三角拼接 A/B、系带、下摆绢衬条</text>
+</g>
+<g id="SCALE" stroke="#1a1a1a" stroke-width="2.2" fill="none">
+  <path d="M 460.0 2065.0 L 460.0 2035.0"/>
+  <path d="M 560.0 2065.0 L 560.0 2049.0"/>
+  <path d="M 660.0 2065.0 L 660.0 2049.0"/>
+  <path d="M 760.0 2065.0 L 760.0 2049.0"/>
+  <path d="M 860.0 2065.0 L 860.0 2049.0"/>
+  <path d="M 960.0 2065.0 L 960.0 2035.0"/>
+  <path d="M 1060.0 2065.0 L 1060.0 2049.0"/>
+  <path d="M 1160.0 2065.0 L 1160.0 2049.0"/>
+  <path d="M 1260.0 2065.0 L 1260.0 2049.0"/>
+  <path d="M 1360.0 2065.0 L 1360.0 2049.0"/>
+  <path d="M 1460.0 2065.0 L 1460.0 2035.0"/>
+  <path d="M 460.0 2065.0 L 1460.0 2065.0"/>
+</g>
+<text x="460.0" y="2109.0" font-family="sans-serif" font-size="25" fill="#1a1a1a">100mm 校验标尺（1:1 打印后实测，误差应 ≤0.5mm）</text>
+</svg>
