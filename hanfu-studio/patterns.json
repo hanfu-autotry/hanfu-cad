@@ -33,7 +33,72 @@
      "2XL"
     ]
    },
-   "knobs": [],
+   "knobs": [
+    {
+     "key": "L",
+     "label": "衣长（后中）",
+     "min": 700,
+     "max": 1050,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "W_HEM",
+     "label": "平铺摆宽",
+     "min": 700,
+     "max": 1800,
+     "step": 10,
+     "unit": "mm"
+    },
+    {
+     "key": "OV",
+     "label": "交叠（越中量）",
+     "min": 120,
+     "max": 450,
+     "step": 10,
+     "unit": "mm"
+    },
+    {
+     "key": "Y_ARM",
+     "label": "袖根高（腋点高）",
+     "min": 380,
+     "max": 660,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "SLEEVE_LEN",
+     "label": "衣身袖长",
+     "min": 180,
+     "max": 340,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "CUFF",
+     "label": "袖口宽",
+     "min": 120,
+     "max": 300,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "NECK",
+     "label": "领口宽（通口）",
+     "min": 120,
+     "max": 280,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "COL_W",
+     "label": "领缘条宽",
+     "min": 30,
+     "max": 80,
+     "step": 2,
+     "unit": "mm"
+    }
+   ],
    "modes": [
     {
      "id": "artifact",
@@ -89,7 +154,8 @@
     "parent": null,
     "delta": {},
     "seam_ledger": []
-   }
+   },
+   "knob_note": "参数级调版：左侧先选号型/基准/放量（那套数是版型自己算的），右边滑杆在同一套数上覆写，不换程序、不动几何算法。"
   },
   {
    "id": "jiexiu",
@@ -122,7 +188,88 @@
      "2XL"
     ]
    },
-   "knobs": [],
+   "knobs": [
+    {
+     "key": "L",
+     "label": "衣长（后中）",
+     "min": 700,
+     "max": 1050,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "W_HEM",
+     "label": "平铺摆宽",
+     "min": 700,
+     "max": 1800,
+     "step": 10,
+     "unit": "mm"
+    },
+    {
+     "key": "OV",
+     "label": "交叠（越中量）",
+     "min": 120,
+     "max": 450,
+     "step": 10,
+     "unit": "mm"
+    },
+    {
+     "key": "Y_ARM",
+     "label": "袖根高（腋点高）",
+     "min": 380,
+     "max": 660,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "SLEEVE_LEN",
+     "label": "衣身袖长（已砍半）",
+     "min": 60,
+     "max": 220,
+     "step": 2,
+     "unit": "mm"
+    },
+    {
+     "key": "CUFF",
+     "label": "袖口宽",
+     "min": 120,
+     "max": 300,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "NECK",
+     "label": "预开领宽（通口）",
+     "min": 60,
+     "max": 280,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "COL_W",
+     "label": "领缘条宽",
+     "min": 30,
+     "max": 80,
+     "step": 2,
+     "unit": "mm"
+    },
+    {
+     "key": "JS",
+     "label": "接袖长",
+     "min": 100,
+     "max": 560,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "WRIST",
+     "label": "腕口宽",
+     "min": 90,
+     "max": 200,
+     "step": 5,
+     "unit": "mm"
+    }
+   ],
    "modes": [
     {
      "id": "artifact",
@@ -172,7 +319,8 @@
     "parent": null,
     "delta": {},
     "seam_ledger": []
-   }
+   },
+   "knob_note": "参数级调版：左侧先选号型/基准/放量（那套数是版型自己算的），右边滑杆在同一套数上覆写，不换程序、不动几何算法。"
   },
   {
    "id": "shenyi",
@@ -464,7 +612,8 @@
     "delta": {},
     "seam_ledger": []
    },
-   "custom": true
+   "custom": true,
+   "no_knob_note": "单件定制版：尺寸＝用户手绘标准图（CASE 在 pattern/geo.py），裁片几何按 jiexiu 模板片出。\n命令行可调：make.py --params '{\"L\":860}'（覆盖 CASE 数值项）；滑杆要等 CASE 接进 pieces 后再开。"
   }
  ]
 }

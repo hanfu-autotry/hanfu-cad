@@ -42,9 +42,15 @@ COL_W = 70.0          # 领缘宽（厂商实测 7cm）
 
 # ── 本版（接袖版）固定量 ──────────────────────────────────────────
 HEM_ADD   = 30.0      # 衣长略加（下摆加长，腋点不动）
-BODY_SL_RATIO = 0.377 # 衣身袖长 / (通袖半 − 肩点)；其余归接袖。M：0.377×530 = 200
+# 衣身袖长 / (通袖半 − 肩点)；其余归接袖。**总袖长（肩点→腕口）恒定，只改两段怎么分**。
+# 2026-11-09 用户定：衣身袖长砍半（原 0.377 → 0.1885），砍掉的半段全部挪给接袖。
+# M：0.1885×530 = 100 衣身 + 430 接袖（原 200 + 330），总袖仍是 530。
+BODY_SL_RATIO = 0.1885
 NECK_PRE  = 100.0     # 预开领总宽（前后片各让 NECK/2 = 50）
 WRIST_DROP = 30.0     # 掩腕袖口 = 袖口 - 30（M：160 → 130）
+ART_JS_BASE = 265.0   # 文物基准的接袖长。独立常量：原 build 默认值 265，
+                      # 不是从 BASE["SLEEVE_LEN"] 推的（两者碰巧都是 265，别合并）
+ART_WRIST_BASE = 130.0  # 文物基准的腕口宽（原 build 默认值，本次不跟着袖口联动，保持口径不变）
 
 BASE_H, BASE_B = 160.0, 84.0     # 女中间体（板型锚点）
 
@@ -145,6 +151,7 @@ def _artifact_params(sex="女", size=None, height=None, bust=None, ease="合体"
     X = BASE["X_ARM"] + db * GRADE["X_per_b"] + ex * 0.357
     C = BASE["CUFF"] + db * GRADE["C_per_b"] + ex * 0.0
     OV = BASE["OV"] + db * GRADE["OV_per_b"] + ex * 0.12
+    SL = BASE["SLEEVE_LEN"] + db * GRADE["S_per_b"]   # 原衣身袖长（未砍半）
 
     p = {
         "COL_W": 40.0,
@@ -154,8 +161,10 @@ def _artifact_params(sex="女", size=None, height=None, bust=None, ease="合体"
         "X_ARM": round(X * k, 1),
         "Y_ARM": round(BASE["Y_ARM"] + db * GRADE["Y_per_b"] + ex * 0.25, 1),
         "X_SHLD": round(BASE["X_SHLD"] + db * GRADE["SH_per_b"], 1),
-        "SLEEVE_LEN": round(BASE["SLEEVE_LEN"] + db * GRADE["S_per_b"], 1),
+        "SLEEVE_LEN": round(SL / 2.0, 1),                        # 衣身袖长砍半
+        "JS": round(ART_JS_BASE + SL / 2.0, 1),                  # 砍掉的半段挪给接袖 → 总袖长不变
         "CUFF": round(C, 1),
+        "WRIST": ART_WRIST_BASE,
         "NECK": round(BASE["NECK"] + db * GRADE["N_per_b"], 1),
         "OV": round(OV * k, 1),
         "HEM_RISE": BASE["HEM_RISE"],
@@ -170,7 +179,7 @@ def sleeve_root(p):
     xs, sl, js = p["X_SHLD"], p["SLEEVE_LEN"], p.get("JS", 0.0)
     t = math.tan(math.radians(p.get("TILT_DEG", 0.8)))
     xjs = xs + sl + js
-    wrist = p.get("WRIST", p["CUFF"])          # artifact 档没有 WRIST → 掩腕袖口＝袖口（同 summary）
+    wrist = p.get("WRIST", p["CUFF"])          # 文物/厂商两档都给了 WRIST；缺省才退回袖口
     yjb = p["L"] - (xjs - xs) * t - wrist
     ang = math.atan2(yjb - p["Y_ARM"], xjs - xs)
     yseam = p["Y_ARM"] + sl * math.tan(ang)

@@ -18,10 +18,11 @@ import math, os, json
 
 # ---- 尺寸参数：可由环境变量 HANFU_PARAMS(JSON) 覆盖，供 sizing.py 一键换码 ----
 # 默认值 = 厂商实物表 男 M（接袖版），单独运行本文件即可出这一码
+# 2026-11-09：衣身袖长砍半（265 → 132.5），砍掉的半段挪给接袖（265 → 397.5），总袖长 530 不变
 _DEF = dict(L=800.0, W_HEM=798.0, EASE=1.0, X_ARM=285.0, Y_ARM=522.8,
-            X_SHLD=285.0, SLEEVE_LEN=265.0, CUFF=160.0, NECK=100.0,
+            X_SHLD=285.0, SLEEVE_LEN=132.5, CUFF=160.0, NECK=100.0,
             OV=270.0, HEM_RISE=60.0, TILT_DEG=0.8, COL_W=70.0,
-            JS=265.0, WRIST=130.0)
+            JS=397.5, WRIST=130.0)
 P = dict(_DEF)
 P.update(json.loads(os.environ.get("HANFU_PARAMS", "{}")))
 

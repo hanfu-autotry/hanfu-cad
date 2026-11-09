@@ -440,10 +440,12 @@ class Studio(tk.Tk):
         self.ease = self.ease_var.get() or None
         self.mode_note.configure(text=self._mode_note())
         A.log("ui.mode", pid=self.spec["id"], profile=self.profile or "-", ease=self.ease or "-")
-        if self.spec.get("mode_kind") == "fixture":
-            self.overrides = {}          # 换夹具 = 换一整套参数，别把上一个夹具的覆盖带过去
-            self._build_params()         # 滑杆要跟着夹具重建（否则 V3→V2 还显示 195）
-        self.render()
+        # 换基准/换夹具/换放量 = 换一整套参数：覆盖清掉，滑杆按新基准重建
+        # （分裁的 artifact↔vendor、通裁的 V3→V2 都要重算，否则滑杆还停在旧值）
+        self.overrides = {}
+        self._build_params()             # 内部会 render
+        if self._loading:
+            self.render()
 
     def _load_sizes(self):
         sizes = self.spec["sizes"][self.sex]
@@ -460,7 +462,8 @@ class Studio(tk.Tk):
             return
         self.sex = self.sex_var.get()
         self._load_sizes()
-        self.render()
+        self.overrides = {}
+        self._build_params()        # 分裁的滑杆基准随性别变（女 artifact / 男 vendor）
 
     def on_size(self):
         if not self.spec:
@@ -475,47 +478,140 @@ class Studio(tk.Tk):
         for w in self.param_frame.winfo_children():
             w.destroy()
         self.knobs = {}
+        self.reset_btn = None          # 旧控件已 destroy，别让 _update_reset_state 摸到它
+        self.changed_lbl = None
         knobs = self.spec.get("knobs") or []
         if not knobs:
             tk.Label(self.param_frame,
-                     text="这个版型的参数由号型表决定（左侧选号型）。\n"
-                          "几何与放码都在它自己的程序里。",
+                     text=self.spec.get("no_knob_note") or
+                          ("这个版型的参数由号型表决定（左侧选号型）。\n"
+                           "几何与放码都在它自己的程序里。"),
                      font=FONT, bg=PANEL, fg=MUTE, justify="left", wraplength=280
                      ).pack(anchor="w", pady=6)
             if not self._loading:
                 self.render()
             return
-        base = dict(self.spec["run"].get("fixtures", {}).get(self.size, {}))
+        base = self._param_base()
+        self._base = base              # 拖滑杆/重置都用这一份，别每次再起子进程问
+        # 只给「子程序真的给了这个键」的参数挂滑杆：
+        # 缺键时若还画一根滑杆，初值只能取中点，一拖就把假值发给子程序 → 报未知参数、图不动。
+        all_knobs = knobs
+        knobs = [k for k in knobs if k["key"] in base]
+        if not knobs:
+            tk.Label(self.param_frame,
+                     text="这个版型当前基准没有给出可调参数（%s）。\n"
+                          "左侧换号型/基准/放量再试。" % "、".join(k["key"] for k in all_knobs),
+                     font=FONT, bg=PANEL, fg=MUTE, justify="left", wraplength=280
+                     ).pack(anchor="w", pady=6)
+            if not self._loading:
+                self.render()
+            return
+        note = self.spec.get("knob_note")
+        if note:
+            tk.Label(self.param_frame, text=note, font=FONT, bg=PANEL, fg=MUTE,
+                     justify="left", wraplength=280).pack(anchor="w", pady=(0, 4))
+        self._knob_defs = {k["key"]: k for k in knobs}
+        bar = tk.Frame(self.param_frame, bg=PANEL)
+        bar.pack(fill="x", pady=(0, 2))
+        self.reset_btn = _btn(bar, "重置为默认值", self._reset_params,
+                              disabledforeground=MUTE)
+        self.reset_btn.pack(side="left")
+        self.changed_lbl = tk.Label(bar, text="", font=FONT_S, bg=PANEL, fg=MUTE)
+        self.changed_lbl.pack(side="left", padx=(8, 0))
+        self._update_reset_state()
         for k in knobs:
-            var = tk.DoubleVar(value=base.get(k["key"], (k["min"] + k["max"]) / 2))
+            v0 = min(max(float(base[k["key"]]), float(k["min"])), float(k["max"]))
+            var = tk.DoubleVar(value=v0)
             self.knobs[k["key"]] = var
             box = tk.Frame(self.param_frame, bg=PANEL)
             box.pack(fill="x", pady=(8, 0))
             top = tk.Frame(box, bg=PANEL)
             top.pack(fill="x")
-            tk.Label(top, text=k["label"], font=FONT, bg=PANEL, fg=MUTE).pack(side="left")
+            txt = k["label"] + (" %s" % k["unit"] if k.get("unit") else "")
+            tk.Label(top, text=txt, font=FONT, bg=PANEL, fg=MUTE).pack(side="left")
             ent = tk.Entry(top, textvariable=var, font=FONT, bg=PANEL2, fg=INK, bd=0,
                            width=8, justify="right", insertbackground=INK)
             ent.pack(side="right")
             ent.bind("<Return>", lambda e, key=k["key"]: self._on_param(key))
             ent.bind("<FocusOut>", lambda e, key=k["key"]: self._on_param(key))
+            step = k.get("step") or 1
             s = ttk.Scale(box, from_=k["min"], to=k["max"], variable=var,
-                          command=lambda v, key=k["key"]: self._on_slider(key))
+                          command=lambda v, key=k["key"]: self._on_slider(key, step))
             s.pack(fill="x", pady=(2, 0))
         if not self._loading:
             self.render()
 
-    def _on_slider(self, key):
-        self._on_param(key, debounce=True)
+    def _reset_params(self):
+        """一键回到号型/基准/放量算出来的默认值（清空所有旋钮覆盖）。"""
+        if not self.spec:
+            return
+        if self._debounce:
+            self.after_cancel(self._debounce)
+            self._debounce = None
+        self.overrides = {}
+        base = getattr(self, "_base", None) or self._param_base()
+        for key, var in self.knobs.items():
+            v = base.get(key)
+            if v is None:
+                continue
+            d = (getattr(self, "_knob_defs", None) or {}).get(key) or {}
+            lo, hi = float(d.get("min", v)), float(d.get("max", v))
+            var.set(min(max(float(v), lo), hi))
+        A.log("ui.params.reset", pid=self.spec["id"], size=self.size, sex=self.sex)
+        self._update_reset_state()
+        self.render()
 
-    def _on_param(self, key, debounce=True):
+    def _update_reset_state(self):
+        """重置按钮只在有改动时可点；旁边显示改了几项。"""
+        btn = getattr(self, "reset_btn", None)
+        if btn is None:
+            return
+        n = len(self.overrides)
+        btn.configure(state=("normal" if n else "disabled"))
+        lbl = getattr(self, "changed_lbl", None)
+        if lbl is not None:
+            lbl.configure(text=("已改 %d 项" % n) if n else "＝号型默认值",
+                          fg=(WARN if n else MUTE))
+
+    def _param_base(self):
+        """滑杆初值＝子程序自己算出来的参数表。
+
+        分裁（make）调 `make.py … --dump-params` 现问；通裁（params）取 fixtures。
+        这样父程序不另存尺码表，子程序改档差时界面自动跟上。
+        """
+        try:
+            return A.probe_params(self.spec["id"], self.size, self.sex,
+                                  self.profile, self.ease)
+        except Exception as e:
+            A.log_exc("probe.ui_fail", e, pid=self.spec["id"], size=self.size)
+            return dict(self.spec["run"].get("fixtures", {}).get(self.size, {}))
+
+    def _on_slider(self, key, step=1):
+        """滑杆拖动：按 step 吸到整数值（mm），再延迟出图。"""
+        v = self.knobs.get(key)
+        val = None
+        if v is not None and step:
+            try:
+                val = float(int(round(float(v.get()) / step)) * step)
+            except Exception:
+                val = None
+        self._on_param(key, debounce=True, value=val)
+
+    def _on_param(self, key, debounce=True, value=None):
         v = self.knobs.get(key)
         if v is None:
             return
         try:
-            self.overrides[key] = float(v.get())
+            cur = float(v.get()) if value is None else float(value)
         except Exception:
             return
+        # 拖回默认值＝没改：不留在 overrides 里（否则"已改 N 项"永远挂着）
+        base = getattr(self, "_base", None) or self._param_base()
+        if key in base and abs(cur - float(base[key])) < 1e-6:
+            self.overrides.pop(key, None)
+        else:
+            self.overrides[key] = cur
+        self._update_reset_state()
         if self._debounce:
             self.after_cancel(self._debounce)
         self._debounce = self.after(220, self.render) if debounce else self.render()
@@ -2209,7 +2305,7 @@ class Studio(tk.Tk):
         A.log("ui.handoff.done", file=fn)
 
     def _reverse_copy(self):
-        cur = dict(self.spec["run"].get("fixtures", {}).get(self.size, {}))
+        cur = self._param_base()
         cur.update(self.overrides)
         self.clipboard_clear()
         self.clipboard_append(json.dumps(cur, ensure_ascii=False, indent=1))

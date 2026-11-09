@@ -870,13 +870,82 @@ def default_profile(sex):
     return "artifact" if sex == "女" else "vendor"
 
 
-def _args(spec, sex, size, out, profile=None, ease=None):
-    """按注册表的 argstyle 拼命令行——这是父程序与子程序之间唯一的接口。"""
+def _args(spec, sex, size, out, profile=None, ease=None, overrides=None):
+    """按注册表的 argstyle 拼命令行——这是父程序与子程序之间唯一的接口。
+
+    overrides（旋钮）不占占位符：统一走 `--params <json>`，子程序在
+    「号型/夹具推导出来的值」上覆写。分裁（make）与通裁（params）因此同一套调参口径。
+    """
     style = spec["run"].get("argstyle") or "--sex {sex} --size {size} --out {out}"
     fmt = dict(sex=sex, size=size, out=out,
                profile=profile or default_profile(sex),
                ease=ease or "合体")
-    return [a for a in style.format(**fmt).split() if a]
+    args = [a for a in style.format(**fmt).split() if a]
+    if overrides:
+        args += ["--params", json.dumps({k: float(v) for k, v in overrides.items()},
+                                        ensure_ascii=False)]
+    return args
+
+
+_PROBE_CACHE = {}
+
+
+def _probe_args(spec, sex, size, profile=None, ease=None):
+    """在 argstyle 基础上去掉 --out，追加 --dump-params（只问参数，不出图）。"""
+    style = spec["run"].get("argstyle") or "--sex {sex} --size {size} --out {out}"
+    fmt = dict(sex=sex, size=size, profile=profile or default_profile(sex),
+               ease=ease or "合体", out="-")
+    toks = [a for a in style.format(**fmt).split() if a]
+    args, i = [], 0
+    while i < len(toks):
+        if toks[i] == "--out":
+            i += 2
+            continue
+        args.append(toks[i])
+        i += 1
+    return args + ["--dump-params"]
+
+
+def probe_params(pid, size, sex="女", profile=None, ease=None):
+    """问子程序：这个号型/基准/放量下，参数表是什么。
+
+    分裁（make）走 `make.py … --dump-params`；通裁（params）直接取 fixtures。
+    界面滑杆的初值＝这份参数，所以滑杆永远从版型自己的真实值起步，
+    不在 studio 里另写一套尺码表（共享层不掺服饰语义）。
+    """
+    spec = spec_of(pid)
+    run = spec.get("run") or {}
+    if run.get("kind") != "make":
+        return dict(run.get("fixtures", {}).get(size, {}))
+    key = (pid, size, sex, profile or "", ease or "")
+    if key in _PROBE_CACHE:
+        return dict(_PROBE_CACHE[key])
+    ws = ws_root()
+    proj = os.path.join(ws, spec["project"])
+    script = os.path.join(proj, spec["script"])
+    args = _probe_args(spec, sex, size, profile, ease)
+    t0 = time.time()
+    r = _run([PY, script] + args, cwd=proj, env=child_env(), capture_output=True,
+             text=True, encoding="utf-8", errors="replace", timeout=120)
+    if r.returncode != 0:
+        log("probe.fail", pid=pid, size=size, rc=r.returncode,
+            stderr=(r.stderr or "")[-400:])
+        raise RuntimeError("取参数失败：%s" % ((r.stderr or r.stdout or "")[-300:]))
+    params = {}
+    for line in reversed((r.stdout or "").strip().splitlines()):
+        line = line.strip()
+        if line.startswith("{"):
+            try:
+                params = json.loads(line).get("params") or {}
+            except Exception:
+                continue
+            break
+    if not params:
+        raise RuntimeError("脚本没有返回参数表：%s" % (r.stdout or "")[-200:])
+    _PROBE_CACHE[key] = dict(params)
+    log("probe.ok", pid=pid, size=size, sex=sex, n=len(params),
+        ms=int((time.time() - t0) * 1000))
+    return dict(params)
 
 
 def _read_pieces(src, params_kind=False):
@@ -924,7 +993,7 @@ def build_svg(pid, size, sex="女", overrides=None, use_cache=True, profile=None
     kind = spec["run"]["kind"]
 
     if kind == "make":
-        r = _run([PY, script] + _args(spec, sex, size, tmp, profile, ease),
+        r = _run([PY, script] + _args(spec, sex, size, tmp, profile, ease, overrides),
                            cwd=proj, env=env, capture_output=True, text=True,
                            encoding="utf-8", errors="replace", timeout=300)
         if r.returncode != 0:
@@ -1001,7 +1070,7 @@ def export(pid, size, sex="女", overrides=None, outdir=None, profile=None, ease
     os.makedirs(outdir, exist_ok=True)
 
     if spec["run"]["kind"] == "make":
-        r = _run([PY, script] + _args(spec, sex, size, outdir, profile, ease),
+        r = _run([PY, script] + _args(spec, sex, size, outdir, profile, ease, overrides),
                            cwd=proj, env=child_env(), capture_output=True, text=True,
                            encoding="utf-8", errors="replace", timeout=300)
         if r.returncode != 0:

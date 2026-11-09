@@ -30,6 +30,9 @@ TP = _g.TPL["params"]
 
 SIZES = {"本案": geo.CASE}
 
+# 可被 --params 覆盖的键＝CASE 里的数值项（TIE_L 这类元组不在此列）
+NUM_KEYS = {k: v for k, v in geo.CASE.items() if isinstance(v, (int, float))}
+
 
 def dxf_python():
     """找一个装了 ezdxf 的解释器：环境变量 → 自己 → 随包 runtime → envs/default"""
@@ -56,11 +59,25 @@ def main():
     ap.add_argument("--out", default=os.path.join(os.path.dirname(HERE), "out"))
     ap.add_argument("--no-dxf", action="store_true")
     ap.add_argument("--asm", action="store_true", help="连拼合平铺图一起出（裁片核对通过后再用）")
+    ap.add_argument("--params", default=None,
+                    help='旋钮覆盖（JSON），如 \'{"L":860,"JS":300}\'；在 CASE 上覆写')
+    ap.add_argument("--dump-params", action="store_true",
+                    help="只打印当前 CASE（JSON，供界面滑杆取基准），不出图")
     a = ap.parse_args()
 
     case = dict(SIZES.get(a.size, geo.CASE))
     case["name"] = a.size
+    ov = json.loads(a.params) if a.params else {}
+    bad = sorted(set(ov) - set(NUM_KEYS))
+    if bad:
+        raise SystemExit("未知参数 %s；这个版型可用：%s"
+                         % ("、".join(bad), "、".join(sorted(NUM_KEYS))))
+    case.update({k: float(v) for k, v in ov.items()})
     d = geo.derive(case)
+    if a.dump_params:
+        print(json.dumps(dict(kind="params", sex=a.sex, size=a.size,
+                              params={k: case[k] for k in NUM_KEYS}), ensure_ascii=False))
+        return 0
     os.makedirs(a.out, exist_ok=True)
     stem = os.path.join(a.out, "明制高交领_%s" % a.size)
 

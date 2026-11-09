@@ -25,8 +25,27 @@ BUILD = os.path.join(HERE, "build.py")
 DXF = os.path.join(HERE, "export_dxf.py")
 
 
-def one(sex, size, ease, outdir, height=None, bust=None, profile="vendor"):
-    p = sizing.params(sex=sex, size=size, height=height, bust=bust, ease=ease, profile=profile)
+def _overrides(p, ov):
+    """把旋钮覆盖值合到号型推出来的参数上（参数级调版，不换程序）。
+
+    未知键直接报错：拼错了要立刻看见，不能静默变成「滑杆没反应」。
+    """
+    if not ov:
+        return p
+    bad = sorted(set(ov) - set(p))
+    if bad:
+        # SystemExit 而不是 ValueError：命令行只打一行话，不甩 traceback
+        raise SystemExit("未知参数 %s；这个版型可用：%s"
+                         % ("、".join(bad), "、".join(sorted(p))))
+    out = dict(p)
+    for k, v in ov.items():
+        out[k] = float(v)
+    return out
+
+
+def one(sex, size, ease, outdir, height=None, bust=None, profile="vendor", overrides=None):
+    p = _overrides(sizing.params(sex=sex, size=size, height=height, bust=bust,
+                                 ease=ease, profile=profile), overrides)
     tag = size if size else "%dx%d" % (height, bust)
     d = os.path.join(outdir, "%s_%s_%s" % (profile, sex, tag.replace("/", "-")))
     os.makedirs(d, exist_ok=True)
@@ -56,9 +75,22 @@ def main():
     ap.add_argument("--profile", default=None, choices=list(sizing.PROFILES),
                     help="不填则按性别自动：女=artifact(原版) / 男=vendor(厂商表)")
     ap.add_argument("--out", default=os.path.join(os.path.dirname(HERE), "out"))
+    ap.add_argument("--params", default=None,
+                    help='旋钮覆盖（JSON），如 \'{"L":860,"OV":300}\'；在号型推导值上覆写')
+    ap.add_argument("--dump-params", action="store_true",
+                    help="只打印当前号型推导出的参数（JSON，供界面滑杆取基准），不出图")
     a = ap.parse_args()
     if a.profile is None:
         a.profile = "artifact" if a.sex == "女" else "vendor"
+    ov = json.loads(a.params) if a.params else {}
+
+    if a.dump_params:
+        p = _overrides(sizing.params(sex=a.sex, size=a.size, height=a.height, bust=a.bust,
+                                     ease=a.ease, profile=a.profile), ov)
+        print(json.dumps(dict(kind="params", sex=a.sex, profile=a.profile,
+                              size=a.size or "%s/%s" % (a.height, a.bust),
+                              params=p), ensure_ascii=False))
+        return 0
 
     if a.all:
         jobs = [(c, None, None) for c, _, _ in sizing.SEX[a.sex]["sizes"]]
@@ -72,7 +104,7 @@ def main():
 
     rows, errs = [], []
     for size, h, b in jobs:
-        rec, err = one(a.sex, size, a.ease, a.out, h, b, a.profile)
+        rec, err = one(a.sex, size, a.ease, a.out, h, b, a.profile, ov)
         if err:
             errs.append((size or "%s/%s" % (h, b), err))
         else:
