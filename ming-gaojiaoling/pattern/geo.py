@@ -35,6 +35,14 @@ import json
 import math
 import os
 
+# 后片不另写一份几何：直接调接袖版（谱系父）的纯函数构造。
+# 「取用父版型的片」＝调用它的构造，不复制源码；父版型改结构，这里跟着改。
+_JX_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
+    os.path.abspath(__file__)))), "hanfu-jiexiu", "pattern")
+if _JX_DIR not in sys.path:
+    sys.path.insert(0, _JX_DIR)
+import construct as JX          # noqa: E402
+
 # 前片领口（按用户 2026-11-06 21:32 在图上画的那条线量的）
 XUREN_W = 180.0        # 续衽越中宽度（拼在前中缝外侧）
 UPPER_LIFT = 68.0      # 上边界 l 向上平移成 l' 的量
@@ -233,6 +241,27 @@ def reverse_open(cmds):
     return out
 
 
+def jiexiu_params(d):
+    """把明制的 CASE 翻成接袖版（后片谱系父）的参数字典。
+
+    口径：**SEAM_H（袖根，标准图实测）作输入**，由它反解腕口高
+    —— 对应 construct.derive(seam_mode="seam")。这样袖根是硬指标，
+    腕口跟着直线袖底走（差 1mm 级），不会被反过来锁死。
+    """
+    return dict(
+        L=d["L"], W_HEM=2.0 * d["HALF"], EASE=1.0,
+        X_ARM=d["X_ARM"], Y_ARM=d["Y_ARM"], X_SHLD=d["X_SH"],
+        SLEEVE_LEN=d["SLV"], JS=d["JS"], CUFF=d["CUF"], WRIST=d["CUF"],
+        NECK=d["NECKW"], OV=2.0 * d["XUREN"], HEM_RISE=d["RISE"],
+        TILT_DEG=0.8, COL_W=d["COL_W"], SEAM_H=d["SEAM_H"],
+    )
+
+
+def back_half(d):
+    """后片半：调父版型的构造（吃本版参数），当前 SEAM_H 驱动。"""
+    return JX.back_half(JX.derive(jiexiu_params(d), "seam"))
+
+
 def pieces(d):
     """裁片表：只出**前片**（自带续衽）。
 
@@ -240,15 +269,15 @@ def pieces(d):
     两段互为**沿前中缝的镜像**，所以天然等长 —— 不量、不算。
     续衽的外缘是从领口底一路弯到下摆的那条曲线（图上手画那条）。
     """
-    P = TPL["params"]
-    L, HALF = P["L"], P["W_HEM"] / 2.0
+    L, HALF = d["L"], d["HALF"]
     NWF, NDF = FRONT_NECK_W, FRONT_NECK_D
     XUR = HALF                     # 续衽越中＝摆半宽 → 下摆左右两段对称，S1 恒等于 S2
     y0 = L - NDF
     k = 0.5523
 
-    back = [list(c) if c[0] == "Z" else [c[0]] + [list(pt) for pt in c[1:]] for c in TPL["cmds"]]
-    hem_c = [c for c in back if c[0] == "C"][0]          # 模板摆弧 P0(0,0) C1 C2 P3
+    _bk = back_half(d)
+    back = [list(c) if c[0] == "Z" else [c[0]] + [list(pt) for pt in c[1:]] for c in _bk["cmds"]]
+    hem_c = [c for c in back if c[0] == "C"][0]          # 后片摆弧 P0(0,0) C1 C2 P3
     M1 = (-hem_c[1][0], hem_c[1][1]); M2 = (-hem_c[2][0], hem_c[2][1])
     M3 = (-hem_c[3][0], hem_c[3][1])
 
@@ -316,7 +345,7 @@ def pieces(d):
     front = [["M", [-XUR, h]]]                               # ① 起点＝摆角（l 起点）
     # ② 按用户定的点位重建，并把**续衽拆成独立一片**
     #    P2＝外缘上端；P1＝l∩中缝(0,y0)；l'＝l 竖直上移；P'2＝外缘延长线∩l'；P'1＝(0,y0+LIFT)
-    heel = (-P["W_HEM"] / 2.0, P["HEM_RISE"])
+    heel = (-HALF, d["RISE"])
     P2 = (-A_a[0], A_a[1])
     P1 = (0.0, y0)
     PK = (NWF, L)
@@ -356,9 +385,9 @@ def pieces(d):
     lp_arc = arc3(P2p, mid_arc((ox2, oy2), R, P2p, P1p), P1p)    # l'：P'2 → P'1
     cut = None
     for i2, c in enumerate(back):
-        if c[0] == "L" and abs(c[1][0] - P["X_SHLD"]) < 1e-6 and abs(c[1][1] - L) < 1e-6:
+        if c[0] == "L" and abs(c[1][0] - d["X_SH"]) < 1e-6 and abs(c[1][1] - L) < 1e-6:
             cut = i2
-    right_body = [["L", [P["X_SHLD"], L]]] + reverse_open(back[:cut + 1])[1:]   # 肩线→袖→腋→侧缝→摆→摆弧→(0,0)
+    right_body = [["L", [d["X_SH"], L]]] + reverse_open(back[:cut + 1])[1:]   # 肩线→袖→腋→侧缝→摆→摆弧→(0,0)
     left_hem = ["C", [-hem_c[1][0], hem_c[1][1]], [-hem_c[2][0], hem_c[2][1]], [heel[0], heel[1]]]
 
     # 01 前片（中缝右边）：左缘＝中缝（x=0，实线）
@@ -387,10 +416,10 @@ def pieces(d):
                      notches=[[0.0, 0.0]], dims=[], aux=[], marks=[l_mark],
                      note="右缘＝中缝；左外缘 摆角→P2→P'2→l'→P'1；虚线 l 为辅助线")
     # 前片 / 续衽 / 内襟（前片镜像） / 内襟续衽（续衽镜像） / 后片
-    back_piece = dict(name="后片（半·模板原样）", qty=2,
+    back_piece = dict(name="后片（半·模板原样）", qty=2,   # 片名沿用（gates 按名对账），几何已由构造生成
                       cmds=[list(c) if c[0] == "Z" else [c[0]] + [list(pt) for pt in c[1:]]
-                            for c in TPL["cmds"]],
-                      grain=[0, 1], notches=TPL.get("notches") or [],
+                            for c in _bk["cmds"]],
+                      grain=[0, 1], notches=[list(n) for n in (_bk.get("notches") or [])],
                       dims=[("L", [0.0, 0.0], [0.0, L], "后中长 %.0f" % L)],
                       note="jiexiu 模板原样；×2 镜像")
     nei_piece = mirror_piece(dict(wai_front))

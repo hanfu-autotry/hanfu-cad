@@ -73,23 +73,29 @@ def band_back(d):
 
 
 def layers(d, view="front"):
+    """装配只做摆放，不改几何。
+
+    片序（geo.pieces 的返回顺序）：
+      P0 前片（中缝右边）  P1 内襟（前片镜像）  P2 续衽（中缝左边）
+      P3 内襟续衽（续衽镜像）  P4 后片半  P5 领缘条
+    一件前身＝前片＋续衽（外襟）；内襟是其镜像那一套。
+    """
     P = geo.pieces(d)
-    back, front, js = P[0]["cmds"], P[1]["cmds"], P[2]["cmds"]
-    XJ, YB = d["X_JS"], d["Y_ARM_BOT"]
+    front, inner = P[0]["cmds"], P[1]["cmds"]
+    xur, inner_xur = P[2]["cmds"], P[3]["cmds"]
+    back = P[4]["cmds"]
 
     if view == "back":
         return [dict(name="后片半（左）", cmds=geo.mirror(back), kind="cut"),
                 dict(name="后片半（右）", cmds=back, kind="cut"),
-                dict(name="接袖（左）", cmds=_shift(geo.mirror(js), -XJ, YB), kind="cut"),
-                dict(name="接袖（右）", cmds=_shift(js, XJ, YB), kind="cut"),
                 dict(name="领缘条", cmds=band_back(d), kind="band")]
 
     return [dict(name="后片（影·右）", cmds=back, kind="ghost"),
             dict(name="后片（影·左）", cmds=geo.mirror(back), kind="ghost"),
-            dict(name="接袖（右）", cmds=_shift(js, XJ, YB), kind="cut"),
-            dict(name="接袖（左）", cmds=_shift(geo.mirror(js), -XJ, YB), kind="cut"),
-            dict(name="前片（右·下）", cmds=front, kind="under"),
-            dict(name="前片（左·上）", cmds=geo.mirror(front), kind="over"),
+            dict(name="内襟续衽（下）", cmds=inner_xur, kind="under"),
+            dict(name="内襟（下）", cmds=inner, kind="under"),
+            dict(name="续衽（上）", cmds=xur, kind="over"),
+            dict(name="前片（上）", cmds=front, kind="over"),
             dict(name="领缘条（横卧）", cmds=band_front(d), kind="band"),
             dict(name="系带（长 450）", cmds=[["M", [-10.0, 566.0]], ["L", [-440.0, 470.0]],
                                          ["L", [-438.0, 490.0]], ["L", [-8.0, 586.0]], ["Z"]], kind="tie"),

@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-"""裁片核对：只量这两片，和 jiexiu 模板的参数逐项对表。"""
+"""裁片核对：量每片的实际尺寸，和 CASE 派生值逐项对表；
+   再跑一遍 construct 的整体数学约束。"""
 import os
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import geo
+import construct
 
 
 def pts_of(cmds, n=24):
@@ -34,26 +36,37 @@ def pts_of(cmds, n=24):
 
 
 def main():
-    P = geo.TPL["params"]
-    L, HALF = P["L"], P["W_HEM"] / 2.0
-    XJ = P["X_SHLD"] + P["SLEEVE_LEN"]
+    d = geo.derive(geo.CASE)
+    L, HALF, Y_ARM = d["L"], d["HALF"], d["Y_ARM"]
+    XC = d["X_SH"] + d["SLV"]                      # 接袖缝（衣身袖止点）
     rows = []
-    for pc in geo.pieces(geo.derive(geo.CASE)):
-        if pc["name"].startswith("续衽"):
-            continue
+    for pc in geo.pieces(d):
+        nm = pc["name"]
         pts = pts_of(pc["cmds"])
-        rows.append((pc["name"], "后中长", L, max(p[1] for p in pts)))
-        rows.append((pc["name"], "腋深", L - P["Y_ARM"], max(p[1] for p in pts) - P["Y_ARM"]))
-        rows.append((pc["name"], "摆半宽", HALF, max(p[0] for p in pts if p[1] <= P["HEM_RISE"] + 6)))
-        rows.append((pc["name"], "袖口 x（接袖缝）", XJ, max(p[0] for p in pts)))
+        ymax = max(p[1] for p in pts)
+        xmax = max(abs(p[0]) for p in pts)
+        if nm.startswith(("后片", "前片")):
+            rows.append((nm, "后中长", L, ymax))
+            rows.append((nm, "腋深", L - Y_ARM, ymax - Y_ARM))
+            rows.append((nm, "摆半宽", HALF, max(abs(p[0]) for p in pts if p[1] <= d["RISE"] + 6)))
+            rows.append((nm, "袖口 x（接袖缝）", XC, xmax))
+        elif nm.startswith("续衽"):
+            rows.append((nm, "摆半宽（＝越中量）", HALF, xmax))
+        elif nm.startswith("领缘条"):
+            rows.append((nm, "领条长", None, xmax - min(p[0] for p in pts)))
+            rows.append((nm, "领条宽（AA′ 硬约束）", 97.05141, ymax - min(p[1] for p in pts)))
 
-    print("%-24s %-16s %9s %9s %7s" % ("片", "项", "模板", "实量", "差"))
+    print("%-24s %-18s %9s %9s %7s" % ("片", "项", "期望", "实量", "差"))
     bad = 0
     for nm, key, want, got in rows:
+        if want is None:
+            print("%-24s %-18s %9s %9.1f" % (nm, key, "（派生）", got))
+            continue
         dif = got - want
         bad += abs(dif) >= 1.0
-        print("%-24s %-16s %9.1f %9.1f %7s%s" % (nm, key, want, got, "",
+        print("%-24s %-18s %9.1f %9.1f %7s%s" % (nm, key, want, got, "",
                                                  "" if abs(dif) < 1.0 else "  ← %+.1f" % dif))
+
     # S1 / S2＝下摆上前中左右两段，互为镜像
     def _bl(A, C1, C2, B, n=200):
         tot, prev = 0.0, A
@@ -65,7 +78,7 @@ def main():
             prev = pt
         return tot
 
-    cm = geo.pieces(geo.derive(geo.CASE))[0]["cmds"]
+    cm = geo.pieces(d)[0]["cmds"]
     ci = max(i for i, c in enumerate(cm) if c[0] == "C")   # 最后一段 C ＝ 下摆左段
     hemL = cm[ci]
     A = None
@@ -77,10 +90,9 @@ def main():
             A = cm[i][3]
             break
     s1 = _bl(tuple(A), tuple(hemL[1]), tuple(hemL[2]), tuple(hemL[3]))
-    s2 = s1                                          # S2＝镜像，长度天然相同
-    print("S1(下摆左段) = %.1f   S2(下摆右段，镜像) = %.1f   差 = 0.0   PASS" % (s1, s2))
+    print("S1(下摆左段) = %.1f   S2(下摆右段，镜像) = %.1f   差 = 0.0   PASS" % (s1, s1))
 
-    # 曲率单调（凹凸性不反号）：逐段三次贝塞尔采样，看连续弦的叉积符号是否翻面
+    # 曲率单调（凹凸性不反号）
     def curvature_ok(p0, p1, p2, p3, n=60):
         pts = []
         for i in range(n + 1):
@@ -97,7 +109,7 @@ def main():
         return (not signs) or (min(signs) == max(signs))
 
     print()
-    for pc in geo.pieces(geo.derive(geo.CASE)):
+    for pc in geo.pieces(d):
         cur, ok_all = (0.0, 0.0), True
         for c in pc["cmds"]:
             if c[0] == "C":
@@ -107,6 +119,14 @@ def main():
                 cur = c[1]
         print("%-24s 曲线凹凸性不反号：%s" % (pc["name"], "PASS" if ok_all else "WARN"))
         bad += 0 if ok_all else 1
+
+    # 整体数学约束（袖底共线 / 袖根自洽 / 通袖 / 摆宽 / 门襟）
+    print("\n── 整体数学约束 ──")
+    dd = construct.derive(geo.jiexiu_params(d), "seam")
+    for line in construct.report(dd):
+        print(line)
+        if line.startswith("FAIL"):
+            bad += 1
 
     print("\n不一致 %d 项" % bad)
     return 0 if bad == 0 else 1

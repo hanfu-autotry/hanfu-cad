@@ -93,15 +93,27 @@ def main():
     span_y = max(p[1] for p in pts) - min(p[1] for p in pts)
     print("拼合后外形：横 %.1f × 纵 %.1f mm（含接袖；图见 %s）" % (span_x, span_y, out))
 
+    # 领缘条单独量：长由领口弧反推（派生），标准图的 COL_L=1908 是纸面参考值
+    cl = [p for p in geo.pieces(d) if p["name"].startswith("领缘条")][0]["cmds"]
+    cl_pts = sample(cl)
+    cl_len = max(p[0] for p in cl_pts) - min(p[0] for p in cl_pts)
+    cl_w = max(p[1] for p in cl_pts) - min(p[1] for p in cl_pts)
+    # 前单边摆宽＝后中 → 摆角（不含袖子，袖子在 x>585 处伸出去）
+    bk_pts = sample(geo.pieces(d)[4]["cmds"])
+    hem_x = max(p[0] for p in bk_pts if p[1] <= d["RISE"] + 6)
+
     rows = [
-        ("通袖（袖口到袖口）", d["S"], span_x),
+        # 本版没有接袖片，袖只到接袖缝（X_SH+SLV），所以量到那里为准；
+        # 通袖 2210 是「含接袖」的成衣尺寸，用构造约束（verify.py）核，不在拼合图上量。
+        ("通袖（到接袖缝）", 2 * (d["X_SH"] + d["SLV"]), span_x),
         ("后中长", d["L"], span_y),
         ("摆宽（前后各半拼起来）", 2 * d["HALF"], 2 * d["HALF"]),
-        ("前单边摆宽（含续衽）", d["X_FRONT"], d["X_FRONT"]),
+        ("前单边摆宽（后中→摆角）", d["HALF"], hem_x),
         ("袖根（接袖缝处袖高）", d["SEAM_H"], d["SEAM_H"]),
         ("袖口", d["CUF"], d["CUF"]),
         ("领口宽", d["NECKW"], d["NECKW"]),
-        ("领缘条", d["COL_L"] * d["COL_W"], d["COL_L"] * d["COL_W"]),
+        ("领缘条长（标准图 COL_L）", d["COL_L"], cl_len),
+        ("领缘条宽（AA′ 硬约束）", 97.05141, cl_w),
     ]
     print("\n%-26s %10s %10s" % ("项", "夹具", "拼合实量"))
     for name, a, b in rows:

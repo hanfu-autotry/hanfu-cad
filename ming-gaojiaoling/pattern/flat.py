@@ -55,8 +55,7 @@ def ribbon(path, w, side=1):
 
 def neck_path(d):
     """领口一圈：外襟 l 弧（中缝顶→颈侧点）→ 后领口 → 内襟 l 弧（镜像）"""
-    P = geo.TPL["params"]
-    NWF, L = geo.FRONT_NECK_W, P["L"]
+    NWF, L = geo.FRONT_NECK_W, d["L"]     # 几何已由 CASE 驱动，不再读模板参数
     front = geo.pieces(d)[0]["cmds"]
     seg, cur = [], None
     for c in front:
@@ -79,7 +78,6 @@ def neck_path(d):
 
 
 def write(d, out_svg):
-    P = geo.TPL["params"]
     pcs = geo.pieces(d)
     front, nei, xur, nei_xur, back = [p["cmds"] for p in pcs[:5]]
     # 后片与前后片共用坐标（侧缝/接袖缝重合），直接叠画成虚线，表示在后层
@@ -116,13 +114,13 @@ def write(d, out_svg):
 
     # ─── 领子构建（逐步累加；外襟与内襟同步镜像）────────────────────
     # 第 1 步：A＝P2，领宽 AA′＝COLLAR_W（B 重合那一版）；PB 同为该值
-    A = (-P["X_ARM"] + 0.0, 0.0)          # 占位，下面用实际 P2
+    A = (-d["X_ARM"] + 0.0, 0.0)          # 占位，下面用实际 P2
     pcs0 = geo.pieces(d)[2]["cmds"]       # 续衽片：[M(摆角), L(P2), L(P'2), …]
     P2 = tuple(pcs0[1][1])                # ★ A 取 P2（l 起点），不是 P'2
     AA = COLLAR_W
     segs = []
     # A′ 在「外缘延长线」上：从摆角指向 P2 的方向，外延 w
-    heel = (-P["W_HEM"] / 2.0, P["HEM_RISE"])
+    heel = (-d["HALF"], d["RISE"])
     dvx, dvy = P2[0] - heel[0], P2[1] - heel[1]
     dn = math.hypot(dvx, dvy) or 1.0
     dvx, dvy = dvx / dn, dvy / dn
@@ -175,7 +173,7 @@ def write(d, out_svg):
             # 领宽取 COLLAR_W，使左右两个 B 落在中缝 x=0 上而重合。
             # 只画 点P、点B、线PB，不画定位圆、不留多余辅助线。
             PB = AA
-            Pn = (geo.FRONT_NECK_W, P["L"])       # 颈侧点 (65, 800)
+            Pn = (geo.FRONT_NECK_W, d["L"])       # 颈侧点 (65, 800)
             A0, Ap0 = segs[1][0], segs[1][1]      # 外襟：A=P2，A′
 
             def _inter(c0, r0, c1, r1):

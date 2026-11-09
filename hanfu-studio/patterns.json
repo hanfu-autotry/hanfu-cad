@@ -577,7 +577,72 @@
    "ease": [
     "合体"
    ],
-   "knobs": [],
+   "knobs": [
+    {
+     "key": "L",
+     "label": "后中长",
+     "min": 700,
+     "max": 1000,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "HALF",
+     "label": "摆半宽",
+     "min": 450,
+     "max": 700,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "DARM",
+     "label": "腋深",
+     "min": 260,
+     "max": 420,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "RISE",
+     "label": "下摆起翘",
+     "min": 40,
+     "max": 140,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "X_SH",
+     "label": "肩点",
+     "min": 480,
+     "max": 650,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "SLV",
+     "label": "衣身袖长",
+     "min": 180,
+     "max": 360,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "SEAM_H",
+     "label": "袖根（接袖缝处袖高）",
+     "min": 160,
+     "max": 280,
+     "step": 5,
+     "unit": "mm"
+    },
+    {
+     "key": "NECKW",
+     "label": "领口宽",
+     "min": 70,
+     "max": 130,
+     "step": 2,
+     "unit": "mm"
+    }
+   ],
    "gates": {
     "fab_w": 600.0,
     "max_panels": 4,
@@ -613,7 +678,7 @@
     "seam_ledger": []
    },
    "custom": true,
-   "no_knob_note": "单件定制版：尺寸＝用户手绘标准图（CASE 在 pattern/geo.py），裁片几何按 jiexiu 模板片出。\n命令行可调：make.py --params '{\"L\":860}'（覆盖 CASE 数值项）；滑杆要等 CASE 接进 pieces 后再开。"
+   "knob_note": "袖根是输入、腕口是派生：改袖根会让腕口跟着直线袖底走（当前算得 131.3，标准图 130）。后片由接袖版（谱系父）的构造直接生成，不再读模板坐标。"
   }
  ]
 }

@@ -3,18 +3,29 @@
 对穿交（钱氏墓/钱樟夫妇墓 鸟衔花枝纹缎夹袄）裁片图生成器
 右衽 · 单层 · 净版 · 单位 mm
 
+本文件只做三件事：**读参数 → 调 construct 出几何 → 排版出图**。
+几何与数学约束都在 `pattern/construct.py`（纯函数，无 IO）；
+这里不再有坐标计算，改版型请改 construct。
+
 量纲锚点：中国丝绸博物馆修复报告实测
   衣长 825 / 摆宽 1150（放量 0.92）/ 单边 710 / 交叠 270 / 领宽 190
 
 本版（v7.0）相对 v6 的唯一改动 = **加接袖**（其余主体不动）：
   · 衣身袖长 / 袖口 / 腋深 / 腋下圆角 全部沿用 v6 数据（"袖口袖根数据不变"）
   · 袖底缘改为**一条连续曲线**：腋点 → 接袖根(G1) → 腕口下角，接缝处零转折
-      - 衣身段：三次贝塞尔，起端切 40°、末端切矢 = 接袖直线方向（5.668°）
-      - 接袖段：直线（袖口→腕口 一条平滑直线）
   · 接袖根边 = 衣身袖口边 → 两侧垂直、直角，无圆角
   · 预开领：前片门襟内端让开 NECK/2，两片合成 100 通口
+
+用法：
+  python build.py                              # 默认参数（厂商表 男 M）出到 pattern/
+  HANFU_PARAMS='{"L":860}' python build.py     # 覆写任意参数
+  HANFU_OUT=/tmp/a.svg python build.py         # 指定输出
 """
-import math, os, json
+import math, os, json, sys
+
+# 随包运行时（嵌入式 python）不会把脚本目录放进 sys.path，这里显式加一次
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import construct
 
 # ---- 尺寸参数：可由环境变量 HANFU_PARAMS(JSON) 覆盖，供 sizing.py 一键换码 ----
 # 默认值 = 厂商实物表 男 M（接袖版），单独运行本文件即可出这一码
@@ -26,9 +37,12 @@ _DEF = dict(L=800.0, W_HEM=798.0, EASE=1.0, X_ARM=285.0, Y_ARM=522.8,
 P = dict(_DEF)
 P.update(json.loads(os.environ.get("HANFU_PARAMS", "{}")))
 
+# ---- 参数 → 派生量（唯一入口；verify.py 等外部脚本仍按老名字读这些模块级变量）----
+_d = construct.derive(P, "wrist")
+
 L          = P["L"]
 W_HEM      = P["W_HEM"]
-EASE       = P["EASE"]
+EASE       = _d["EASE"]
 X_ARM      = P["X_ARM"]
 Y_ARM      = P["Y_ARM"]
 X_SHLD     = P["X_SHLD"]
@@ -39,215 +53,69 @@ OV         = P["OV"]
 HEM_RISE   = P["HEM_RISE"]
 COL_W      = P["COL_W"]
 JS         = P["JS"]             # 接袖长
-WRIST      = P["WRIST"]          # 掩腕袖口宽
+WRIST      = _d["WRIST"]         # 掩腕袖口宽（= 直线袖底推到腕口处的高度）
 
-HALF     = W_HEM / 2.0 * EASE    # 侧缝
-X_CUFF   = X_SHLD + SLEEVE_LEN   # 接袖根（= 衣身袖口）
-X_JS     = X_CUFF + JS           # 腕口
-S        = 2 * X_JS              # 通袖
-TILT     = math.radians(P["TILT_DEG"])
-LAP_DX   = OV / 2.0              # 门襟边越中量
-_MENJIN_ANG = math.atan2(LAP_DX - NECK / 2.0, L)   # 门襟斜边与竖直线的夹角（grain 由它派生）
-NECK_DIP = 0.0
-P_HEM    = 760.0                 # 兼容旧字段
+HALF       = _d["HALF"]          # 侧缝
+X_CUFF     = _d["X_CUFF"]        # 接袖根（= 衣身袖口）
+X_JS       = _d["X_JS"]          # 腕口
+S          = _d["S"]             # 通袖
+TILT       = _d["TILT"]
+LAP_DX     = _d["LAP_DX"]        # 门襟边越中量
+_MENJIN_ANG = _d["MENJIN_ANG"]   # 门襟斜边与竖直线的夹角（grain 由它派生）
+NECK_DIP   = 0.0
+P_HEM      = 760.0               # 兼容旧字段
 
-Y_TOP = L + NECK_DIP
+Y_TOP      = _d["Y_TOP"]
+Y_CUFF_TOP = _d["Y_CUFF_TOP"]
+Y_CUFF_BOT = _d["Y_CUFF_BOT"]
+Y_JS_TOP   = _d["Y_JS_TOP"]
+Y_JS_BOT   = _d["Y_JS_BOT"]
+Y_SEAM_BOT = _d["Y_SEAM_BOT"]
+SEAM_H     = _d["SEAM_H"]        # 袖根（派生值）
+UND_ANG    = _d["UND_ANG"]
+UND_U      = _d["UND_U"]
+U_ARM      = _d["U_ARM"]
+Z_PT       = _d["Z"]
+_UND_A     = (X_ARM, Y_ARM)
+_UND_Z     = (X_JS, Y_JS_BOT)
+_UND_ANG   = UND_ANG
+R_ARM_F    = construct.R_ARM_F
+X_SEAM     = X_CUFF              # 接袖缝位置（参考线）
+U_SEAM     = (X_CUFF, Y_SEAM_BOT)
 
 
 def sleeve_y(x):
     """袖上缘：自肩点起微下垂 0.8°"""
-    return Y_TOP - (abs(x) - X_SHLD) * math.tan(TILT)
+    return construct.sleeve_y(_d, x)
 
 
-Y_CUFF_TOP = sleeve_y(X_CUFF)
-Y_CUFF_BOT = Y_CUFF_TOP - CUFF
-Y_JS_TOP   = sleeve_y(X_JS)
-Y_JS_BOT   = Y_JS_TOP - WRIST
-
-
-# ---------- 袖底缘 ----------
-# 汉服直裁：腋点 → 腕口下角 **一条直线**（不是深凹弧）
-# 接袖缝只是这条直线上的一道垂直切口 → 接缝处天然零转折
-_UND_A = (X_ARM, Y_ARM)
-_UND_Z = (X_JS, Y_JS_BOT)
-_UND_ANG = math.atan2(_UND_Z[1] - _UND_A[1], _UND_Z[0] - _UND_A[0])
-_UND_U = (math.cos(_UND_ANG), math.sin(_UND_ANG))
-Y_SEAM_BOT = _UND_A[1] + (X_CUFF - X_ARM) * math.tan(_UND_ANG)   # 接袖根下缘
-SEAM_H = Y_CUFF_TOP - Y_SEAM_BOT                                  # 袖根（派生值）
-R_ARM_F = 45.0                                                    # 腋下圆角
-U_ARM = (_UND_A[0] + R_ARM_F * _UND_U[0], _UND_A[1] + R_ARM_F * _UND_U[1])
-Z_PT = _UND_Z
-
-
-def _bez(x0, y0, x1, y1, x2, y2, x3, y3, t=0.5):
-    mt = 1 - t
-    x = mt**3*x0 + 3*mt*mt*t*x1 + 3*mt*t*t*x2 + t**3*x3
-    y = mt**3*y0 + 3*mt*mt*t*y1 + 3*mt*t*t*y2 + t**3*y3
-    return (x, y)
-
-
-# ---------- 裁片定义（服饰坐标：x 向右，y 向上，原点=后中缝∩下摆中心） ----------
-def _tan(seg, t0=0.0, t1=1.0, h=0.002):
-    """三次贝塞尔在参数 t 处的单位切矢"""
-    a = _bez(seg[0], seg[1], seg[2], seg[3], max(0.0, t0 - h))
-    b = _bez(seg[0], seg[1], seg[2], seg[3], min(1.0, t1 + h))
-    return _unit(a, b)
-
-
-def blend(A, tA, B, tB, k=0.92):
-    """G1 三次混合：两端切线分别与相邻段一致 → 无折角"""
-    d = math.hypot(B[0] - A[0], B[1] - A[1]) / 3.0 * k
-    c1 = (A[0] + tA[0] * d, A[1] + tA[1] * d)
-    c2 = (B[0] - tB[0] * d, B[1] - tB[1] * d)
-    return ("C", c1, c2, B)
-
-
-def _unit(a, b):
-    dx, dy = b[0] - a[0], b[1] - a[1]
-    n = math.hypot(dx, dy) or 1.0
-    return (dx / n, dy / n)
-
-
-def _off(p, d, r):
-    return (p[0] + d[0] * r, p[1] + d[1] * r)
-
-
-def _bez(p0, p1, p2, p3, t):
-    mt = 1 - t
-    return (mt**3*p0[0] + 3*mt*mt*t*p1[0] + 3*mt*t*t*p2[0] + t**3*p3[0],
-            mt**3*p0[1] + 3*mt*mt*t*p1[1] + 3*mt*t*t*p2[1] + t**3*p3[1])
-
-
-def split_cubic(p0, p1, p2, p3, t):
-    """de Casteljau 精确分割：返回两段三次贝塞尔"""
-    def lerp(a, b, u):
-        return (a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u)
-    a = lerp(p0, p1, t); b = lerp(p1, p2, t); c = lerp(p2, p3, t)
-    d = lerp(a, b, t); e = lerp(b, c, t)
-    f = lerp(d, e, t)
-    return (p0, a, d, f), (f, e, c, p3)
-
-
-# 接袖缝位置（参考线）
-X_SEAM = X_CUFF
-U_SEAM = (X_CUFF, Y_SEAM_BOT)
-
-
-def _under_cmds(sx):
-    """衣身袖底：腋下圆角终点 → 接袖根，一条直线（与接袖段共线）"""
-    return [("L", (sx * X_CUFF, Y_SEAM_BOT))]
-
-
-def _cuff_top(sx):
-    """袖口竖边（直角，无圆角）+ 袖上缘 → 肩点"""
-    return [("L", (sx * X_CUFF, Y_CUFF_TOP)), ("L", (sx * X_SHLD, L))]
-
-
+# ---- 裁片：一层薄包装，几何全在 construct ----
 def back_half():
-    """后片半（×2 镜像，后中缝对折）——衣身袖止于接袖根，袖底弧一条连续曲线"""
-    hem = ((0, 0), (200, 5), (400, 30), (HALF, HEM_RISE))
-    R = 70.0
-    d_side = _unit((HALF, HEM_RISE), (X_ARM, Y_ARM))
-    arm = (X_ARM, Y_ARM)
-    A_a = _off(arm, d_side, -R)
-    B_a = (U_ARM[0], U_ARM[1])
-    tB_a = _UND_U
-    cmds = [("M", (0, 0)), ("C", hem[1], hem[2], hem[3]),
-            ("L", A_a), blend(A_a, d_side, B_a, tB_a)]
-    cmds += _under_cmds(1.0)
-    cmds += _cuff_top(1.0)
-    cmds += [("L", (NECK / 2, L)), ("L", (0, L)), ("Z",)]
-    return {
-        "name": "后片半", "qty": 2, "grain": (0, 1), "cmds": cmds,
-        "seams": [[(0, 0), (0, L)]],
-        "notches": [arm, (0, 0)],
-        "dims": [("L", (0, 0), (0, L), "后中长 %d" % round(L)),
-                 ("L", (0, HEM_RISE), (HALF, HEM_RISE), "摆半宽 %d / 起翘 %d" % (round(HALF), round(HEM_RISE))),
-                 ("L", (X_ARM, Y_ARM), (X_ARM, L), "腋深 %d" % round(L - Y_ARM)),
-                 ("L", (X_CUFF + 44, Y_SEAM_BOT), (X_CUFF + 44, Y_CUFF_TOP), "袖根 %d" % round(SEAM_H)),
-                 ("L", (X_SHLD, L), (X_CUFF, Y_CUFF_TOP), "衣身袖长 %d" % round(SLEEVE_LEN))],
-    }
+    return construct.back_half(_d)
 
 
 def front_panel():
-    """前片（×2 镜像；右衽时穿着者左片为外襟）——门襟内端让开 NECK/2 形成预开领"""
-    hem = ((LAP_DX, 0), (-200, 5), (-400, 30), (-HALF, HEM_RISE))
-    R = 70.0
-    d_side = _unit((-HALF, HEM_RISE), (-X_ARM, Y_ARM))
-    arm = (-X_ARM, Y_ARM)
-    A_a = _off(arm, d_side, -R)
-    B_a = (-U_ARM[0], U_ARM[1])
-    tb = _UND_U
-    cmds = [("M", (NECK / 2, L)), ("L", (LAP_DX, 0)), ("C", hem[1], hem[2], hem[3]),
-            ("L", A_a), blend(A_a, d_side, B_a, (-tb[0], tb[1]))]
-    cmds += _under_cmds(-1.0)
-    cmds += _cuff_top(-1.0)
-    cmds += [("L", (NECK / 2, L)), ("Z",)]
-    return {
-        "name": "前片", "qty": 2,
-        "grain": (math.sin(_MENJIN_ANG), -math.cos(_MENJIN_ANG)),
-        "cmds": cmds,
-        "seams": [],
-        "notches": [arm, (NECK / 2, L)],
-        "dims": [("L", (-HALF, -60), (LAP_DX, -60), "单边摆宽 %d" % round(HALF + LAP_DX)),
-                 ("L", (LAP_DX, -130), (0, -130), "越中 %d" % round(LAP_DX)),
-                 ("L", (NECK / 2, L), (LAP_DX, 0), "门襟斜 %.1f°" % math.degrees(
-                     math.atan2(LAP_DX - NECK / 2, L))),
-                 ("L", (NECK / 2, L), (0, L), "预开领半 %d" % round(NECK / 2))],
-    }
+    return construct.front_panel(_d)
 
 
 def sleeve_ext():
-    """接袖（×4，前后片各一）：根边=衣身袖口（垂直），袖底为袖底线的延续，腕口垂直"""
-    cmds = [("M", (X_CUFF, Y_SEAM_BOT)), ("L", Z_PT),
-            ("L", (X_JS, Y_JS_TOP)), ("L", (X_CUFF, Y_CUFF_TOP)), ("Z",)]
-    return {
-        "name": "接袖", "qty": 4, "grain": (1, 0), "cmds": cmds,
-        "seams": [],
-        "notches": [(X_CUFF, Y_SEAM_BOT), (X_CUFF, Y_CUFF_TOP)],
-        "dims": [("L", (X_CUFF, Y_SEAM_BOT), (X_CUFF, Y_CUFF_TOP), "袖根 %d" % round(SEAM_H)),
-                 ("L", (X_JS, Y_JS_BOT), (X_JS, Y_JS_TOP), "腕口 %d" % round(WRIST)),
-                 ("L", (X_CUFF, Y_SEAM_BOT), (X_JS, Y_JS_BOT), "接袖长 %d" % round(JS))],
-    }
+    return construct.sleeve_ext(_d)
 
 
 def collar_band(width=None):
-    """领缘条（领襟一体，直丝）：沿门襟斜边 → 后领 → 另一侧门襟，整条不断开"""
-    width = width or 40.0
-    lapel = math.hypot(L, LAP_DX - NECK / 2.0)
-    total = 2 * lapel + NECK + 20.0
-    return {
-        "name": "领缘条", "qty": 1, "grain": (1, 0),
-        "cmds": [("M", (0, 0)), ("L", (total, 0)), ("L", (total, width)), ("L", (0, width)), ("Z",)],
-        "seams": [],
-        "notches": [(lapel, 0), (lapel + NECK, 0)],
-        "dims": [("L", (0, 0), (total, 0), "总长 %d × 宽 %d" % (round(total), round(width)))],
-    }
+    return construct.collar_band(_d, width)
 
 
 def triangle(h, w=95.0, name="三角拼接"):
-    return {
-        "name": name, "qty": 1, "grain": (0, 1),
-        "cmds": [("M", (0, 0)), ("L", (w, 0)), ("L", (0, h)), ("Z",)],
-        "seams": [], "notches": [], "dims": [("L", (0, 0), (0, h), "高 %d" % h)],
-    }
+    return construct.triangle(name, h, w)
 
 
 def tie(length=200.0, width=20.0):
-    return {
-        "name": "系带", "qty": 2, "grain": (1, 0),
-        "cmds": [("M", (0, 0)), ("L", (length, 0)), ("L", (length, width)), ("L", (0, width)), ("Z",)],
-        "seams": [], "notches": [], "dims": [("L", (0, 0), (length, 0), "长 200")],
-    }
+    return construct.tie(length, width)
 
 
 def hem_facing(length=None, width=30.0):
-    length = length or (2 * HALF)
-    return {
-        "name": "下摆绢衬条", "qty": 1, "grain": (1, 0),
-        "cmds": [("M", (0, 0)), ("L", (length, 0)), ("L", (length, width)), ("L", (0, width)), ("Z",)],
-        "seams": [], "notches": [], "dims": [("L", (0, 0), (length, 0), "长 %d × 宽 30" % round(length))],
-    }
+    return construct.hem_facing(length or (2 * HALF), width)
 
 
 PIECES = [
@@ -262,7 +130,7 @@ PIECES = [
 ]
 
 
-# ---------- 几何工具 ----------
+# ---------- 几何工具（排版用；只跟 cmds 结构有关，跟服饰无关）----------
 def flat(cmds):
     """把 cmds 展开成带控制点的点列表（y 取反，转 SVG 坐标）"""
     pts = []
