@@ -16,6 +16,10 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# 本机用户名不写进仓库（写死等于自己把用户名公开出去）；
+# 规则改成通用的「绝对路径里的 Users\<名字>」，历史探针在运行时按环境变量拼
+_LOCAL_USERS = [u for u in (os.environ.get("USERNAME"), os.environ.get("USER")) if u]
+
 # 内容规则：名字 → 正则
 RULES = [
     ("微博/微信会话 token", re.compile(r"user_token\s*=")),
@@ -25,7 +29,7 @@ RULES = [
     ("私钥", re.compile(r"BEGIN (RSA |EC |OPENSSH |PGP )?PRIVATE KEY")),
     ("口令/密钥赋值", re.compile(r"(password|passwd|secret|api[_-]?key)\s*[=:]\s*['\"][^'\"]{6,}",
                                 re.I)),
-    ("本机用户名路径", re.compile(r"Users[\\/]29520")),
+    ("本机用户目录绝对路径", re.compile(r"[A-Za-z]:[\\/]+Users[\\/]+[^\\/\s\"']+")),
     ("工作区绝对路径", re.compile(r"[A-Za-z]:[\\/]+entertain[\\/]+tmp")),
 ]
 
@@ -100,8 +104,9 @@ def scan(files, staged):
 def scan_history():
     """推之前跑：历史里出现过的敏感串/文件名。"""
     bad = []
-    probes = ["user_token=[A-Za-z0-9]", "skey=@crypt", "Users\\29520", "Users/29520",
+    probes = ["user_token=[A-Za-z0-9]", "skey=@crypt",
               "BEGIN OPENSSH PRIVATE KEY", "@crypt_"]
+    probes += ["Users\\" + u for u in _LOCAL_USERS] + ["Users/" + u for u in _LOCAL_USERS]
     # 排除检查器自身（它必然含这些字面量），否则永远报自己
     skip = [":(exclude)tools/check_secrets.py", ":(exclude).githooks/pre-commit"]
     for probe in probes:
