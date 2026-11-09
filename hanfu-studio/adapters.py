@@ -5,7 +5,7 @@
   build_svg(pid, size, sex, overrides) → 调 build/make 脚本，拿回 SVG
   svg_to_png(svg, png)                 → 调 Edge 无头截图（和项目自己的 preview.py 同一路子）
 
-分工的理由：分裁（半臂/接袖）与通裁（深衣/直领交襟）**底层逻辑不同**，
+分工的理由：默认（半臂/接袖）与古制（深衣/直领交襟）**底层逻辑不同**，
 各自留在各自项目里；框架只认"脚本 + 参数 + 产物"这三样。
 """
 import copy
@@ -387,11 +387,11 @@ def project_catalog_cached():
 
 
 def _catalog_configs(p):
-    """每个项目默认收哪些组件：分裁一个代表配置；通裁按每个模式各收一套。"""
+    """每个项目默认收哪些组件：默认一个代表配置；古制按每个模式各收一套。"""
     sexes = p.get("sexes") or ["—"]
     sex = sexes[0]
     modes = p.get("modes") or []
-    if p["cut"] == "通裁":
+    if p["cut"] == "古制":
         out = []
         for m in modes:
             out.append(dict(sex=sex, size=m["id"], profile=None, ease=None,
@@ -426,7 +426,7 @@ def project_catalog(refresh=False):
                     log_exc("catalog.build_fail", e, pid=p["id"], size=cfg["size"])
                     continue
                 pieces = meta.get("pieces") or []
-                kind = "piece" if p["cut"] == "分裁" else "block"
+                kind = "piece" if p["cut"] == "默认" else "block"
                 for idx, piece in enumerate(pieces):
                     name = piece.get("name") or ("组件%d" % (idx + 1))
                     cid = "proj_%s_%s_%d_%s" % (p["id"], _safe_tag(cfg["size"], 16), idx,
@@ -513,7 +513,7 @@ def spec_of(pid):
 
 
 def groups():
-    """按谱系根分组：分裁 / 通裁"""
+    """按谱系根分组：默认 / 古制"""
     out = {}
     for p in registry()["patterns"]:
         out.setdefault(p["cut"], []).append(p)
@@ -901,7 +901,7 @@ def _args(spec, sex, size, out, profile=None, ease=None, overrides=None):
     """按注册表的 argstyle 拼命令行——这是父程序与子程序之间唯一的接口。
 
     overrides（旋钮）不占占位符：统一走 `--params <json>`，子程序在
-    「号型/夹具推导出来的值」上覆写。分裁（make）与通裁（params）因此同一套调参口径。
+    「号型/夹具推导出来的值」上覆写。默认（make）与古制（params）因此同一套调参口径。
     """
     style = spec["run"].get("argstyle") or "--sex {sex} --size {size} --out {out}"
     fmt = dict(sex=sex, size=size, out=out,
@@ -936,7 +936,7 @@ def _probe_args(spec, sex, size, profile=None, ease=None):
 def probe_params(pid, size, sex="女", profile=None, ease=None):
     """问子程序：这个号型/基准/放量下，参数表是什么。
 
-    分裁（make）走 `make.py … --dump-params`；通裁（params）直接取 fixtures。
+    默认（make）走 `make.py … --dump-params`；古制（params）直接取 fixtures。
     界面滑杆的初值＝这份参数，所以滑杆永远从版型自己的真实值起步，
     不在 studio 里另写一套尺码表（共享层不掺服饰语义）。
     """
@@ -976,7 +976,7 @@ def probe_params(pid, size, sex="女", profile=None, ease=None):
 
 
 def _read_pieces(src, params_kind=False):
-    """从脚本产物里取裁片几何（pieces.json）。通裁可能没有 pieces → 返回空表。"""
+    """从脚本产物里取裁片几何（pieces.json）。古制可能没有 pieces → 返回空表。"""
     if params_kind:
         paths = [src.rsplit(".", 1)[0] + ".pieces.json"]
     else:
@@ -1085,8 +1085,8 @@ def build_svg(pid, size, sex="女", overrides=None, use_cache=True, profile=None
 def export(pid, size, sex="女", overrides=None, outdir=None, profile=None, ease=None):
     """把当前配置的产物落盘（不改几何，只是让脚本写到指定目录）。
 
-    分裁（kind=make）：脚本自己会出 .svg + .dxf + .pieces.json → 直接 --out 到目标目录
-    通裁（kind=params）：脚本只出 .svg + .pieces.json；DXF 要"整衣一片"，另行处理，这里不假装有
+    默认（kind=make）：脚本自己会出 .svg + .dxf + .pieces.json → 直接 --out 到目标目录
+    古制（kind=params）：脚本只出 .svg + .pieces.json；DXF 要"整衣一片"，另行处理，这里不假装有
     """
     overrides = overrides or {}
     spec = spec_of(pid)
@@ -1119,7 +1119,7 @@ def export(pid, size, sex="女", overrides=None, outdir=None, profile=None, ease
             log("export.fail", pid=pid, size=size, rc=r.returncode,
                 stderr=(r.stderr or "")[-600:])
             raise RuntimeError("脚本失败：%s" % (r.stderr or r.stdout)[-500:])
-        # 补片：通裁的 build_* 只写空 pieces，pieces_post 才会把裁片/区块补进去
+        # 补片：古制的 build_* 只写空 pieces，pieces_post 才会把裁片/区块补进去
         post = spec.get("pieces_post")
         if post:
             side = out_svg.rsplit(".", 1)[0] + ".pieces.json"
@@ -1146,7 +1146,7 @@ def export(pid, size, sex="女", overrides=None, outdir=None, profile=None, ease
 
 
 def generate_all(pid, size, sex="女", overrides=None, profile=None, ease=None, outdir=None):
-    """一键生成：预览用 SVG + 落盘全套产物（分裁：svg/dxf/pieces/尺码表；通裁：加整衣 DXF）。"""
+    """一键生成：预览用 SVG + 落盘全套产物（默认：svg/dxf/pieces/尺码表；古制：加整衣 DXF）。"""
     spec = spec_of(pid)
     outdir = outdir or studio_out_dir("generate", "%s_%s_%s"
                                       % (pid, size, time.strftime("%m%d-%H%M")))
@@ -1179,7 +1179,7 @@ def generate_all(pid, size, sex="女", overrides=None, profile=None, ease=None, 
 
 
 def batch_plan(pid, sex=None, all_sizes=False):
-    """列出"批量生成"要跑的组合：分裁＝模式(基准) × 放量 × 号型；通裁＝每个夹具模式。"""
+    """列出"批量生成"要跑的组合：默认＝模式(基准) × 放量 × 号型；古制＝每个夹具模式。"""
     spec = spec_of(pid)
     kind = (spec.get("run") or {}).get("kind")
     plan = []
@@ -1249,7 +1249,7 @@ def generate_batch(pid, sex=None, all_sizes=False, outdir=None):
             sub = os.path.join(outdir, tag)
             r = generate_all(pid, item["size"], item["sex"], {}, profile=item["profile"],
                              ease=item["ease"], outdir=sub)
-            if item["profile"]:      # 只有分裁（make）会自建内层目录；通裁的"形制核对/"必须留着
+            if item["profile"]:      # 只有默认（make）会自建内层目录；古制的"形制核对/"必须留着
                 _flatten(sub, "%s_%s_%s" % (item["profile"], item["sex"], item["size"]))
             sm = (r.get("gates") or {}).get("summary") or {}
             rows.append(dict(item, tag=tag, files=len(r["files"]), dxf=r["dxf"],
@@ -1259,7 +1259,7 @@ def generate_batch(pid, sex=None, all_sizes=False, outdir=None):
             rows.append(dict(item, tag=tag, files=0, dxf=False, gates={}, ok=False, err=str(e)[:200]))
     L = ["# 批量生成 · %s（每个可复用模式一整套）" % spec["label"], "",
          "> 由 `adapters.generate_batch()` 生成。每行一个组合：产物目录 `./<tag>/` 内含 "
-         "SVG / 裁片 JSON / DXF（通裁另含整衣 DXF）+ `形制核对/`。", "",
+         "SVG / 裁片 JSON / DXF（古制另含整衣 DXF）+ `形制核对/`。", "",
          "| 模式 | 基准 | 放量 | 性别 | 号型 | 文件 | DXF | 核对(通过/示意) | 结果 |",
          "|---|---|---|---|---|---|---|---|---|"]
     for x in rows:
@@ -1286,8 +1286,8 @@ def export_layout_dxf(pid, size, sex="女", pieces=None, layout=None, canvas=Non
     几何本身仍留在各项目里；这里只做摆放变换并调 layout_dxf.py 出图。
     """
     spec = spec_of(pid)
-    if spec["cut"] != "分裁":
-        raise ValueError("%s 是通裁：整衣 DXF 由「导出产物」出，不做裁片排料" % spec["label"])
+    if spec["cut"] != "默认":
+        raise ValueError("%s 是古制：整衣 DXF 由「导出产物」出，不做裁片排料" % spec["label"])
     if not pieces:
         raise ValueError("没有裁片几何（pieces.json 为空），无法生成排料 DXF")
     layout = layout or {}
@@ -1418,7 +1418,7 @@ CONVENTIONS = {    "设计目的": "每个版型一种程序；父程序专门�
                 "两者都面向 harness（AI 会话）做量图/判级/派生，桌面程序只承载状态与交接",
     "许愿判级": {"参数级": "同一程序换夹具（不新建程序）",
                 "结构级": "用 Δ 派生新程序（禁止复制父版型源码）",
-                "裁法级": "新谱系根（分裁 ↔ 通裁）"},
+                "裁法级": "新谱系根（默认 ↔ 古制）"},
     "继承规则": "允许取用父版型的片，禁止复制父版型源码；派生记录只记 op/参数/父版型/产物 hash，不记几何",
     "拟合边界": "只许纯形状自由度（白名单）；只出建议值不改 DEF；多闸门；正背共用一组参数",
     "禁止": ["合并成万能参数化引擎", "共享层加服饰语义", "用 YAML-DSL 描述版型",
@@ -1453,7 +1453,7 @@ def interface_file(kind, request="", artifact_path="", pid=None, size=None, sex=
              where="hanfu-cad/（叠合根＝archive/v3 含接袖原尺寸版）"),
         dict(name="形状拟合（只出建议值）", cmd="python verification/fit.py", where="hanfu-cad/"),
         dict(name="形制核对表", cmd="python verification/verify.py", where="hanfu-cad/ 与 hanfu-jiexiu/"),
-        dict(name="通裁整衣 DXF", cmd="python pattern/export_dxf_whole.py", where="hanfu-shenyi/"),
+        dict(name="古制整衣 DXF", cmd="python pattern/export_dxf_whole.py", where="hanfu-shenyi/"),
     ]
     outdir = outdir or os.path.join(ws_root(), "hanfu-studio", "out", "interface")
     os.makedirs(outdir, exist_ok=True)
@@ -1466,7 +1466,7 @@ def interface_file(kind, request="", artifact_path="", pid=None, size=None, sex=
 def run_extra(pid, extra_id, size=None, overrides=None):
     """跑项目里现成的"附加产物"脚本（make_cmp.py / export_dxf_whole.py），返回它产出的文件。
 
-    通裁（kind=params）的附加脚本吃 HANFU_PARAMS/HANFU_OUT：这里把当前夹具+旋钮传下去，
+    古制（kind=params）的附加脚本吃 HANFU_PARAMS/HANFU_OUT：这里把当前夹具+旋钮传下去，
     并把 HANFU_OUT 指到 out/studio/<pid>_<size>/，产物落盘可复用。
     """
     spec = spec_of(pid)

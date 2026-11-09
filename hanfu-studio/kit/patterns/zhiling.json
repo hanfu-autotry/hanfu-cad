@@ -1,7 +1,7 @@
 {
  "id": "zhiling",
  "label": "原始直领交襟衣",
- "cut": "通裁",
+ "cut": "古制",
  "project": "hanfu-shenyi",
  "project_dir": "hanfu-shenyi",
  "script": "pattern/build.py",
@@ -99,5 +99,5 @@
   "verification/形制核对表.md",
   "直交一体_盲区解说.md"
  ],
- "subject": "03-原始直领交襟衣_通裁"
+ "subject": "03-原始直领交襟衣_古制"
 }

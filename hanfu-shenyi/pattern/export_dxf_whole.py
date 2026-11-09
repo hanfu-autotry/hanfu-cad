@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""通裁 · 整衣铺开一片 DXF（方案 B：一条连续闭合外轮廓 + 标注）
+"""古制 · 整衣铺开一片 DXF（方案 B：一条连续闭合外轮廓 + 标注）
 ────────────────────────────────────────────────────────────────
 口径（2026-11-02 与用户对齐后重写，替代已删除的旧版）：
   · 外轮廓 = 一条连续闭合线：裳·后(3幅) + 衣(4幅,中段对折) + 裳·前(3幅)，
@@ -180,7 +180,7 @@ def write_dxf():
                          dxfattribs={"layer": "NOTCH_刀口"})
 
     ty = H + 260
-    msp.add_text("通裁 · 整衣铺开一片（%s）｜ 一条连续外轮廓：裳后 + 衣(中段对折) + 裳前" % NAME,
+    msp.add_text("古制 · 整衣铺开一片（%s）｜ 一条连续外轮廓：裳后 + 衣(中段对折) + 裳前" % NAME,
                  height=48, dxfattribs={"layer": "TEXT_文字", "style": "CN"}
                  ).set_placement((OX - 100, OY + ty + 190), align=TextEntityAlignment.LEFT)
     for i, t in enumerate(ANN):
@@ -244,7 +244,7 @@ def write_svg(path):
                  % (px - 8, py - 8, px + 8, py + 8, px - 8, py + 8, px + 8, py - 8,
                     COL["NOTCH_刀口"][0], 1.6 * k))
     o.append('<g font-family="sans-serif" fill="#111111">')
-    o.append('<text x="60" y="70" font-size="42" font-weight="600">通裁 · 整衣铺开一片（%s）｜ 一条连续外轮廓：裳后 + 衣(中段对折) + 裳前</text>' % NAME)
+    o.append('<text x="60" y="70" font-size="42" font-weight="600">古制 · 整衣铺开一片（%s）｜ 一条连续外轮廓：裳后 + 衣(中段对折) + 裳前</text>' % NAME)
     for i, t in enumerate(ANN):
         o.append('<text x="60" y="%d" font-size="27" fill="#444444">%s</text>' % (130 + i * 44, t))
     o.append('<text x="%g" y="%g" font-size="28">领条 ×1（另裁）</text>' % (P2(collar[0])[0], P2(collar[3])[1] - 14))

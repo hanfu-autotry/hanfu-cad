@@ -6,7 +6,7 @@
 
 ```
 subject,type,file,project,origin_path,note,anchor_ok,kb,sha1
-02-深衣_通裁,剪裁与平铺,新图.jpg,<项目>,<来源URL或路径>,量幅数与开口,PARTIAL,120,<sha1>
+02-深衣_古制,剪裁与平铺,新图.jpg,<项目>,<来源URL或路径>,量幅数与开口,PARTIAL,120,<sha1>
 ```
 
 规则：

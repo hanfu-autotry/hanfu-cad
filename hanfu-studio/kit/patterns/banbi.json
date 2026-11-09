@@ -1,7 +1,7 @@
 {
  "id": "banbi",
  "label": "对穿交半臂",
- "cut": "分裁",
+ "cut": "默认",
  "project": "hanfu-cad",
  "project_dir": "hanfu-cad",
  "script": "pattern/make.py",

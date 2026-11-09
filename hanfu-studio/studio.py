@@ -58,8 +58,8 @@ class Studio(tk.Tk):
         self.sex = None
         self.knobs = {}
         self.overrides = {}
-        self.profile = None      # 分裁：基准档（artifact/vendor）
-        self.ease = None        # 分裁：放量档
+        self.profile = None      # 默认：基准档（artifact/vendor）
+        self.ease = None        # 默认：放量档
         self._debounce = None
         self._svg = ""
         self._layers = {}
@@ -381,7 +381,7 @@ class Studio(tk.Tk):
     def _fill_modes(self):
         spec = self.spec
         ms = spec.get("modes") or []
-        self._mode_labels = dict((m["id"], m["label"]) for m in ms)   # 两种 kind 都要（通裁无下拉，但要点树）
+        self._mode_labels = dict((m["id"], m["label"]) for m in ms)   # 两种 kind 都要（古制无下拉，但要点树）
         if spec.get("mode_kind") == "profile":
             self.base_box["values"] = [m["label"] for m in ms]
             pick = getattr(self, "_pending_mode", None)
@@ -404,7 +404,7 @@ class Studio(tk.Tk):
             self.ease_box.pack_forget()
             self.profile = None
             self.ease = None
-            # 通裁：模式不在下拉里，但 base_var 必须指向当前夹具，否则"点树上的 V3"落不到 V3
+            # 古制：模式不在下拉里，但 base_var 必须指向当前夹具，否则"点树上的 V3"落不到 V3
             pick = getattr(self, "_pending_mode", None)
             pick_label = self._mode_labels.get(pick) if pick else None
             if not pick_label and ms:
@@ -431,7 +431,7 @@ class Studio(tk.Tk):
         if not self.spec:
             return
         mid = self._mode_id()
-        if self.spec.get("mode_kind") == "fixture" and mid:      # 通裁：模式即号型
+        if self.spec.get("mode_kind") == "fixture" and mid:      # 古制：模式即号型
             sizes = (self.spec.get("sizes") or {}).get(self.sex) or []
             if mid in sizes:
                 self.size = mid
@@ -441,7 +441,7 @@ class Studio(tk.Tk):
         self.mode_note.configure(text=self._mode_note())
         A.log("ui.mode", pid=self.spec["id"], profile=self.profile or "-", ease=self.ease or "-")
         # 换基准/换夹具/换放量 = 换一整套参数：覆盖清掉，滑杆按新基准重建
-        # （分裁的 artifact↔vendor、通裁的 V3→V2 都要重算，否则滑杆还停在旧值）
+        # （默认的 artifact↔vendor、古制的 V3→V2 都要重算，否则滑杆还停在旧值）
         self.overrides = {}
         self._build_params()             # 内部会 render
         if self._loading:
@@ -450,7 +450,7 @@ class Studio(tk.Tk):
     def _load_sizes(self):
         sizes = self.spec["sizes"][self.sex]
         self.size_box["values"] = sizes
-        if self.spec["cut"] == "通裁":                 # 通裁：号型就是夹具 id → 跟当前模式保持一致
+        if self.spec["cut"] == "古制":                 # 古制：号型就是夹具 id → 跟当前模式保持一致
             want = self._mode_id() or (sizes[0] if sizes else "")
             self.size = want if want in sizes else (sizes[0] if sizes else "")
         else:
@@ -463,7 +463,7 @@ class Studio(tk.Tk):
         self.sex = self.sex_var.get()
         self._load_sizes()
         self.overrides = {}
-        self._build_params()        # 分裁的滑杆基准随性别变（女 artifact / 男 vendor）
+        self._build_params()        # 默认的滑杆基准随性别变（女 artifact / 男 vendor）
 
     def on_size(self):
         if not self.spec:
@@ -576,7 +576,7 @@ class Studio(tk.Tk):
     def _param_base(self):
         """滑杆初值＝子程序自己算出来的参数表。
 
-        分裁（make）调 `make.py … --dump-params` 现问；通裁（params）取 fixtures。
+        默认（make）调 `make.py … --dump-params` 现问；古制（params）取 fixtures。
         这样父程序不另存尺码表，子程序改档差时界面自动跟上。
         """
         try:
@@ -801,8 +801,8 @@ class Studio(tk.Tk):
         e_label = row("名称", "我的版型")
         r0 = tk.Frame(frm, bg=PANEL); r0.pack(fill="x", pady=3)
         tk.Label(r0, text="裁法", font=FONT, bg=PANEL, fg=MUTE, width=13, anchor="w").pack(side="left")
-        cut_var = tk.StringVar(value="分裁")
-        ttk.Combobox(r0, textvariable=cut_var, values=["分裁", "通裁"], state="readonly",
+        cut_var = tk.StringVar(value="默认")
+        ttk.Combobox(r0, textvariable=cut_var, values=["默认", "古制"], state="readonly",
                      font=FONT, style="Studio.TCombobox", width=10).pack(side="left")
         e_proj = row("项目目录", projs[0] if projs else "")
         e_script = row("脚本（相对项目）", "pattern/build.py")
@@ -1538,8 +1538,8 @@ class Studio(tk.Tk):
         self._lib_win = dlg
         tk.Label(dlg, text="共享组件库", font=FONT_T, bg=PANEL, fg=INK).pack(
             anchor="w", padx=16, pady=(12, 2))
-        tk.Label(dlg, text="studio 内部资产：默认收录所有项目组件（分裁=裁片，通裁=区块）。\n"
-                            "分裁组件只在分裁版型间互通；通裁组件只在通裁版型间互通。\n"
+        tk.Label(dlg, text="studio 内部资产：默认收录所有项目组件（默认=裁片，古制=区块）。\n"
+                            "默认组件只在默认版型间互通；古制组件只在古制版型间互通。\n"
                             "插入＝引用实例（记录库 id + 版本）；「断开引用」后保留当前几何快照；不做自动参数适配。",
                  font=FONT, bg=PANEL, fg=MUTE, justify="left").pack(anchor="w", padx=16)
 
@@ -1713,10 +1713,10 @@ class Studio(tk.Tk):
             return
         src_cut = (comp.get("source") or {}).get("cut")
         if not src_cut:
-            src_cut = "分裁" if comp.get("kind") == "piece" else "通裁"
+            src_cut = "默认" if comp.get("kind") == "piece" else "古制"
         if self.spec["cut"] != src_cut:
             messagebox.showinfo("共享组件",
-                                "分裁组件只和分裁互通；通裁组件只在通裁内部互通。\n"
+                                "默认组件只和默认互通；古制组件只在古制内部互通。\n"
                                 "当前是%s版型，不能插入%s组件。" % (self.spec["cut"], src_cut),
                                 parent=self._lib_win)
             return
@@ -1736,7 +1736,7 @@ class Studio(tk.Tk):
         self._fill_components(select=name)
         self._fill_layers()
         if kind == "block":
-            self.status.configure(text="已插入项目区块：%s（通裁内部参考；整衣 DXF 仍由导出产物出）" % name)
+            self.status.configure(text="已插入项目区块：%s（古制内部参考；整衣 DXF 仍由导出产物出）" % name)
         else:
             self.status.configure(text="已插入共享组件：%s（引用 %s v%s）"
                                   % (name, comp["id"], ref["version"]))
@@ -1746,8 +1746,8 @@ class Studio(tk.Tk):
     def _lib_save_current(self):
         name = self.view.selected()
         if not name:
-            msg = ("先在预览里点选一个裁片。" if self.spec and self.spec["cut"] == "分裁"
-                   else "通裁没有可点选的独立裁片；项目区块已默认收录在共享库。")
+            msg = ("先在预览里点选一个裁片。" if self.spec and self.spec["cut"] == "默认"
+                   else "古制没有可点选的独立裁片；项目区块已默认收录在共享库。")
             messagebox.showinfo("存入共享库", msg, parent=self._lib_win)
             return
         piece = self.view.piece_of(name)
@@ -1759,7 +1759,7 @@ class Studio(tk.Tk):
                       size=self.size, sex=self.sex,
                       profile=self.profile, ease=self.ease,
                       overrides=dict(self.overrides))
-        kind = "piece" if self.spec["cut"] == "分裁" else "block"
+        kind = "piece" if self.spec["cut"] == "默认" else "block"
         self.status.configure(text="存入共享库…")
         A.log("ui.library.save.start", name=name, pid=self.spec["id"], kind=kind)
         threading.Thread(target=self._do_lib_save,
@@ -1933,8 +1933,8 @@ class Studio(tk.Tk):
         """按当前排料直接出一份可裁 DXF（不动子程序产物）。"""
         if not self.spec:
             return
-        if self.spec["cut"] != "分裁":
-            self.status.configure(text="通裁请用「导出产物」：整衣 DXF 已包含")
+        if self.spec["cut"] != "默认":
+            self.status.configure(text="古制请用「导出产物」：整衣 DXF 已包含")
             return
         if not self._pieces:
             self.status.configure(text="还没有裁片几何（先等预览出图）")
@@ -2040,7 +2040,7 @@ class Studio(tk.Tk):
         plan = A.batch_plan(self.spec["id"])
         plan_all = A.batch_plan(self.spec["id"], all_sizes=True)
         tk.Label(dlg, text="每模式取中码：%d 组　｜　每模式全码：%d 组\n"
-                           "每组产出：SVG + 裁片 JSON + DXF（通裁另含整衣 DXF）+ 形制核对"
+                           "每组产出：SVG + 裁片 JSON + DXF（古制另含整衣 DXF）+ 形制核对"
                  % (len(plan), len(plan_all)), font=FONT, bg=PANEL, fg=MUTE, justify="left"
                  ).pack(anchor="w", padx=14)
         var = tk.IntVar(value=0)
@@ -2181,7 +2181,7 @@ class Studio(tk.Tk):
                     A.log_exc("ui.export.layout_png", e, pid=pid, size=size)
                 r["files"].extend([os.path.basename(svg), os.path.basename(png)])
                 A.log("ui.export.layout", pid=pid, size=size, file=svg)
-            if cut == "分裁" and pieces:
+            if cut == "默认" and pieces:
                 try:
                     lr = A.export_layout_dxf(pid, size, sex, pieces=pieces, layout=layout_state,
                                              canvas=canvas, outdir=r["dir"],

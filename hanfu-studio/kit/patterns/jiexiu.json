@@ -1,7 +1,7 @@
 {
  "id": "jiexiu",
  "label": "对穿交接袖",
- "cut": "分裁",
+ "cut": "默认",
  "project": "hanfu-jiexiu",
  "project_dir": "hanfu-jiexiu",
  "script": "pattern/make.py",

@@ -213,7 +213,7 @@ def check_invariants(g, pieces, params, resolved):
                 if any(abs(x - half) <= 1.5 for x in xs):
                     found = True
                     break
-            out.append(_item("结构自洽", "门襟越中 %.0f（分裁）" % half,
+            out.append(_item("结构自洽", "门襟越中 %.0f（默认）" % half,
                              "PASS" if found else "WARN",
                              "裁片轮廓上%s找到 x=%.0f 的门襟边" % ("已" if found else "未", half)))
         elif kind == "piece_names":

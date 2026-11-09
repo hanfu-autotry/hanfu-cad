@@ -5,7 +5,7 @@
   {
    "id": "banbi",
    "label": "对穿交半臂",
-   "cut": "分裁",
+   "cut": "默认",
    "project": "hanfu-cad",
    "script": "pattern/make.py",
    "run": {
@@ -160,7 +160,7 @@
   {
    "id": "jiexiu",
    "label": "对穿交接袖",
-   "cut": "分裁",
+   "cut": "默认",
    "project": "hanfu-jiexiu",
    "script": "pattern/make.py",
    "run": {
@@ -325,7 +325,7 @@
   {
    "id": "shenyi",
    "label": "深衣",
-   "cut": "通裁",
+   "cut": "古制",
    "project": "hanfu-shenyi",
    "script": "pattern/build_shenyi.py",
    "pieces_post": "pattern/build_pieces_shenyi.py",
@@ -415,7 +415,7 @@
     }
    ],
    "mode_kind": "fixture",
-   "mode_note": "通裁深衣：夹具即「可复用模式」，每个模式是一组已定的版型参数。",
+   "mode_note": "古制深衣：夹具即「可复用模式」，每个模式是一组已定的版型参数。",
    "gates": {
     "fab_w": 500,
     "max_panels": 4,
@@ -453,7 +453,7 @@
   {
    "id": "zhiling",
    "label": "原始直领交襟衣",
-   "cut": "通裁",
+   "cut": "古制",
    "project": "hanfu-shenyi",
    "script": "pattern/build.py",
    "run": {
@@ -551,8 +551,8 @@
   },
   {
    "id": "minggaojiaoling",
-   "label": "明制高交领（高交领·分裁）",
-   "cut": "分裁",
+   "label": "明制高交领（高交领·默认）",
+   "cut": "默认",
    "project": "ming-gaojiaoling",
    "script": "pattern/make.py",
    "run": {
@@ -682,8 +682,8 @@
   },
   {
    "id": "tangyuanling",
-   "label": "唐圆领（分裁·本案）",
-   "cut": "分裁",
+   "label": "唐圆领（默认·本案）",
+   "cut": "默认",
    "project": "tang-yuanling",
    "script": "pattern/make.py",
    "run": {
@@ -765,8 +765,8 @@
   },
   {
    "id": "zhilingduijin",
-   "label": "直领对襟（分裁·本案）",
-   "cut": "分裁",
+   "label": "直领对襟（默认·本案）",
+   "cut": "默认",
    "project": "hanfu-zhidui",
    "script": "pattern/make.py",
    "run": {
@@ -785,7 +785,7 @@
     {
      "id": "case",
      "label": "本案",
-     "note": "逐步绘图定稿：先只留领条与后片、后片复制成前片；再按通裁·原始直领 V1 开领宽 160、装领条（压边 40，中间露出后片 80，后领立起 77）"
+     "note": "逐步绘图定稿：先只留领条与后片、后片复制成前片；再按古制·原始直领 V1 开领宽 160、装领条（压边 40，中间露出后片 80，后领立起 77）"
     }
    ],
    "ease": [

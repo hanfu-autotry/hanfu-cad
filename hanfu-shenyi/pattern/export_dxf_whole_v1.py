@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""通裁 · V1 原始直领交襟衣 · 整衣铺开一片 DXF（方案 B）
+"""古制 · V1 原始直领交襟衣 · 整衣铺开一片 DXF（方案 B）
 ────────────────────────────────────────────────────────────────
 V1 无裳：整衣＝一块布（通袖 2000＝4 幅 × 500，高＝对折线×2），
   肩线在对折线（不剪），前中开口 ±80 贯通到下摆（两襟可滑），领条直条另裁绕颈后。
@@ -105,7 +105,7 @@ def write_dxf():
     for a, b in grain:
         msp.add_line(C(a), C(b), dxfattribs={"layer": "GRAIN_布纹"})
     ty = H + 240
-    msp.add_text("通裁 · V1 原始直领交襟衣 · 整衣铺开一片（一条连续外轮廓）",
+    msp.add_text("古制 · V1 原始直领交襟衣 · 整衣铺开一片（一条连续外轮廓）",
                  height=48, dxfattribs={"layer": "TEXT_文字", "style": "CN"}
                  ).set_placement((OX - 100, OY + ty + 190), align=TextEntityAlignment.LEFT)
     for i, t in enumerate(ANN):
@@ -160,7 +160,7 @@ def write_svg(path):
     poly(band_tab, "BAND_领条")
     for a, b in grain: seg(a, b, "GRAIN_布纹")
     o.append('<g font-family="sans-serif" fill="#111111">')
-    o.append('<text x="60" y="70" font-size="42" font-weight="600">通裁 · V1 原始直领交襟衣 · 整衣铺开一片</text>')
+    o.append('<text x="60" y="70" font-size="42" font-weight="600">古制 · V1 原始直领交襟衣 · 整衣铺开一片</text>')
     for i, t in enumerate(ANN):
         o.append('<text x="60" y="%d" font-size="27" fill="#444444">%s</text>' % (130 + i * 44, t))
     o.append('<text x="%g" y="%g" font-size="28">领条 ×1（另裁）</text>' % (P2(collar[0])[0], P2(collar[3])[1] - 14))

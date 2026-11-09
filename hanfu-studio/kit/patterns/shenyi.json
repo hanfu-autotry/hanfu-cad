@@ -1,7 +1,7 @@
 {
  "id": "shenyi",
  "label": "深衣",
- "cut": "通裁",
+ "cut": "古制",
  "project": "hanfu-shenyi",
  "project_dir": "hanfu-shenyi",
  "script": "pattern/build_shenyi.py",
@@ -126,5 +126,5 @@
   "verification/形制核对表.md",
   "直交一体_盲区解说.md"
  ],
- "subject": "02-深衣_通裁"
+ "subject": "02-深衣_古制"
 }
