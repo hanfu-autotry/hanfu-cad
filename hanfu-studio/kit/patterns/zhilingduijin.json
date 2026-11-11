@@ -1,0 +1,91 @@
+{
+ "id": "zhilingduijin",
+ "label": "直领对襟（默认·本案）",
+ "cut": "默认",
+ "project": "hanfu-zhidui",
+ "project_dir": "hanfu-zhidui",
+ "script": "pattern/make.py",
+ "script_exists": true,
+ "run": {
+  "kind": "make",
+  "argstyle": "--sex {sex} --size {size} --out {out}"
+ },
+ "modes": [
+  {
+   "id": "case",
+   "label": "本案",
+   "note": "逐步绘图定稿：先只留领条与后片、后片复制成前片；再按古制·原始直领 V1 开领宽 160、装领条（压边 40，中间露出后片 80，后领立起 77）"
+  }
+ ],
+ "mode_kind": null,
+ "ease": [
+  "合体"
+ ],
+ "knobs": [
+  {
+   "key": "NECK_W",
+   "label": "开领宽",
+   "min": 80,
+   "max": 240,
+   "step": 10,
+   "unit": "mm"
+  },
+  {
+   "key": "COLLAR_W",
+   "label": "领条宽",
+   "min": 60,
+   "max": 140,
+   "step": 5,
+   "unit": "mm"
+  },
+  {
+   "key": "LAPEL_FOLD",
+   "label": "领条压边（可见）",
+   "min": 20,
+   "max": 60,
+   "step": 5,
+   "unit": "mm"
+  },
+  {
+   "key": "NECK_H",
+   "label": "领条立起高",
+   "min": 40,
+   "max": 120,
+   "step": 5,
+   "unit": "mm"
+  }
+ ],
+ "extras": [],
+ "gates": {
+  "fab_w": 600.0,
+  "max_panels": 4,
+  "min_radius": 10,
+  "invariants": [],
+  "reference": [
+   {
+    "name": "裁片自检",
+    "cmd": "python pattern/step2.py",
+    "where": "hanfu-zhidui/",
+    "last": "领条 1803.9×95 ／ 开领宽 160 ／ 压边 40 ／ 立起 77（2026-11-09）"
+   }
+  ],
+  "parent": null,
+  "delta": {},
+  "seam_ledger": []
+ },
+ "scripts": {
+  "pattern": [
+   "flat.py",
+   "geo.py",
+   "make.py",
+   "sheet.py",
+   "step1.py",
+   "step2.py"
+  ],
+  "verification": []
+ },
+ "docs": [
+  "README.md"
+ ],
+ "subject": "07-直领对襟（默认·本案）_默认"
+}

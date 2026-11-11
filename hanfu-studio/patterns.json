@@ -845,6 +845,72 @@
    "product": "三片：领条（全衣一条，长＝2×前襟＋开领宽）／前片（开领 80）／后片（模板原样）；另有正面平铺线稿",
    "knob_note": "领条长由 2×前襟剪口边长＋开领宽 现算，不挂旋钮；折转段顶半宽照 V1 固定 44.5。",
    "custom": true
+  },
+  {
+   "id": "shiyanshuling",
+   "label": "试验竖领浅交襟（竖领·默认）",
+   "cut": "默认",
+   "project": "shiyan-shuling",
+   "script": "pattern/make.py",
+   "run": {
+    "kind": "make",
+    "argstyle": "--sex {sex} --size {size} --out {out}"
+   },
+   "sexes": [
+    "—"
+   ],
+   "sizes": {
+    "—": [
+     "本案"
+    ]
+   },
+   "modes": [
+    {
+     "id": "case",
+     "label": "试验本案",
+     "note": "以厂商基准半臂 L770 为底逐步构造：P₁/P₂ 解析 → VP=50 → P₁P₂ 60° 弧作新领口 → 上领子等高 30mm 连续竖起（A 在 P₁ 右上方）→ 领子按衣片分三块 → 根据共边做成一条带状（三段沿 P₁A / P₁′A′ 相接、两端分开首尾不接、不自交）"
+    }
+   ],
+   "ease": [
+    "合体"
+   ],
+   "knobs": [],
+   "gates": {
+    "fab_w": 600.0,
+    "max_panels": 4,
+    "min_radius": 10,
+    "invariants": [
+     {
+      "name": "piece_names",
+      "expect": [
+       "前片（右）",
+       "前片（左·镜像）",
+       "后片（右·半）",
+       "后片（左·半·镜像）",
+       "领条"
+      ]
+     }
+    ],
+    "reference": [
+     {
+      "name": "第 6 步自检",
+      "cmd": "python pattern/step6.py",
+      "where": "shiyan-shuling/",
+      "last": "26/26 PASS；领条 8 边 / 共边 2×30 / 端头 2×30 / 自交 0 / 面积 7023.330613（2026-11-11）"
+     },
+     {
+      "name": "模板自检",
+      "cmd": "python pattern/save_template.py",
+      "where": "shiyan-shuling/",
+      "last": "11/11 PASS（2026-11-11）"
+     }
+    ],
+    "parent": null,
+    "delta": {},
+    "seam_ledger": []
+   },
+   "custom": true,
+   "knob_note": "定稿几何（第 6 步），暂无旋钮；改版型走改 pattern/*.py 或重新派生（不造假滑杆）。"
   }
  ]
 }

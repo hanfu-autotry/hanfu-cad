@@ -9,6 +9,10 @@
 | `02-深衣_古制/` | 古制：深衣 V2 宽袖 / V3 窄袖 的剪裁图与平铺图 | shenyi | 三步图(1)、剪裁与平铺(2) |
 | `03-原始直领交襟衣_古制/` | 古制：原始直领交襟衣 V1 的三步图 | zhiling | 三步图(1) |
 | `04-直交一体_术语证据/` | 跨版型的术语口径证据：交叠量 → 直领 / v / y / x 四形态 | banbi、jiexiu、shenyi、zhiling | 证据(4) |
+| `05-明制高交领（高交领·默认）_默认/` | 新建版型 明制高交领（高交领·默认）（minggaojiaoling）的素材：补 rules 或把图投到 intake/ | minggaojiaoling | 暂无 |
+| `06-唐圆领（默认·本案）_默认/` | 新建版型 唐圆领（默认·本案）（tangyuanling）的素材：补 rules 或把图投到 intake/ | tangyuanling | 暂无 |
+| `07-直领对襟（默认·本案）_默认/` | 新建版型 直领对襟（默认·本案）（zhilingduijin）的素材：补 rules 或把图投到 intake/ | zhilingduijin | 暂无 |
+| `08-试验竖领浅交襟（竖领·默认）_默认/` | 新建版型 试验竖领浅交襟（竖领·默认）（shiyanshuling）的素材：补 rules 或把图投到 intake/ | shiyanshuling | 暂无 |
 | `99-来历待考/` | 来源未核实（不得用于交付） | — | 1 |
 | `_来源清单/` | 项目自带的 csv/md/html | — | 查出处用，不当素材 |
 | `intake/` | **harness 投放口** | — | 新素材放这里并登记一行 |

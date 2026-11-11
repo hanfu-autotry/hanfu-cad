@@ -1,0 +1,94 @@
+{
+ "id": "tangyuanling",
+ "label": "唐圆领（默认·本案）",
+ "cut": "默认",
+ "project": "tang-yuanling",
+ "project_dir": "tang-yuanling",
+ "script": "pattern/make.py",
+ "script_exists": true,
+ "run": {
+  "kind": "make",
+  "argstyle": "--sex {sex} --size {size} --out {out}"
+ },
+ "modes": [
+  {
+   "id": "case",
+   "label": "本案",
+   "note": "逐步绘图定稿：P/P' 直径圆取下半圆为领口；续衽左缘斜率可调；领子三段连续不闭合；四片裁片（后片按模板后片半 ×2，不挖领）"
+  }
+ ],
+ "mode_kind": null,
+ "ease": [
+  "合体"
+ ],
+ "knobs": [
+  {
+   "key": "P_SHIFT",
+   "label": "领口点右移",
+   "min": 0,
+   "max": 80,
+   "step": 5,
+   "unit": "mm"
+  },
+  {
+   "key": "COLLAR_W",
+   "label": "领宽",
+   "min": 30,
+   "max": 120,
+   "step": 5,
+   "unit": "mm"
+  },
+  {
+   "key": "COLLAR_SPLIT",
+   "label": "P′ 在 AB 上的位置",
+   "min": 0.2,
+   "max": 0.8,
+   "step": 0.05,
+   "unit": ""
+  },
+  {
+   "key": "XUREN_TILT_DEG",
+   "label": "续衽左缘倾角",
+   "min": 5,
+   "max": 21,
+   "step": 1,
+   "unit": "°"
+  }
+ ],
+ "extras": [],
+ "gates": {
+  "fab_w": 600.0,
+  "max_panels": 4,
+  "min_radius": 10,
+  "invariants": [],
+  "reference": [
+   {
+    "name": "四片裁片自检",
+    "cmd": "python pattern/step6.py",
+    "where": "tang-yuanling/",
+    "last": "领条/前片原生/前片续衽/后片（半·模板原样）×2（2026-11-09，出图走 sheet.write_sheet）"
+   }
+  ],
+  "parent": null,
+  "delta": {},
+  "seam_ledger": []
+ },
+ "scripts": {
+  "pattern": [
+   "geo.py",
+   "make.py",
+   "sheet.py",
+   "step1.py",
+   "step2.py",
+   "step3.py",
+   "step4.py",
+   "step5.py",
+   "step6.py"
+  ],
+  "verification": []
+ },
+ "docs": [
+  "README.md"
+ ],
+ "subject": "06-唐圆领（默认·本案）_默认"
+}

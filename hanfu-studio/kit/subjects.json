@@ -48,5 +48,37 @@
    "直交一体",
    "谱系"
   ]
+ },
+ {
+  "id": "05-明制高交领（高交领·默认）_默认",
+  "feeds": [
+   "minggaojiaoling"
+  ],
+  "rules": [],
+  "note": "新建版型 明制高交领（高交领·默认）（minggaojiaoling）的素材：补 rules 或把图投到 intake/"
+ },
+ {
+  "id": "06-唐圆领（默认·本案）_默认",
+  "feeds": [
+   "tangyuanling"
+  ],
+  "rules": [],
+  "note": "新建版型 唐圆领（默认·本案）（tangyuanling）的素材：补 rules 或把图投到 intake/"
+ },
+ {
+  "id": "07-直领对襟（默认·本案）_默认",
+  "feeds": [
+   "zhilingduijin"
+  ],
+  "rules": [],
+  "note": "新建版型 直领对襟（默认·本案）（zhilingduijin）的素材：补 rules 或把图投到 intake/"
+ },
+ {
+  "id": "08-试验竖领浅交襟（竖领·默认）_默认",
+  "feeds": [
+   "shiyanshuling"
+  ],
+  "rules": [],
+  "note": "新建版型 试验竖领浅交襟（竖领·默认）（shiyanshuling）的素材：补 rules 或把图投到 intake/"
  }
 ]

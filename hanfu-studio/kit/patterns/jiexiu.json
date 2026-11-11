@@ -28,7 +28,88 @@
   "合体",
   "宽松"
  ],
- "knobs": [],
+ "knobs": [
+  {
+   "key": "L",
+   "label": "衣长（后中）",
+   "min": 700,
+   "max": 1050,
+   "step": 5,
+   "unit": "mm"
+  },
+  {
+   "key": "W_HEM",
+   "label": "平铺摆宽",
+   "min": 700,
+   "max": 1800,
+   "step": 10,
+   "unit": "mm"
+  },
+  {
+   "key": "OV",
+   "label": "交叠（越中量）",
+   "min": 120,
+   "max": 450,
+   "step": 10,
+   "unit": "mm"
+  },
+  {
+   "key": "Y_ARM",
+   "label": "袖根高（腋点高）",
+   "min": 380,
+   "max": 660,
+   "step": 5,
+   "unit": "mm"
+  },
+  {
+   "key": "SLEEVE_LEN",
+   "label": "衣身袖长（已砍半）",
+   "min": 60,
+   "max": 220,
+   "step": 2,
+   "unit": "mm"
+  },
+  {
+   "key": "CUFF",
+   "label": "袖口宽",
+   "min": 120,
+   "max": 300,
+   "step": 5,
+   "unit": "mm"
+  },
+  {
+   "key": "NECK",
+   "label": "预开领宽（通口）",
+   "min": 60,
+   "max": 280,
+   "step": 5,
+   "unit": "mm"
+  },
+  {
+   "key": "COL_W",
+   "label": "领缘条宽",
+   "min": 30,
+   "max": 80,
+   "step": 2,
+   "unit": "mm"
+  },
+  {
+   "key": "JS",
+   "label": "接袖长",
+   "min": 100,
+   "max": 560,
+   "step": 5,
+   "unit": "mm"
+  },
+  {
+   "key": "WRIST",
+   "label": "腕口宽",
+   "min": 90,
+   "max": 200,
+   "step": 5,
+   "unit": "mm"
+  }
+ ],
  "extras": [],
  "gates": {
   "fab_w": 500,
@@ -65,6 +146,7 @@
   "pattern": [
    "assembly.py",
    "build.py",
+   "construct.py",
    "export_dxf.py",
    "make.py",
    "preview.py",

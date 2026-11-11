@@ -14,7 +14,7 @@
 | `ming-gaojiaoling/` | 子程序 | **明制高交领**（用户手绘标准图，单号「本案」） |
 | `tang-yuanling/` | 子程序 | **唐圆领**（逐步绘图定稿，单号「本案」） |
 | `hanfu-zhidui/` | 子程序 | **直领对襟**（以半臂后片为底，照原始直领的口径开领装领，单号「本案」） |
-| `shiyan-shuling/` | 试验版型 | **试验竖领浅交襟**（以厂商基准半臂为底逐步构造；领条＝**一条带状**，三段沿共边相接、两端分开首尾不接，不自交；单号「本案」） |
+| `shiyan-shuling/` | 试验版型（已注册） | **试验竖领浅交襟**（以厂商基准半臂为底逐步构造；领条＝**一条带状**，三段沿共边相接、两端分开首尾不接，不自交；单号「本案」） |
 
 ## 口径
 
@@ -27,7 +27,7 @@
 
 两套底层逻辑不同，**不硬合并**：几何留在各自项目里，壳只认「脚本 ＋ 参数 ＋ 产物」。
 
-已注册版型（`hanfu-studio/patterns.json`，共 7 个）：
+已注册版型（`hanfu-studio/patterns.json`，共 8 个）：
 
 | id | 口径 | 项目 | 脚本 | 号型 |
 |---|---|---|---|---|
@@ -38,9 +38,10 @@
 | `minggaojiaoling` | 默认 | `ming-gaojiaoling` | `pattern/make.py` | 本案 |
 | `tangyuanling` | 默认 | `tang-yuanling` | `pattern/make.py` | 本案 |
 | `zhilingduijin` | 默认 | `hanfu-zhidui` | `pattern/make.py` | 本案 |
+| `shiyanshuling` | 默认 | `shiyan-shuling` | `pattern/make.py` | 本案（试验） |
 
-> 另有**试验版型** `shiyan-shuling`（竖领浅交襟）：**尚未注册**（没有 `make.py` 契约入口），
-> 以 `pattern/step6.py` 出图、`pattern/save_template.py` 落模板（`shuling-v1`）。说明见 `shiyan-shuling/使用说明.md`。
+> `shiyanshuling` 是**试验版型**：定稿几何（第 6 步），**暂无旋钮**（不造假滑杆）；
+> 改版型走改 `pattern/*.py` 或重新派生。模板 `pattern/_tpl.pieces.json`（`shuling-v1`）。说明见 `shiyan-shuling/使用说明.md`。
 
 ## 父-子关系（别改口径）
 

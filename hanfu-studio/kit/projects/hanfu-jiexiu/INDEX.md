@@ -9,6 +9,7 @@
 |---|---|
 | 版型/出图 | `hanfu-jiexiu/pattern/assembly.py` |
 | 版型/出图 | `hanfu-jiexiu/pattern/build.py` |
+| 版型/出图 | `hanfu-jiexiu/pattern/construct.py` |
 | 版型/出图 | `hanfu-jiexiu/pattern/export_dxf.py` |
 | 版型/出图 | `hanfu-jiexiu/pattern/make.py` |
 | 版型/出图 | `hanfu-jiexiu/pattern/preview.py` |

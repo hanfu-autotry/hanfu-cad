@@ -1,0 +1,80 @@
+{
+ "id": "shiyanshuling",
+ "label": "试验竖领浅交襟（竖领·默认）",
+ "cut": "默认",
+ "project": "shiyan-shuling",
+ "project_dir": "shiyan-shuling",
+ "script": "pattern/make.py",
+ "script_exists": true,
+ "run": {
+  "kind": "make",
+  "argstyle": "--sex {sex} --size {size} --out {out}"
+ },
+ "modes": [
+  {
+   "id": "case",
+   "label": "试验本案",
+   "note": "以厂商基准半臂 L770 为底逐步构造：P₁/P₂ 解析 → VP=50 → P₁P₂ 60° 弧作新领口 → 上领子等高 30mm 连续竖起（A 在 P₁ 右上方）→ 领子按衣片分三块 → 根据共边做成一条带状（三段沿 P₁A / P₁′A′ 相接、两端分开首尾不接、不自交）"
+  }
+ ],
+ "mode_kind": null,
+ "ease": [
+  "合体"
+ ],
+ "knobs": [],
+ "extras": [],
+ "gates": {
+  "fab_w": 600.0,
+  "max_panels": 4,
+  "min_radius": 10,
+  "invariants": [
+   {
+    "name": "piece_names",
+    "expect": [
+     "前片（右）",
+     "前片（左·镜像）",
+     "后片（右·半）",
+     "后片（左·半·镜像）",
+     "领条"
+    ]
+   }
+  ],
+  "reference": [
+   {
+    "name": "第 6 步自检",
+    "cmd": "python pattern/step6.py",
+    "where": "shiyan-shuling/",
+    "last": "26/26 PASS；领条 8 边 / 共边 2×30 / 端头 2×30 / 自交 0 / 面积 7023.330613（2026-11-11）"
+   },
+   {
+    "name": "模板自检",
+    "cmd": "python pattern/save_template.py",
+    "where": "shiyan-shuling/",
+    "last": "11/11 PASS（2026-11-11）"
+   }
+  ],
+  "parent": null,
+  "delta": {},
+  "seam_ledger": []
+ },
+ "scripts": {
+  "pattern": [
+   "geo.py",
+   "make.py",
+   "save_template.py",
+   "sheet.py",
+   "step1.py",
+   "step2.py",
+   "step3.py",
+   "step4.py",
+   "step5.py",
+   "step6.py",
+   "verify_fit.py"
+  ],
+  "verification": []
+ },
+ "docs": [
+  "使用说明.md"
+ ],
+ "subject": "08-试验竖领浅交襟（竖领·默认）_默认"
+}

@@ -26,3 +26,31 @@
 - 跨版型的术语口径证据：交叠量 → 直领 / v / y / x 四形态
 - 喂给：banbi、jiexiu、shenyi、zhiling
 - 类型：证据 4 个
+
+## 05-明制高交领（高交领·默认）_默认
+
+- 新建版型 明制高交领（高交领·默认）（minggaojiaoling）的素材：补 rules 或把图投到 intake/
+- 喂给：minggaojiaoling
+- 类型：暂无
+- **新建：请补规则或往 intake/ 投放素材**
+
+## 06-唐圆领（默认·本案）_默认
+
+- 新建版型 唐圆领（默认·本案）（tangyuanling）的素材：补 rules 或把图投到 intake/
+- 喂给：tangyuanling
+- 类型：暂无
+- **新建：请补规则或往 intake/ 投放素材**
+
+## 07-直领对襟（默认·本案）_默认
+
+- 新建版型 直领对襟（默认·本案）（zhilingduijin）的素材：补 rules 或把图投到 intake/
+- 喂给：zhilingduijin
+- 类型：暂无
+- **新建：请补规则或往 intake/ 投放素材**
+
+## 08-试验竖领浅交襟（竖领·默认）_默认
+
+- 新建版型 试验竖领浅交襟（竖领·默认）（shiyanshuling）的素材：补 rules 或把图投到 intake/
+- 喂给：shiyanshuling
+- 类型：暂无
+- **新建：请补规则或往 intake/ 投放素材**
