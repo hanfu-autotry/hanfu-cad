@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="3240mm" height="2130mm" viewBox="0 0 3240 2130">
+<title>试验竖领浅交襟 · 第 2 步 · 赋值 VP₁ = VP₂ = 5cm</title>
+<rect width="100%%" height="100%%" fill="#ffffff"/>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#8a8a8a" stroke-width="1.1"/></marker></defs>
+<g id="OUTLINE" stroke="#1a1a1a" stroke-width="2.2" fill="none" stroke-linejoin="round">
+  <path id="前片_ot" data-qty="2" d="M 970.0 420.0 L 1105.0 1190.0 C 770.0 1185.0 570.0 1160.0 571.0 1130.0 L 667.2 764.9 C 673.7 740.0 666.3 692.7 641.7 684.7 C 566.3 660.4 486.6 622.4 437.2 594.0 C 427.9 588.6 420.0 574.4 420.0 563.7 L 420.0 443.7 C 420.0 435.0 431.3 423.5 440.0 423.4 L 685.0 420.0 L 970.0 420.0 Z"/>
+</g>
+<g id="OLD_EDGE" stroke="#1a1a1a" stroke-width="2.2" fill="none" stroke-dasharray="14 10" stroke-linejoin="round">
+</g>
+<g id="POINTS" stroke="#c0392b" stroke-width="2.0" fill="#ffffff">
+  <circle cx="920.0" cy="420.0" r="11"/>
+  <circle cx="978.6" cy="469.2" r="11"/>
+  <circle cx="970.0" cy="420.0" r="11"/>
+  <circle cx="685.0" cy="420.0" r="11"/>
+  <circle cx="1105.0" cy="1190.0" r="11"/>
+</g>
+<g id="POINT_LABEL" fill="#c0392b" font-family="sans-serif" font-size="26" font-weight="600">
+  <text x="620.0" y="384.0" stroke="none">P₁ · VP₁=50mm</text>
+  <text x="1014.6" y="539.2" stroke="none">P₂ · VP₂=50mm</text>
+  <text x="992.0" y="376.0" stroke="none">V</text>
+  <text x="685.0" y="464.0" stroke="none">S</text>
+  <text x="1125.0" y="1170.0" stroke="none">H</text>
+</g>
+<g id="LINK" stroke="#c0392b" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+</g>
+<g id="NOTCH" stroke="#c0392b" stroke-width="2.6">
+  <path d="M 675.0 687.2 L 695.0 707.2 M 675.0 707.2 L 695.0 687.2"/>
+</g>
+<g id="MARK" stroke="#1f5fa8" stroke-width="1.6" stroke-dasharray="16 10" fill="none">
+  <path d="M 970.0 420.0 L 685.0 420.0"/>
+  <path d="M 970.0 420.0 L 1105.0 1190.0"/>
+</g>
+<g id="AUX_PATH" stroke="#8a8a8a" stroke-width="1.3" fill="none">
+  <path d="M 958.0 420.0 L 982.0 420.0"/>
+  <path d="M 970.0 432.0 L 970.0 408.0"/>
+  <path d="M 673.0 420.0 L 697.0 420.0"/>
+  <path d="M 685.0 432.0 L 685.0 408.0"/>
+  <path d="M 1093.0 1190.0 L 1117.0 1190.0"/>
+  <path d="M 1105.0 1202.0 L 1105.0 1178.0"/>
+</g>
+<g id="GRAIN" stroke="#1e7a4a" stroke-width="1.6">
+  <path d="M 732.1 619.1 L 792.9 990.9" marker-end="url(#ar)"/>
+</g>
+<g id="DIM" stroke="#8a8a8a" stroke-width="0.9" fill="#8a8a8a" font-family="sans-serif" font-size="26">
+</g>
+<g id="LABEL" fill="#1a1a1a" font-family="sans-serif">
+  <text x="420.0" y="374.0" font-size="34" font-weight="600">01 前片 ×2</text>
+</g>
+<g id="BLOCK" stroke="#1a1a1a" stroke-width="1.6" fill="none">
+  <rect x="420.0" y="1400.0" width="2400.0" height="410.0"/>
+</g>
+<g font-family="sans-serif" fill="#1a1a1a">
+  <text x="460.0" y="1478.0" font-size="44" font-weight="600">试验竖领浅交襟 · 第 2 步 · 赋值 VP₁ = VP₂ = 5cm</text>
+  <text x="460.0" y="1528.0" font-size="26" fill="#8a8a8a">底＝hanfu-cad 厂商基准男 M（模板原衣长 770）「02 前片 ×2」只读　｜　净版 mm　｜　专注前片</text>
+  <text x="460.0" y="1578.0" font-size="27">约束（用户令）：VP₁ = VP₂ = 5cm = 50mm；e_top、u_lap 均为单位向量 ⇒ a = b = 50</text>
+  <text x="460.0" y="1618.0" font-size="27">P₁ = V + 50·(−1,0) = (−50.00, 770.00)；P₂ = V + 50·u = (8.63, 720.75)　单位 mm</text>
+  <text x="460.0" y="1658.0" font-size="27">衣长：缩短 5cm 已撤销，回归厂商基准模板原值 L=770；θ=atan(135/770)=9.9443°，∠V=99.9443°</text>
+  <text x="460.0" y="1698.0" font-size="27">第 1 步的参数化定义与待定状态保留在 step1_*；本步只赋值，未改前片几何</text>
+</g>
+<g id="SCALE" stroke="#1a1a1a" stroke-width="2.2" fill="none">
+  <path d="M 460.0 1770.0 L 460.0 1740.0"/>
+  <path d="M 560.0 1770.0 L 560.0 1754.0"/>
+  <path d="M 660.0 1770.0 L 660.0 1754.0"/>
+  <path d="M 760.0 1770.0 L 760.0 1754.0"/>
+  <path d="M 860.0 1770.0 L 860.0 1754.0"/>
+  <path d="M 960.0 1770.0 L 960.0 1740.0"/>
+  <path d="M 1060.0 1770.0 L 1060.0 1754.0"/>
+  <path d="M 1160.0 1770.0 L 1160.0 1754.0"/>
+  <path d="M 1260.0 1770.0 L 1260.0 1754.0"/>
+  <path d="M 1360.0 1770.0 L 1360.0 1754.0"/>
+  <path d="M 1460.0 1770.0 L 1460.0 1740.0"/>
+  <path d="M 460.0 1770.0 L 1460.0 1770.0"/>
+</g>
+<text x="460.0" y="1814.0" font-family="sans-serif" font-size="25" fill="#1a1a1a">100mm 校验标尺（1:1 打印后实测，误差应 ≤0.5mm）</text>
+</svg>

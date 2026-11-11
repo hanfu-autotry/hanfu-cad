@@ -1,0 +1,118 @@
+{
+ "step": 1,
+ "scope": "02 前片 ×2（只做前片）",
+ "basis": {
+  "profile": "vendor",
+  "size": "M",
+  "L_vendor": 770.0,
+  "L": 770.0,
+  "template": "_base_vendor_L770.pieces.json",
+  "note": "厂商基准男 M 模板原衣长 770；衣长缩短 5cm 的改动已撤销，L 未覆盖；由 build.py 生成",
+  "readonly": true,
+  "geometry_changed": false
+ },
+ "vertices": {
+  "V": {
+   "xy": [
+    0.0,
+    770.0
+   ],
+   "meaning": "顶边右端 = 门襟边上端 = 前中缝顶点"
+  },
+  "S": {
+   "xy": [
+    -285.0,
+    770.0
+   ],
+   "meaning": "肩点，顶边左端"
+  },
+  "H": {
+   "xy": [
+    135.0,
+    0.0
+   ],
+   "meaning": "门襟边下端（越中 LAP_DX）"
+  }
+ },
+ "edges": {
+  "top": {
+   "from": [
+    0.0,
+    770.0
+   ],
+   "to": [
+    -285.0,
+    770.0
+   ],
+   "unit_dir": [
+    -1.0,
+    0.0
+   ],
+   "length": 285.0,
+   "equation": "y = L = 770, x ∈ [-285, 0]"
+  },
+  "lap": {
+   "from": [
+    0.0,
+    770.0
+   ],
+   "to": [
+    135.0,
+    0.0
+   ],
+   "unit_dir": [
+    0.17269061786580944,
+    -0.9849761167160983
+   ],
+   "length": 781.74484328328,
+   "equation": "P = V + b·(135,−770)/781.7448, b ∈ [0, 781.74]"
+  }
+ },
+ "derived": {
+  "theta_deg": 9.944294263185931,
+  "theta_note": "atan(LAP_DX/L)；标称 9.3° 是文物基准 L=825 的门襟偏角，也是 build.py 硬编码的 grain 方向",
+  "angle_at_V_deg": 99.94429426318592,
+  "grain": [
+   0.16160382110336113,
+   -0.9868557164068072
+  ],
+  "grain_cross_with_lap": 0.011244819253825838,
+  "grain_parallel_to_lap": false,
+  "grain_note": "布纹仍是 build.py 硬编码的 9.3° 方向，与厂商基准 L=770 的门襟边不平行；未自行修正"
+ },
+ "points": {
+  "P1": {
+   "on": "顶边（肩线）",
+   "expr": "V + a·(-1, 0)",
+   "param": "a",
+   "range": [
+    0.0,
+    285.0
+   ],
+   "value": null,
+   "status": "待定：本步不赋值"
+  },
+  "P2": {
+   "on": "门襟边",
+   "expr": "V + b·u_lap",
+   "param": "b",
+   "range": [
+    0.0,
+    781.74484328328
+   ],
+   "value": null,
+   "status": "待定：本步不赋值"
+  }
+ },
+ "construction": {
+  "rule": "给定领口线 ℓ: X = Q + s·d，P1 = ℓ∩顶边、P2 = ℓ∩门襟边，由 2×2 线性方程组解析求交",
+  "function": "geo.construct_from_neckline(Q, d)",
+  "optional_constraint": "若后续要求 |VP1| = |VP2| = r，则 a = b = r（单参数），本步不预设"
+ },
+ "note": "位置不从截图量；a、b 未赋值。图上的空心点是示意占位，非定量。",
+ "demo_placeholders": {
+  "a": 142.5,
+  "b": 390.87242164164,
+  "meaning": "仅用于画图示意，不是 P1/P2 的位置"
+ }
+}

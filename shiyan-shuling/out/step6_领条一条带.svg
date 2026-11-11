@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2600" height="3200" viewBox="0 0 520.000 640.000">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="24.000" y="22.000" font-family="sans-serif" font-size="9.00" fill="#1a1a1a" text-anchor="start" font-weight="600">第 6 步 · 领条＝一条带状（三段沿共边相接 · 首尾不接）</text>
+<text x="24.000" y="37.000" font-family="sans-serif" font-size="4.50" fill="#6a6a6a" text-anchor="start" font-weight="400">沿共边依次翻折展开（刚性铰接）：段① 不动 → 段② 关于 P₁A 反射 → 段③ 两次反射；反射等距，形状与面积不变</text>
+<text x="24.000" y="50.000" font-family="sans-serif" font-size="4.50" fill="#6a6a6a" text-anchor="start" font-weight="400">黑实线＝外轮廓（下缘 2 段贝塞尔 C 标红）｜蓝实线＝两条共边（段与段缝线，各 30mm）｜绿粗线＝两端头（各 30mm，分开不接）</text>
+<path d="M 435.7 273.1 C 392.0 265.3 355.8 234.9 340.7 193.3 L 188.4 138.2 C 150.1 160.5 102.8 160.7 64.3 138.7 L 101.4 107.3 L 212.5 96.0 L 349.1 145.4 L 427.3 225.2 L 435.7 273.1 Z" stroke="#1a1a1a" stroke-width="1.0" fill="none" stroke-linejoin="round"/>
+<path d="M 435.7 273.1 C 392.0 265.3 355.8 234.9 340.7 193.3" stroke="#c0392b" stroke-width="1.7" fill="none"/>
+<path d="M 188.4 138.2 C 150.1 160.5 102.8 160.7 64.3 138.7" stroke="#c0392b" stroke-width="1.7" fill="none"/>
+<path d="M 340.7 193.3 L 349.1 145.4" stroke="#1f5fa8" stroke-width="1.4" fill="none"/>
+<path d="M 188.4 138.2 L 212.5 96.0" stroke="#1f5fa8" stroke-width="1.4" fill="none"/>
+<path d="M 427.3 225.2 L 435.7 273.1" stroke="#1e8449" stroke-width="2.2" fill="none"/>
+<path d="M 64.3 138.7 L 101.4 107.3" stroke="#1e8449" stroke-width="2.2" fill="none"/>
+<text x="388.193" y="206.227" font-family="sans-serif" font-size="4.60" fill="#1a1a1a" text-anchor="middle" font-weight="600">段① 前片左襟</text>
+<text x="388.193" y="214.227" font-family="sans-serif" font-size="4.20" fill="#1f5fa8" text-anchor="middle" font-weight="400">A=2110.744392 mm²</text>
+<text x="268.726" y="141.635" font-family="sans-serif" font-size="4.60" fill="#1a1a1a" text-anchor="middle" font-weight="600">段② 后片</text>
+<text x="268.726" y="149.635" font-family="sans-serif" font-size="4.20" fill="#1f5fa8" text-anchor="middle" font-weight="400">A=2801.841829 mm²</text>
+<text x="138.426" y="122.525" font-family="sans-serif" font-size="4.60" fill="#1a1a1a" text-anchor="middle" font-weight="600">段③ 前片右襟</text>
+<text x="138.426" y="130.525" font-family="sans-serif" font-size="4.20" fill="#1f5fa8" text-anchor="middle" font-weight="400">A=2110.744392 mm²</text>
+<text x="310.895" y="171.336" font-family="sans-serif" font-size="3.90" fill="#1f5fa8" text-anchor="start" font-weight="400">共边 30</text>
+<text x="206.449" y="119.080" font-family="sans-serif" font-size="3.90" fill="#1f5fa8" text-anchor="start" font-weight="400">共边 30</text>
+<text x="431.294" y="235.184" font-family="sans-serif" font-size="3.90" fill="#1e8449" text-anchor="start" font-weight="400">端头 30</text>
+<text x="68.314" y="148.702" font-family="sans-serif" font-size="3.90" fill="#1e8449" text-anchor="start" font-weight="400">端头 30</text>
+<text x="24.000" y="322.000" font-family="sans-serif" font-size="4.00" fill="#6a6a6a" text-anchor="start" font-weight="400">段数 / 边数</text>
+<text x="24.000" y="329.000" font-family="sans-serif" font-size="4.80" fill="#1a1a1a" text-anchor="start" font-weight="600">3 段 / 8 条边（2 C + 6 L）</text>
+<text x="24.000" y="338.000" font-family="sans-serif" font-size="4.00" fill="#6a6a6a" text-anchor="start" font-weight="400">共边</text>
+<text x="24.000" y="345.000" font-family="sans-serif" font-size="4.80" fill="#1a1a1a" text-anchor="start" font-weight="600">2 条 × 30.000000 mm</text>
+<text x="24.000" y="354.000" font-family="sans-serif" font-size="4.00" fill="#6a6a6a" text-anchor="start" font-weight="400">端头（首尾不接）</text>
+<text x="24.000" y="361.000" font-family="sans-serif" font-size="4.80" fill="#1a1a1a" text-anchor="start" font-weight="600">2 条 × 30.000000 mm</text>
+<text x="24.000" y="370.000" font-family="sans-serif" font-size="4.00" fill="#6a6a6a" text-anchor="start" font-weight="400">自交</text>
+<text x="24.000" y="377.000" font-family="sans-serif" font-size="4.80" fill="#1a1a1a" text-anchor="start" font-weight="600">0 处（展开后不自交）</text>
+<text x="24.000" y="386.000" font-family="sans-serif" font-size="4.00" fill="#6a6a6a" text-anchor="start" font-weight="400">面积（三段和）</text>
+<text x="24.000" y="393.000" font-family="sans-serif" font-size="4.80" fill="#1a1a1a" text-anchor="start" font-weight="600">7023.330613 mm²</text>
+<text x="270.000" y="322.000" font-family="sans-serif" font-size="4.00" fill="#6a6a6a" text-anchor="start" font-weight="400">段① 前片左襟</text>
+<text x="270.000" y="329.000" font-family="sans-serif" font-size="4.80" fill="#1a1a1a" text-anchor="start" font-weight="600">2110.744392 mm²</text>
+<text x="270.000" y="338.000" font-family="sans-serif" font-size="4.00" fill="#6a6a6a" text-anchor="start" font-weight="400">段② 后片</text>
+<text x="270.000" y="345.000" font-family="sans-serif" font-size="4.80" fill="#1a1a1a" text-anchor="start" font-weight="600">2801.841829 mm²</text>
+<text x="270.000" y="354.000" font-family="sans-serif" font-size="4.00" fill="#6a6a6a" text-anchor="start" font-weight="400">段③ 前片右襟</text>
+<text x="270.000" y="361.000" font-family="sans-serif" font-size="4.80" fill="#1a1a1a" text-anchor="start" font-weight="600">2110.744392 mm²</text>
+<text x="270.000" y="370.000" font-family="sans-serif" font-size="4.00" fill="#6a6a6a" text-anchor="start" font-weight="400">解析 / 鞋带</text>
+<text x="270.000" y="377.000" font-family="sans-serif" font-size="4.80" fill="#1a1a1a" text-anchor="start" font-weight="600">7023.331 / 7023.331</text>
+<text x="270.000" y="386.000" font-family="sans-serif" font-size="4.00" fill="#6a6a6a" text-anchor="start" font-weight="400">周长</text>
+<text x="270.000" y="393.000" font-family="sans-serif" font-size="4.80" fill="#1a1a1a" text-anchor="start" font-weight="600">547.938736 mm</text>
+<text x="24.000" y="470.000" font-family="sans-serif" font-size="3.90" fill="#6a6a6a" text-anchor="start" font-weight="400">产物＝一条带状领子，由三部分组成：段①前片左襟 → 段②后片 → 段③前片右襟，沿共边 P₁A / P₁′A′ 首尾相接。</text>
+<text x="24.000" y="483.000" font-family="sans-serif" font-size="3.90" fill="#6a6a6a" text-anchor="start" font-weight="400">领条首尾不接：两端 P₂B / P₂′B′（绿粗线，各 30mm）分开落在带子两端，不再绕成环、不再自交。</text>
+<text x="24.000" y="496.000" font-family="sans-serif" font-size="3.90" fill="#6a6a6a" text-anchor="start" font-weight="400">展开为刚性铰接（反射等距）：边长 / 角度 / 面积全部不变，无拉伸、无近似；前 / 后片 cmds 与模板逐项相同。</text>
+</svg>

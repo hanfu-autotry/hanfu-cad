@@ -49,3 +49,7 @@ desktop.ini
 
 # 自建项目登记＝运行时状态（README 已注明运行时生成），且含本机绝对路径，不入库
 /hanfu-studio/projects.json
+
+# ── 试验项目里已作废的反例 / 对比产物（留在本地复查，不入库）──
+/shiyan-shuling/out/verify_*
+/shiyan-shuling/pattern/verify_fit.py

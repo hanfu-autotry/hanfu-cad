@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="56.0" y="62.0" font-family="sans-serif" font-size="38" fill="#1a1a1a" text-anchor="start" font-weight="600">第 4 步 · 领口局部放大（4×）· 上领缘直线折线</text>
+<text x="56.0" y="102.0" font-family="sans-serif" font-size="21" fill="#6f6f6f" text-anchor="start">蓝＝领子上缘直线折线 B→A→A′→B′ + 四条 30mm 宽度边；红＝第 3 步新领口 60° 圆弧（下缘，不重复描）</text>
+<text x="56.0" y="134.0" font-family="sans-serif" font-size="21" fill="#6f6f6f" text-anchor="start">红弧：圆心角 60° ⇒ R=弦长=76.5732mm、圆心 (21.968, 796.155)、凹向下摆；左片圆心镜像、两段在中缝 y≈722.80 相交</text>
+<text x="56.0" y="166.0" font-family="sans-serif" font-size="21" fill="#6f6f6f" text-anchor="start">11:48 修正：P₁P₂ 改 60° 弧、A 依然右上角、上领缘采用直线；A/A′ 竖起在顶边之上 29.55mm</text>
+<path d="M 70.0 390.0 L 1190.0 390.0" stroke="#1a1a1a" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+<path d="M 430.0 390.0 L 630.0 390.0" stroke="#1a1a1a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-dasharray="14 10"/>
+<path d="M 630.0 390.0 L 830.0 390.0" stroke="#1a1a1a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-dasharray="14 10"/>
+<path d="M 630.0 670.0 L 630.0 150.0" stroke="#6f6f6f" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-dasharray="26 14"/>
+<path d="M 630.0 390.0 L 664.5 587.0" stroke="#1a1a1a" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-dasharray="14 10"/>
+<path d="M 664.5 587.0 L 686.1 710.0" stroke="#1a1a1a" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+<path d="M 630.0 390.0 L 595.5 587.0" stroke="#1a1a1a" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-dasharray="14 10"/>
+<path d="M 595.5 587.0 L 573.9 710.0" stroke="#1a1a1a" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+<path d="M 643.8 468.8 L 450.7 271.8 L 809.3 271.8 L 616.2 468.8" stroke="#1f5fa8" stroke-width="3.4" fill="none" stroke-linejoin="round"/>
+<path d="M 664.5 587.0 L 643.8 468.8" stroke="#1f5fa8" stroke-width="3.0" fill="none" stroke-linecap="round"/>
+<path d="M 430.0 390.0 L 450.7 271.8" stroke="#1f5fa8" stroke-width="3.0" fill="none" stroke-linecap="round"/>
+<path d="M 830.0 390.0 L 809.3 271.8" stroke="#1f5fa8" stroke-width="3.0" fill="none" stroke-linecap="round"/>
+<path d="M 595.5 587.0 L 616.2 468.8" stroke="#1f5fa8" stroke-width="3.0" fill="none" stroke-linecap="round"/>
+<path d="M 430.0 390.0 L 431.8 394.7 L 433.6 399.4 L 435.5 404.0 L 437.5 408.6 L 439.5 413.2 L 441.6 417.7 L 443.8 422.2 L 446.1 426.7 L 448.5 431.1 L 450.9 435.5 L 453.4 439.8 L 455.9 444.2 L 458.6 448.4 L 461.3 452.6 L 464.0 456.8 L 466.9 460.9 L 469.8 465.0 L 472.8 469.1 L 475.8 473.0 L 478.9 477.0 L 482.1 480.9 L 485.3 484.7 L 488.6 488.5 L 491.9 492.2 L 495.4 495.9 L 498.8 499.5 L 502.4 503.0 L 506.0 506.5 L 509.6 510.0 L 513.3 513.3 L 517.1 516.7 L 520.9 519.9 L 524.7 523.1 L 528.7 526.2 L 532.6 529.3 L 536.6 532.3 L 540.7 535.2 L 544.8 538.1 L 549.0 540.9 L 553.2 543.6 L 557.4 546.3 L 561.7 548.9 L 566.0 551.4 L 570.4 553.8 L 574.8 556.2 L 579.3 558.5 L 583.8 560.8 L 588.3 562.9 L 592.9 565.0 L 597.4 567.0 L 602.1 568.9 L 606.7 570.8 L 611.4 572.6 L 616.1 574.3 L 620.9 575.9 L 625.6 577.5 L 630.4 578.9 L 635.2 580.3 L 640.1 581.6 L 644.9 582.9 L 649.8 584.0 L 654.7 585.1 L 659.6 586.1 L 664.5 587.0" stroke="#c0392b" stroke-width="4.2" fill="none" stroke-linejoin="round"/>
+<path d="M 830.0 390.0 L 828.2 394.7 L 826.4 399.4 L 824.5 404.0 L 822.5 408.6 L 820.5 413.2 L 818.4 417.7 L 816.2 422.2 L 813.9 426.7 L 811.5 431.1 L 809.1 435.5 L 806.6 439.8 L 804.1 444.2 L 801.4 448.4 L 798.7 452.6 L 796.0 456.8 L 793.1 460.9 L 790.2 465.0 L 787.2 469.1 L 784.2 473.0 L 781.1 477.0 L 777.9 480.9 L 774.7 484.7 L 771.4 488.5 L 768.1 492.2 L 764.6 495.9 L 761.2 499.5 L 757.6 503.0 L 754.0 506.5 L 750.4 510.0 L 746.7 513.3 L 742.9 516.7 L 739.1 519.9 L 735.3 523.1 L 731.3 526.2 L 727.4 529.3 L 723.4 532.3 L 719.3 535.2 L 715.2 538.1 L 711.0 540.9 L 706.8 543.6 L 702.6 546.3 L 698.3 548.9 L 694.0 551.4 L 689.6 553.8 L 685.2 556.2 L 680.7 558.5 L 676.2 560.8 L 671.7 562.9 L 667.1 565.0 L 662.6 567.0 L 657.9 568.9 L 653.3 570.8 L 648.6 572.6 L 643.9 574.3 L 639.1 575.9 L 634.4 577.5 L 629.6 578.9 L 624.8 580.3 L 619.9 581.6 L 615.1 582.9 L 610.2 584.0 L 605.3 585.1 L 600.4 586.1 L 595.5 587.0" stroke="#c0392b" stroke-width="4.2" fill="none" stroke-linejoin="round"/>
+<circle cx="630.0" cy="390.0" r="8" fill="#ffffff" stroke="#1a1a1a" stroke-width="2.2"/>
+<text x="646.0" y="360.0" font-family="sans-serif" font-size="23" fill="#1a1a1a" text-anchor="start" font-weight="600">V</text>
+<circle cx="430.0" cy="390.0" r="8" fill="#ffffff" stroke="#c0392b" stroke-width="2.2"/>
+<text x="314.0" y="432.0" font-family="sans-serif" font-size="23" fill="#c0392b" text-anchor="start" font-weight="600">P₁</text>
+<circle cx="830.0" cy="390.0" r="8" fill="#ffffff" stroke="#c0392b" stroke-width="2.2"/>
+<text x="856.0" y="432.0" font-family="sans-serif" font-size="23" fill="#c0392b" text-anchor="start" font-weight="600">P₁′</text>
+<circle cx="664.5" cy="587.0" r="8" fill="#ffffff" stroke="#c0392b" stroke-width="2.2"/>
+<text x="692.5" y="627.0" font-family="sans-serif" font-size="23" fill="#c0392b" text-anchor="start" font-weight="600">P₂</text>
+<circle cx="595.5" cy="587.0" r="8" fill="#ffffff" stroke="#c0392b" stroke-width="2.2"/>
+<text x="479.5" y="627.0" font-family="sans-serif" font-size="23" fill="#c0392b" text-anchor="start" font-weight="600">P₂′</text>
+<circle cx="450.7" cy="271.8" r="8" fill="#ffffff" stroke="#1f5fa8" stroke-width="2.2"/>
+<text x="346.7" y="301.8" font-family="sans-serif" font-size="23" fill="#1f5fa8" text-anchor="start" font-weight="600">A</text>
+<circle cx="809.3" cy="271.8" r="8" fill="#ffffff" stroke="#1f5fa8" stroke-width="2.2"/>
+<text x="835.3" y="301.8" font-family="sans-serif" font-size="23" fill="#1f5fa8" text-anchor="start" font-weight="600">A′</text>
+<circle cx="643.8" cy="468.8" r="8" fill="#ffffff" stroke="#1f5fa8" stroke-width="2.2"/>
+<text x="689.8" y="446.8" font-family="sans-serif" font-size="23" fill="#1f5fa8" text-anchor="start" font-weight="600">B</text>
+<circle cx="616.2" cy="468.8" r="8" fill="#ffffff" stroke="#1f5fa8" stroke-width="2.2"/>
+<text x="494.2" y="446.8" font-family="sans-serif" font-size="23" fill="#1f5fa8" text-anchor="start" font-weight="600">B′</text>
+<text x="70.0" y="752.0" font-family="sans-serif" font-size="23" fill="#1f5fa8" text-anchor="start">P₁A = P₂B = P₁′A′ = P₂′B′ = 30mm（领高，暂取 3cm）；蓝带＝等高、一条连续、竖起</text>
+<text x="70.0" y="788.0" font-family="sans-serif" font-size="20" fill="#6f6f6f" text-anchor="start">A = P₁ + 30·mirror(w)（P₁ 右上方）；B = V + 20·u 仍在直线 HP₂ 上（非线段）；上领缘＝直线折线</text>
+</svg>

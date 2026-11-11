@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="860" viewBox="0 0 900 860">
+<title>第 2 步 · V 附近局部放大</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#c0392b" stroke-width="1.4"/></marker></defs>
+<text x="60" y="40" font-family="sans-serif" font-size="30" font-weight="600" fill="#1a1a1a">第 2 步 · V 附近局部放大（3.2×）</text>
+<g stroke="#1a1a1a" stroke-width="3.2" fill="none">
+  <path d="M 60.0 316.0 L 508.0 316.0"/>
+  <path d="M 508.0 316.0 L 585.4 757.3"/>
+</g>
+<text x="66.4" y="300.0" font-family="sans-serif" font-size="22" fill="#8a8a8a">顶边（肩线）</text>
+<text x="601.4" y="727.3" font-family="sans-serif" font-size="22" fill="#8a8a8a">门襟边</text>
+<g stroke="#c0392b" stroke-width="1.6" fill="none">
+  <path d="M 508.0 316.0 L 508.0 282.0 M 348.0 316.0 L 348.0 282.0"/>
+  <path d="M 508.0 282.0 L 348.0 282.0" marker-start="url(#ar)" marker-end="url(#ar)"/>
+</g>
+<text x="428.0" y="270.0" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="600" fill="#c0392b">VP₁ = 50mm</text>
+<g stroke="#c0392b" stroke-width="1.6" fill="none">
+  <path d="M 508.0 316.0 L 474.5 321.9 M 535.6 473.6 L 502.1 479.5"/>
+  <path d="M 474.5 321.9 L 502.1 479.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+</g>
+<text x="520.1" y="400.7" font-family="sans-serif" font-size="24" font-weight="600" fill="#c0392b">VP₂ = 50mm</text>
+<g stroke="#c0392b" stroke-width="2.4" fill="#ffffff">
+  <circle cx="508.0" cy="316.0" r="9"/>
+  <circle cx="348.0" cy="316.0" r="9"/>
+  <circle cx="535.6" cy="473.6" r="9"/>
+</g>
+<g font-family="sans-serif" font-size="26" font-weight="600" fill="#c0392b">
+  <text x="524.0" y="300.0">V</text>
+  <text x="302.0" y="354.0">P₁</text>
+  <text x="551.6" y="507.6">P₂</text>
+</g>
+<text x="60" y="790" font-family="sans-serif" font-size="20" fill="#8a8a8a">θ = atan(135/770) = 9.9443°　｜　∠V = 99.9443°　｜　单位 mm</text>
+<text x="60" y="822" font-family="sans-serif" font-size="20" fill="#8a8a8a">仅放大重画已有线段，无新几何</text>
+</svg>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2360" height="1940" viewBox="0 0 472.000 388.000">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="44.000" y="22.000" font-family="sans-serif" font-size="8.00" fill="#1a1a1a" text-anchor="start" font-weight="600">第 5 步 · 领子三块（平裁平面区域 · 贝塞尔曲边 · 积分面积）</text>
+<text x="44.000" y="36.000" font-family="sans-serif" font-size="4.20" fill="#6a6a6a" text-anchor="start" font-weight="400">60° 弧＝三次贝塞尔 C（k=4/3·tan(Δθ/4)）；直线边＝L；cmds 仅 M/L/C/Z，与 sheet.py 出图定义一致</text>
+<text x="44.000" y="48.000" font-family="sans-serif" font-size="4.20" fill="#6a6a6a" text-anchor="start" font-weight="400">面积＝½∮(x dy−y dx)：直线段叉积 + 贝塞尔幂基解析积分；sheet.sample(4096) 鞋带独立交叉验证</text>
+<text x="44.000" y="68.000" font-family="sans-serif" font-size="5.60" fill="#1a1a1a" text-anchor="start" font-weight="600">领条·左襟</text>
+<text x="44.000" y="78.000" font-family="sans-serif" font-size="3.90" fill="#6a6a6a" text-anchor="start" font-weight="400">前片左襟领子（基准，未镜像）</text>
+<path d="M 112.6 186.8 C 85.7 182.0 63.3 163.3 54.0 137.5 L 59.2 108.0 L 107.5 157.2 L 112.6 186.8 Z" stroke="#1a1a1a" stroke-width="0.9" fill="none" stroke-linejoin="round"/>
+<path d="M 112.6 186.8 C 85.7 182.0 63.3 163.3 54.0 137.5" stroke="#c0392b" stroke-width="1.35" fill="none"/>
+<circle cx="112.635" cy="186.798" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<circle cx="54.000" cy="137.549" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<circle cx="54.000" cy="137.549" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<circle cx="59.181" cy="108.000" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<circle cx="107.454" cy="157.249" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<circle cx="112.635" cy="186.798" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<text x="44.000" y="222.000" font-family="sans-serif" font-size="5.40" fill="#1f5fa8" text-anchor="start" font-weight="600">A = 2110.744392 mm²</text>
+<text x="44.000" y="232.000" font-family="sans-serif" font-size="3.80" fill="#6a6a6a" text-anchor="start" font-weight="400">鞋带 2110.744358　差 3.35e-05</text>
+<text x="44.000" y="241.000" font-family="sans-serif" font-size="3.80" fill="#6a6a6a" text-anchor="start" font-weight="400">边缘曲线周长 ∫ds = 209.150087 mm</text>
+<text x="44.000" y="253.000" font-family="sans-serif" font-size="4.00" fill="#1a1a1a" text-anchor="start" font-weight="400">边缘曲线（4 条）：</text>
+<text x="44.000" y="262.000" font-family="sans-serif" font-size="3.40" fill="#c0392b" text-anchor="start" font-weight="400">  C  下缘 右 60° 弧 P₂→P₁（三次贝塞尔）</text>
+<text x="44.000" y="271.000" font-family="sans-serif" font-size="3.40" fill="#6a6a6a" text-anchor="start" font-weight="400">  L  宽度边 P₁A</text>
+<text x="44.000" y="280.000" font-family="sans-serif" font-size="3.40" fill="#6a6a6a" text-anchor="start" font-weight="400">  L  上缘 A→B（直线）</text>
+<text x="44.000" y="289.000" font-family="sans-serif" font-size="3.40" fill="#6a6a6a" text-anchor="start" font-weight="400">  L  端头 B→P₂</text>
+<text x="172.000" y="68.000" font-family="sans-serif" font-size="5.60" fill="#1a1a1a" text-anchor="start" font-weight="600">领条·后片</text>
+<text x="172.000" y="78.000" font-family="sans-serif" font-size="3.90" fill="#6a6a6a" text-anchor="start" font-weight="400">后片领子（梯形，上窄下宽）</text>
+<path d="M 182.0 137.5 L 282.0 137.5 L 276.8 108.0 L 187.2 108.0 L 182.0 137.5 Z" stroke="#1a1a1a" stroke-width="0.9" fill="none" stroke-linejoin="round"/>
+<circle cx="182.000" cy="137.549" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<circle cx="282.000" cy="137.549" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<circle cx="276.819" cy="108.000" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<circle cx="187.181" cy="108.000" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<text x="172.000" y="222.000" font-family="sans-serif" font-size="5.40" fill="#1f5fa8" text-anchor="start" font-weight="600">A = 2801.841829 mm²</text>
+<text x="172.000" y="232.000" font-family="sans-serif" font-size="3.80" fill="#6a6a6a" text-anchor="start" font-weight="400">鞋带 2801.841829　差 -3.64e-12</text>
+<text x="172.000" y="241.000" font-family="sans-serif" font-size="3.80" fill="#6a6a6a" text-anchor="start" font-weight="400">边缘曲线周长 ∫ds = 249.638563 mm</text>
+<text x="172.000" y="253.000" font-family="sans-serif" font-size="4.00" fill="#1a1a1a" text-anchor="start" font-weight="400">边缘曲线（4 条）：</text>
+<text x="172.000" y="262.000" font-family="sans-serif" font-size="3.40" fill="#6a6a6a" text-anchor="start" font-weight="400">  L  下缘 后颈直线 P₁→P₁′</text>
+<text x="172.000" y="271.000" font-family="sans-serif" font-size="3.40" fill="#6a6a6a" text-anchor="start" font-weight="400">  L  宽度边 P₁′A′</text>
+<text x="172.000" y="280.000" font-family="sans-serif" font-size="3.40" fill="#6a6a6a" text-anchor="start" font-weight="400">  L  上缘 A′→A（直线）</text>
+<text x="172.000" y="289.000" font-family="sans-serif" font-size="3.40" fill="#6a6a6a" text-anchor="start" font-weight="400">  L  宽度边 A→P₁</text>
+<text x="300.000" y="68.000" font-family="sans-serif" font-size="5.60" fill="#1a1a1a" text-anchor="start" font-weight="600">领条·右襟·镜像</text>
+<text x="300.000" y="78.000" font-family="sans-serif" font-size="3.90" fill="#6a6a6a" text-anchor="start" font-weight="400">前片右襟领子（＝左襟关于 x=0 镜像）</text>
+<path d="M 310.0 186.8 C 336.9 182.0 359.3 163.3 368.6 137.5 L 363.5 108.0 L 315.2 157.2 L 310.0 186.8 Z" stroke="#1a1a1a" stroke-width="0.9" fill="none" stroke-linejoin="round"/>
+<path d="M 310.0 186.8 C 336.9 182.0 359.3 163.3 368.6 137.5" stroke="#c0392b" stroke-width="1.35" fill="none"/>
+<circle cx="310.000" cy="186.798" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<circle cx="368.635" cy="137.549" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<circle cx="368.635" cy="137.549" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<circle cx="363.454" cy="108.000" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<circle cx="315.181" cy="157.249" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<circle cx="310.000" cy="186.798" r="1.6" fill="#ffffff" stroke="#c0392b" stroke-width="0.6"/>
+<text x="300.000" y="222.000" font-family="sans-serif" font-size="5.40" fill="#1f5fa8" text-anchor="start" font-weight="600">A = 2110.744392 mm²</text>
+<text x="300.000" y="232.000" font-family="sans-serif" font-size="3.80" fill="#6a6a6a" text-anchor="start" font-weight="400">鞋带 2110.744358　差 3.35e-05</text>
+<text x="300.000" y="241.000" font-family="sans-serif" font-size="3.80" fill="#6a6a6a" text-anchor="start" font-weight="400">边缘曲线周长 ∫ds = 209.150087 mm</text>
+<text x="300.000" y="253.000" font-family="sans-serif" font-size="4.00" fill="#1a1a1a" text-anchor="start" font-weight="400">边缘曲线（4 条）：</text>
+<text x="300.000" y="262.000" font-family="sans-serif" font-size="3.40" fill="#c0392b" text-anchor="start" font-weight="400">  C  下缘 右 60° 弧 P₂→P₁（三次贝塞尔）（镜像）</text>
+<text x="300.000" y="271.000" font-family="sans-serif" font-size="3.40" fill="#6a6a6a" text-anchor="start" font-weight="400">  L  宽度边 P₁A（镜像）</text>
+<text x="300.000" y="280.000" font-family="sans-serif" font-size="3.40" fill="#6a6a6a" text-anchor="start" font-weight="400">  L  上缘 A→B（直线）（镜像）</text>
+<text x="300.000" y="289.000" font-family="sans-serif" font-size="3.40" fill="#6a6a6a" text-anchor="start" font-weight="400">  L  端头 B→P₂（镜像）</text>
+<text x="44.000" y="330.000" font-family="sans-serif" font-size="4.00" fill="#6a6a6a" text-anchor="start" font-weight="400">总面积 = 7023.330613 mm²　｜　旧「等宽直条 L×h」= 7811.235285 mm²　｜　差 = -787.904672 mm²</text>
+<text x="44.000" y="342.000" font-family="sans-serif" font-size="4.00" fill="#6a6a6a" text-anchor="start" font-weight="400">右襟块＝左襟块关于 x=0 镜像；三块沿 P₁A / P₁′A′ 共边拼接＝第 4 步一条连续竖起领子</text>
+<text x="44.000" y="354.000" font-family="sans-serif" font-size="4.00" fill="#6a6a6a" text-anchor="start" font-weight="400">平裁：上身立起是空间遮挡折叠关系，裁片本身为平面；不扣减交叠量</text>
+<text x="44.000" y="366.000" font-family="sans-serif" font-size="4.00" fill="#6a6a6a" text-anchor="start" font-weight="400">贝塞尔近似最大径向偏差 = 0.001827 mm（R = 76.573 mm，60° 单段）</text>
+</svg>

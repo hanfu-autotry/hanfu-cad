@@ -1,0 +1,11 @@
+{
+ "schema": "hanfu-studio/project@1",
+ "id": "user:试验竖领浅交襟_abffeb",
+ "name": "试验竖领浅交襟",
+ "note": "第 6 步定稿（2026-11-11 16:00）：完整裁片 5 片（前片×2 / 后片半×2 / 领条 1＝一条带状，三段沿共边 P1A / P1'A' 相接、两端分开首尾不接、不自交）。定稿模板：pattern/_tpl.pieces.json（由 pattern/save_template.py 生成）",
+ "created": "2026-11-10 18:25:00",
+ "updated": "2026-11-11 16:12:00",
+ "patterns": [
+  "banbi"
+ ]
+}
