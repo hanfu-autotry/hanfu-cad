@@ -35,6 +35,16 @@ desktop.ini
 # ── 无头浏览器的临时 profile（含 Cookies/Login Data，绝不入库）──
 **/_edge_profile/
 
+# ── 凭据 / 私钥（安全审查 2026-11-18：当前仓库无此类文件，预防性排除）──
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+credentials*.json
+secrets*.json
+
 # ── 量图派生裁切 / 我留下的临时图 ──
 **/_ref/
 **/out/_*.png

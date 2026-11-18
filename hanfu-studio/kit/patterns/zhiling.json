@@ -9,7 +9,11 @@
  "run": {
   "kind": "params",
   "fixtures": {
-   "V1": {}
+   "V1": {
+    "HALF_L": 624.0,
+    "NECK_W": 160.0,
+    "COLLAR_W": 30.0
+   }
   }
  },
  "modes": [

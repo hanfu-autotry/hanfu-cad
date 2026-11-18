@@ -56,4 +56,3 @@
 - 新建版型 深衣·窄袖（V3）（shenyiv3）的素材：补 rules 或把图投到 intake/
 - 喂给：shenyiv3
 - 类型：暂无
-- **新建：请补规则或往 intake/ 投放素材**

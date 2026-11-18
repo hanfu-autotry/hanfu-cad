@@ -17,7 +17,7 @@ print(r['gates']['summary'])
 PY
 ```
 
-## 最近一次实测（2026-11-11 16:26）
+## 最近一次实测（2026-11-18 16:57）
 
 通过 28 ／ 示意 2 ／ 共 30
 
@@ -54,6 +54,6 @@ PY
 | 参照闸门 | 第 6 步自检 | PASS | 命令：python pattern/step6.py（shiyan-shuling/）｜最近结果：26/26 PASS；领条 8 边 / 共边 2×30 / 端头 2×30 / 自交 0 / 面积 7023.330613（2026-11-11） |
 | 参照闸门 | 模板自检 | PASS | 命令：python pattern/save_template.py（shiyan-shuling/）｜最近结果：11/11 PASS（2026-11-11） |
 
-> 原始：`<ws>/hanfu-studio/out/generate/shiyanshuling_本案_1111-1626/形制核对/gates.json`
+> 原始：`<ws>/hanfu-studio/out/batch/shiyanshuling/case_—_本案_合体/gates.json`
 
 > 口径：**失败不硬打回**——WARN 只报错示意，人工确认后写 `signoff.json`。

@@ -260,7 +260,9 @@ def newest_gates_json(ws, pid):
     root = os.path.join(ws, "hanfu-studio", "out")
     cands = []
     for dirpath, _dirs, files in os.walk(root):
-        if "gates.json" in files and pid in dirpath:
+        # 必须按「路径段精确匹配」：用 `pid in dirpath` 子串匹配会让 `shenyi`
+        # 误命中 `shenyiv3` 目录，导致 V2 闸门文档被 V3 数据覆盖（2026-11-18 实测）。
+        if "gates.json" in files and pid in os.path.normpath(dirpath).split(os.sep):
             cands.append(os.path.join(dirpath, "gates.json"))
     return max(cands, key=os.path.getmtime) if cands else None
 
