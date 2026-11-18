@@ -31,16 +31,16 @@
    "unit": "mm"
   },
   {
-   "key": "SLIT_HALF",
-   "label": "前中剪开半间距",
-   "min": 40,
-   "max": 120,
-   "step": 5,
+   "key": "NECK_W",
+   "label": "领口宽",
+   "min": 80,
+   "max": 240,
+   "step": 10,
    "unit": "mm"
   },
   {
-   "key": "LAPEL_FOLD",
-   "label": "领条压边（每边可见）",
+   "key": "COLLAR_W",
+   "label": "领条宽（＝立起高）",
    "min": 20,
    "max": 60,
    "step": 5,
@@ -72,7 +72,7 @@
     "name": "三步图对照",
     "cmd": "（harness 量图：sources/fig_原始直领交襟衣_三步.png）",
     "where": "hanfu-shenyi/sources/",
-    "last": "前中开口贯通、领条绕颈后"
+    "last": "前中开口 160 贯通、领条＝平行弦的等带宽 30（立起≡带宽）"
    }
   ],
   "parent": null,
@@ -84,6 +84,8 @@
    "build.py",
    "build_pieces_shenyi.py",
    "build_shenyi.py",
+   "build_v3.py",
+   "collar.py",
    "export_dxf.py",
    "export_dxf_whole.py",
    "export_dxf_whole_v1.py",

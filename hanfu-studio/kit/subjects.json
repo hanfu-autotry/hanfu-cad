@@ -80,5 +80,13 @@
   ],
   "rules": [],
   "note": "新建版型 试验竖领浅交襟（竖领·默认）（shiyanshuling）的素材：补 rules 或把图投到 intake/"
+ },
+ {
+  "id": "09-深衣·窄袖（V3）_古制",
+  "feeds": [
+   "shenyiv3"
+  ],
+  "rules": [],
+  "note": "新建版型 深衣·窄袖（V3）（shenyiv3）的素材：补 rules 或把图投到 intake/"
  }
 ]

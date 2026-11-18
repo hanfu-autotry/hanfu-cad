@@ -12,12 +12,7 @@
    "V2": {
     "L_BODY": 624.0,
     "GARMENT_L": 1872.0,
-    "N_SHANG": 3
-   },
-   "V3": {
-    "L_BODY": 195.0,
-    "GARMENT_L": 770.0,
-    "N_SHANG": 2
+    "N_SHANG": 6
    }
   }
  },
@@ -25,12 +20,7 @@
   {
    "id": "V2",
    "label": "宽袖礼服",
-   "note": "衣长 624（=袖口），总长 1872 及踝；裳 3 幅（摆 1080 够走路）"
-  },
-  {
-   "id": "V3",
-   "label": "窄袖便服",
-   "note": "衣长 195，总长 770（厂商实测男 M）；裳 2 幅（直筒窄摆）"
+   "note": "衣长 624（=袖口），总长 1872 及踝；裳＝一条 6 幅带·左右折（左 3 右 3 对称、两端在后中相接），前中剪开贯通到摆"
   }
  ],
  "mode_kind": "fixture",
@@ -53,16 +43,16 @@
    "unit": "mm"
   },
   {
-   "key": "SLIT_HALF",
-   "label": "前中剪开半间距",
-   "min": 40,
-   "max": 120,
-   "step": 5,
+   "key": "NECK_W",
+   "label": "领口宽",
+   "min": 80,
+   "max": 240,
+   "step": 10,
    "unit": "mm"
   },
   {
-   "key": "LAPEL_FOLD",
-   "label": "领条压边（每边可见）",
+   "key": "COLLAR_W",
+   "label": "领条宽（＝立起高）",
    "min": 20,
    "max": 60,
    "step": 5,
@@ -99,7 +89,7 @@
     "name": "剪裁图对照（幅数/前中开口/领条）",
     "cmd": "（harness 量图：sources/fig_深衣_剪裁与平铺.jpg）",
     "where": "hanfu-shenyi/sources/",
-    "last": "4 幅带 + 上/下块各 3 幅、开口 160 已对齐"
+    "last": "2 段（上衣段 624×2 + 裳段 1248）、裳 6 幅一条带左右折、领口宽 160 / 领条宽 30（古制统一算法）"
    }
   ],
   "parent": null,
@@ -111,6 +101,8 @@
    "build.py",
    "build_pieces_shenyi.py",
    "build_shenyi.py",
+   "build_v3.py",
+   "collar.py",
    "export_dxf.py",
    "export_dxf_whole.py",
    "export_dxf_whole_v1.py",

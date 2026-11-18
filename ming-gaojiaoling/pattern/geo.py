@@ -64,6 +64,7 @@ CASE = dict(
     NECKW=98.0,       # 开领条宽（领口通口）
     LAP=276.0,        # 门襟（肩线 → 领口底）
     XUREN=137.0,      # 续衽越中（前单边摆 722 － 后摆半 585）
+    XUR_H=20.0,       # 续衽 H 点：沿上边缘（l′ 弧）自 P2′ 向中缝方向的弧长 ＝新左边缘 HH1 的定位（标准 20）
     COL_L=1908.0,     # 领缘条总长
     COL_W=40.0,       # 领缘条宽（横卧领的领高）
     R_ARM=70.0,       # 腋下圆角（模板 jiexiu 的 R=70 ）
@@ -262,6 +263,122 @@ def back_half(d):
     return JX.back_half(JX.derive(jiexiu_params(d), "seam"))
 
 
+# ── 贝塞尔链的弧长 / 截断（续衽 H 点与 H1 靠它精确定位，不用采样折线）──
+def _lerp(a, b, t):
+    return (a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t)
+
+
+def _bz_pt(P0, C1, C2, P3, t):
+    mt = 1.0 - t
+    return (mt ** 3 * P0[0] + 3 * mt * mt * t * C1[0] + 3 * mt * t * t * C2[0] + t ** 3 * P3[0],
+            mt ** 3 * P0[1] + 3 * mt * mt * t * C1[1] + 3 * mt * t * t * C2[1] + t ** 3 * P3[1])
+
+
+def _bz_split(P0, C1, C2, P3, t):
+    """de Casteljau 在 t 处切成两段，返回 (前段四点, 后段四点)；端点严格不动。"""
+    p01, p12, p23 = _lerp(P0, C1, t), _lerp(C1, C2, t), _lerp(C2, P3, t)
+    p012, p123 = _lerp(p01, p12, t), _lerp(p12, p23, t)
+    m = _lerp(p012, p123, t)
+    return (P0, p01, p012, m), (m, p123, p23, P3)
+
+
+def _bz_len(P0, C1, C2, P3, n=64, t=1.0):
+    """[0, t] 段弧长（弦长累加，n 段）"""
+    tot, prev = 0.0, P0
+    for i in range(1, n + 1):
+        q = _bz_pt(P0, C1, C2, P3, t * i / float(n))
+        tot += math.hypot(q[0] - prev[0], q[1] - prev[1])
+        prev = q
+    return tot
+
+
+def _chain(start, cmds):
+    """[["C",c1,c2,b], ...] → [(P0,C1,C2,P3), ...]"""
+    out, cur = [], tuple(start)
+    for c in cmds:
+        out.append((cur, tuple(c[1]), tuple(c[2]), tuple(c[3])))
+        cur = tuple(c[3])
+    return out
+
+
+def chain_len(start, cmds, n=64):
+    return sum(_bz_len(*sg, n=n) for sg in _chain(start, cmds))
+
+
+def chain_cut(start, cmds, s, n=64):
+    """按弧长 s 把链切开：返回 (断点, 前段 cmds, 后段 cmds)。s=0 时前段为空。"""
+    left, brk = max(0.0, float(s)), tuple(start)
+    head, tail = [], []
+    for P0, C1, C2, P3 in _chain(start, cmds):
+        L = _bz_len(P0, C1, C2, P3, n=n)
+        if left >= L - 1e-12:                       # 整段留在前段
+            head.append(["C", list(C1), list(C2), list(P3)])   # C 只存 3 点，起点＝当前位置
+            left -= L
+            brk = P3
+            continue
+        if left <= 1e-12:                           # 整段归后段
+            tail.append(["C", list(C1), list(C2), list(P3)])
+            continue
+        lo, hi = 0.0, 1.0                           # 段内二分定 t
+        for _ in range(60):
+            mid = (lo + hi) / 2.0
+            if _bz_len(P0, C1, C2, P3, n=n, t=mid) < left:
+                lo = mid
+            else:
+                hi = mid
+        a, b = _bz_split(P0, C1, C2, P3, (lo + hi) / 2.0)
+        head.append(["C", list(a[1]), list(a[2]), list(a[3])])
+        tail.append(["C", list(b[1]), list(b[2]), list(b[3])])
+        brk = b[0]
+        left = 0.0
+    return brk, head, tail
+
+
+def line_hit_bez(H, dv, P0, C1, C2, P3, n=800):
+    """直线 H + t·dv 与三次贝塞尔求交（叉积扫描 + 二分）：返回 (交点, u, 前段 cmds)"""
+    def f(u):
+        q = _bz_pt(P0, C1, C2, P3, u)
+        return (q[0] - H[0]) * dv[1] - (q[1] - H[1]) * dv[0]
+
+    us = [i / float(n) for i in range(n + 1)]
+    prev, u = f(us[0]), None
+    for i in range(1, n + 1):
+        cur = f(us[i])
+        if abs(prev) < 1e-12 or (prev < 0) != (cur < 0):
+            lo, hi = us[i - 1], us[i]
+            for _ in range(60):
+                mid = (lo + hi) / 2.0
+                if (f(lo) < 0) != (f(mid) < 0):
+                    hi = mid
+                else:
+                    lo = mid
+            u = (lo + hi) / 2.0
+            break
+        prev = cur
+    if u is None:
+        u = 1.0
+    a, _b = _bz_split(P0, C1, C2, P3, u)
+    ph = _bz_pt(P0, C1, C2, P3, u)
+    cmds = [["C", list(a[1]), list(a[2]), list(a[3])]] if u > 1e-12 else []   # 起点＝(0,0)
+    return ph, u, cmds
+
+
+def solve_collar_w(mt):
+    """领宽 C 的反解（唯一未知量 C，一条方程）。
+
+    记  o = mt["l_circle"][:2],  R = mt["l_circle"][2],  L = mt["P"][1],  k = L − oy
+        Γ_L = { X : |X − o| = R }                       （P 所在 L 弧的载体圆）
+        Γ_C = { X : |X − o| = R − C }                   （上缘载体圆 = Γ_L 的法向等距 C）
+    约束（后片连接左右襟处的领宽 = 领条宽）：
+        (0, L + C) ∈ Γ_C            ⇔            ox² + (k + C)² = (R − C)²
+    闭式解：
+        C = (R² − ox² − k²) / (2(k + R))
+    """
+    ox, oy, R = mt["l_circle"]
+    k = mt["P"][1] - oy
+    return (R * R - ox * ox - k * k) / (2.0 * (k + R))
+
+
 def pieces(d):
     """裁片表：只出**前片**（自带续衽）。
 
@@ -390,15 +507,38 @@ def pieces(d):
     right_body = [["L", [d["X_SH"], L]]] + reverse_open(back[:cut + 1])[1:]   # 肩线→袖→腋→侧缝→摆→摆弧→(0,0)
     left_hem = ["C", [-hem_c[1][0], hem_c[1][1]], [-hem_c[2][0], hem_c[2][1]], [heel[0], heel[1]]]
 
+    # ── 续衽左边缘 HH1（2026-11-18 用户定，原版没有这条构造）──
+    #   H＝上边缘（l′ 弧）上的动点，自 P2′ 沿弧向中缝方向移动 XUR_H（标准 20mm）；
+    #   HH1 恒平行于续衽原左外缘（heel→P2′），H1 落在下摆上；HH1 即**新的续衽左边缘**。
+    #   被裁掉的那条（原外缘 heel→P2→P2′ ＋ 下摆 H1→heel）改画灰色辅助线，如实留档。
+    H_ARC = max(0.0, float(d.get("XUR_H") or 0.0))
+    H, _lp_head, lp_rest = chain_cut(P2p, lp_arc, H_ARC)      # 上边缘：P2′→H | H→P1′
+    u_edge = _unit(heel, P2p)                                  # 原左外缘方向（下→上）
+    H1, _u1, hem_head = line_hit_bez(H, u_edge, (0.0, 0.0),
+                                     tuple(left_hem[1]), tuple(left_hem[2]), heel)
+    hh1_len = math.hypot(H1[0] - H[0], H1[1] - H[1])
+    hh1_perp = abs((H[0] - heel[0]) * u_edge[1] - (H[1] - heel[1]) * u_edge[0])
+    # 门襟边 HH1 与领口线（l 圆）的交点 P0＝领缘沿门襟往上装到哪儿为止（定义口径）。
+    # 旧版这个点就是 P2（原外缘与 l 圆相交处）；HH1 内让后交点随之内移。
+    _hx, _hy = H1[0] - ox, H1[1] - oy
+    _bq = 2.0 * (_hx * u_edge[0] + _hy * u_edge[1])
+    _cq = _hx * _hx + _hy * _hy - R * R
+    _disc = _bq * _bq - 4.0 * _cq
+    P0 = None
+    if _disc >= 0:
+        for _t in ((-_bq + math.sqrt(_disc)) / 2.0, (-_bq - math.sqrt(_disc)) / 2.0):
+            if -1e-9 <= _t <= hh1_len + 1e-9:      # 只取落在 HH1 这段上的那个
+                P0 = (H1[0] + u_edge[0] * _t, H1[1] + u_edge[1] * _t)
+    if P0 is None:
+        P0 = P2
+
     # 01 前片（中缝右边）：左缘＝中缝（x=0，实线）
     # 前片：左缘只到 P1 (0,y0)，不再往上有那段「冒尖」的线
     right = [["M", [0.0, y0]]] + l_arc + right_body + [["Z"]]
-    # 02 续衽（中缝左边）：右缘＝中缝
-    left = [["M", [heel[0], heel[1]]], ["L", [P2[0], P2[1]]], ["L", [P2p[0], P2p[1]]]]
-    left += lp_arc + [["L", [P1p[0], P1p[1]]], ["L", [0.0, 0.0]]] + [left_hem] + [["Z"]]
-    # 外襟整片（供内襟镜像）
-    whole = [["M", [heel[0], heel[1]]], ["L", [P2[0], P2[1]]], ["L", [P2p[0], P2p[1]]]]
-    whole += lp_arc + [["L", [P1[0], P1[1]]]] + l_arc + right_body + [left_hem] + [["Z"]]
+    # 02 续衽（中缝左边）：右缘＝中缝；左缘＝HH1；上缘＝H→P1′
+    left = ([["M", list(H)]] + lp_rest + [["L", [0.0, 0.0]]]
+            + hem_head + [["L", list(H)], ["Z"]])
+
 
     wai_front = dict(name="前片（中缝右边）", qty=1, cmds=right, grain=[0, 1],
                      notches=[[0.0, y0]], dims=[], aux=[],
@@ -410,11 +550,35 @@ def pieces(d):
         a_p1 -= 2 * math.pi
     elif a_p2 - a_p1 > math.pi:
         a_p1 += 2 * math.pi
-    l_mark = [(ox + R * math.cos(a_p2 + (a_p1 - a_p2) * i / 16.0),
-               oy + R * math.sin(a_p2 + (a_p1 - a_p2) * i / 16.0)) for i in range(17)]
+    # HH1 已把外端裁掉 → 虚线 l 只留新片内那一段，起点精确落在 HH1 上（不留半截悬空）
+    _sgn = 1.0 if ((P1p[0] - H[0]) * u_edge[1] - (P1p[1] - H[1]) * u_edge[0]) >= 0 else -1.0
+
+    def _side(q):
+        return ((q[0] - H[0]) * u_edge[1] - (q[1] - H[1]) * u_edge[0]) * _sgn
+
+    l_full = [(ox + R * math.cos(a_p2 + (a_p1 - a_p2) * i / 48.0),
+               oy + R * math.sin(a_p2 + (a_p1 - a_p2) * i / 48.0)) for i in range(49)]
+    l_mark = []
+    for i, q in enumerate(l_full):
+        if _side(q) >= -1e-9:
+            if i and _side(l_full[i - 1]) < 0:                  # 跨过 HH1：补交点
+                a_, b_ = l_full[i - 1], q
+                sa, sb = _side(a_), _side(b_)
+                tt = sa / (sa - sb) if abs(sa - sb) > 1e-15 else 0.0
+                l_mark.append([a_[0] + (b_[0] - a_[0]) * tt, a_[1] + (b_[1] - a_[1]) * tt])
+            l_mark.append([q[0], q[1]])
+    xur_meta = dict(P2=list(P2), P2p=list(P2p), P1p=list(P1p), P1=list(P1), heel=list(heel),
+                    P=list(PK), H=list(H), H1=list(H1), H_ARC=H_ARC, P0=list(P0),
+                    top_arc_full=chain_len(P2p, lp_arc), top_arc_rest=chain_len(H, lp_rest),
+                    HH1=hh1_len, HH1_width=hh1_perp,
+                    l_circle=[ox, oy, R], hem=[[0.0, 0.0]] + [list(q) for q in left_hem[1:]])
     xur_piece = dict(name="续衽（中缝左边）", qty=1, cmds=left, grain=[0, 1],
-                     notches=[[0.0, 0.0]], dims=[], aux=[], marks=[l_mark],
-                     note="右缘＝中缝；左外缘 摆角→P2→P'2→l'→P'1；虚线 l 为辅助线")
+                     notches=[[0.0, 0.0]], dims=[], marks=[l_mark] if len(l_mark) >= 2 else [],
+                     aux=[[[heel[0], heel[1]], [P2[0], P2[1]], [P2p[0], P2p[1]]],
+                          [[H1[0], H1[1]], [heel[0], heel[1]]]],
+                     meta=xur_meta,
+                     note="右缘＝中缝；左缘＝HH1（∥原外缘）")
+
     # 前片 / 续衽 / 内襟（前片镜像） / 内襟续衽（续衽镜像） / 后片
     back_piece = dict(name="后片（半·模板原样）", qty=2,   # 片名沿用（gates 按名对账），几何已由构造生成
                       cmds=[list(c) if c[0] == "Z" else [c[0]] + [list(pt) for pt in c[1:]]
@@ -433,7 +597,9 @@ def pieces(d):
     # 06 领缘条（高交领·全衣一条，用户 2026-11-08 定）
     # 约束：领宽恒＝AA′＝PB＝97.05141（B 落在中缝而重合，故左右两段连成一条带子）。
     # 长度由领口线反推：左右两段 L 弧 ＋ 后领水平段（＝2×颈侧点横坐标）。
-    aA = math.atan2(P2[1] - oy, P2[0] - ox)
+    # **领条随续衽同步（2026-11-18）**：门襟边改成 HH1 后，领缘的起点＝**HH1 与 l 圆的交点 P0**
+    # （旧版该点就是 P2）。缝线＝P0→PK 的 l 弧，长度与平铺图领子同源，不再各自为政。
+    aA = math.atan2(P0[1] - oy, P0[0] - ox)
     aP = math.atan2(PK[1] - oy, PK[0] - ox)
     sweep = aP - aA
     if sweep < 0:
@@ -441,7 +607,7 @@ def pieces(d):
     arc_L = R * sweep
     back_neck = 2.0 * NWF
     collar_len = 2.0 * arc_L + back_neck
-    collar_w = 97.05141
+    collar_w = solve_collar_w(xur_meta)   # 反解（B 落中缝），不再是硬编码
     out.append(dict(
         name="领缘条（高交领·全衣一条）", qty=1,
         cmds=[["M", [0.0, 0.0]], ["L", [collar_len, 0.0]],
@@ -449,7 +615,7 @@ def pieces(d):
         grain=[1, 0], notches=[],
         dims=[("L", [0.0, 0.0], [collar_len, 0.0], "领条长 %.1f" % collar_len),
               ("L", [collar_len, 0.0], [collar_len, collar_w], "领宽 %.1f" % collar_w)],
-        note="反推：长＝2×L弧(%.1f)＋后领段(%.1f)＝%.1f；宽＝AA′＝PB＝%.1f（B 重合）"
+        note="反推：长＝2×(P0→颈侧点 L 弧 %.1f)＋后领段 %.1f＝%.1f；宽＝AA′＝PB＝%.1f"
              % (arc_L, back_neck, collar_len, collar_w)))
     return out
 def mirror_piece(p):
@@ -463,6 +629,21 @@ def mirror_piece(p):
     p["aux"] = [[[-q[0], q[1]] for q in mk] for mk in (p.get("aux") or [])]
     p["dims"] = [(dm[0], [-dm[1][0], dm[1][1]], [-dm[2][0], dm[2][1]], dm[3])
                  for dm in (p.get("dims") or [])]
+    if p.get("meta"):                                # meta 里的点也镜像，免得内外襟读串
+        mt = {}
+        for k, v in p["meta"].items():
+            if isinstance(v, (list, tuple)) and len(v) == 2 and all(
+                    isinstance(q, (int, float)) for q in v):
+                mt[k] = [-v[0], v[1]]
+            elif isinstance(v, (list, tuple)) and len(v) == 3 and all(
+                    isinstance(q, (int, float)) for q in v):
+                mt[k] = [-v[0], v[1], v[2]]          # 圆心 + 半径
+            elif isinstance(v, (list, tuple)) and v and all(
+                    isinstance(q, (list, tuple)) and len(q) == 2 for q in v):
+                mt[k] = [[-q[0], q[1]] for q in v]
+            else:
+                mt[k] = v
+        p["meta"] = mt
     return p
 
 

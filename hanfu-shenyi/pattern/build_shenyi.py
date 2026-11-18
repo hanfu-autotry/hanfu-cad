@@ -1,21 +1,23 @@
 # -*- coding: utf-8 -*-
 """
-深衣（V2 宽袖 / V3 窄袖）· 裁片与制作 ①材料 ②对折 ③平铺
+深衣 V2（宽袖礼服）· 裁片与制作 ①材料 ②对折 ③平铺（与 V3 同一套排布：2 段·裳左右折）
 ────────────────────────────────────────────────────────────────
 依据：sources/fig_深衣_三步.png、fig_深衣_剪裁与平铺.jpg
       孙韬《拒绝碰瓷，一篇文章说清楚西周矩领》"窄袖深衣的腰线，实为高腰甚至齐胸位置"
-  · 材料 = 4 幅 × 3 段（中段 = 2×衣长，上/下段 = 裳高）
-  · 中段对折 → 上衣前后；**衣长 = 袖肥 = 袖口**（同一个数！）
-  · 上段、下段折过来 → 下裳（两段等长，把剩余的料都给它）
-  · 前中直接剪开两道（间距 160，不折）；领条压边每边 40，中间露出后片 80，上领条
-  · 腰线（衣身接缝）= 中段的上下边
+  · 材料 = 4 幅 × 2 段（上衣段 = 2×衣长，裳段 = 裳高）——两段同宽，无台阶
+  · 上衣段水平对折 → 上衣前后；**衣长 = 袖肥 = 袖口**（同一个数！）
+  · 裳段 = 一条 4 幅 × 裳高 的带子，**左右折**：两侧（±1 幅）折、中缝缝合（用户 2026-11-18）
+  · 前中直接剪开两道（间距 160，不折）；领条＝**与襟缘平行的等宽带**（宽＝领宽 30），
+    颈口转折为「前片两三角 ＋ 后片梯形」（底 160 → 顶 160−2×30＝100，高 30）；
+    立起高 ≡ 带宽；中间露出后片 160−2×30＝100 —— 与 `hanfu-zhidui` 的领条算法完全一致（2026-11-18）
+  · 腰线（衣身接缝）= 上衣段下边 = 裳段上边
 
-★ 两个旋钮：
-  L_BODY    衣长（＝袖肥＝袖口）
-        624 → V2 宽袖（腰线在自然腰/胯）｜195 → 窄袖（腰线抬到齐胸）
-  GARMENT_L 成衣总长（肩线到摆）
-        1872 → 礼服（及踝）｜770 → 便服/普通外套（厂商实测男 M 衣长）
-  裳高 = GARMENT_L − L_BODY，布片高 = 中段 + 上下两段。
+★ V2 的两个旋钮：
+  L_BODY    衣长（＝袖肥＝袖口）默认 624（宽袖礼服，腰线在自然腰/胯）
+  GARMENT_L 成衣总长（肩线→摆）默认 1872（礼服，及踝）
+  裳高 = GARMENT_L − L_BODY，布片高 = 上衣段 + 裳段。
+  裳段 = **6 幅（3000）= 左 3 幅 + 右 3 幅，关于 x=0 对称**：两侧（±750）折、两端在后中相接。
+  V3（窄袖、裳 4 幅）见 `build_v3.py`。
 
 像素反测（1 幅 = 87.75 px 剪裁图 / 84 px 平铺 → 5.698 / 5.952 mm/px）
   段高 218.5 px → 1248 ｜ 衣长 109 px → 624 ｜ 裳高 215 px → 1248
@@ -24,37 +26,38 @@
 坐标系：x 右为正、y 上为正，原点 = 布片下边中点
 """
 import os, json
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import collar
 
 _DEF = dict(
     FAB_W=500.0,        # 单幅宽
     N_PANEL=4,          # 拼幅数（= 通袖 4 匹）
-    SEG_H=1248.0,       # 旧版段高，现仅作参考（布片高改由 L_BODY + GARMENT_L 决定）
-    N_SEG=3,            # 段数：中段＝上衣，上下两段＝裳
-    L_BODY=195.0,       # ★衣长（＝袖肥＝袖口，三者同值）：窄袖 195；V2 宽袖版填 624
-    GARMENT_L=770.0,    # ★成衣总长（肩线到摆）：便服外套 770（厂商实测男 M 衣长）；礼服去掉这行用 1872
-    SLIT_HALF=80.0,     # 前中剪开线半间距（→ 间距 160）
-    LAPEL_FOLD=40.0,    # 领条压边可见宽 40（不是折边量；中间露出后片 80）
-    COLLAR_W=95.0,      # 领条宽
-    NECK_TOP_HALF=44.5, # 领条向上折转段顶半宽
-    NECK_H=77.0,        # 领条折转露出高度
+    L_BODY=624.0,       # ★衣长（＝袖肥＝袖口，三者同值）：V2 宽袖 624
+    GARMENT_L=1872.0,   # ★成衣总长（肩线到摆）：V2 礼服 1872（及踝）
+    NECK_W=160.0,       # ★领口宽（旋钮）＝前中开口宽（两剪开线间距）
+    COLLAR_W=30.0,      # ★领宽（3cm）= 领条宽 = 立起高（与 hanfu-zhidui 同一口径）
+    # 派生：NECK_H ≡ COLLAR_W；后领带顶半宽 = SLIT_HALF − COLLAR_W；压边可见 = COLLAR_W
     ARMPIT=370.0,       # 躯干衣身边缘到中线的距离（钩形记号竖段；高分辨率图量得 ±368；**与裳无关**）
     ARMPIT_H=200.0,     # V2 时腋点距腰线高度（剪裁图量 195，平铺量 205）；V3 按 L_BODY 比例缩
     HOOK_OUT=60.0,      # 钩形记号：竖线在腰线上再向外弯出的水平量（量得 56~88）
     HOOK_H=70.0,        # V2 时弯折段高度（量得 68）；V3 按 L_BODY 比例缩
-    N_SHANG=2,          # 裳（上/下段）幅数，V2 礼服夹具里覆盖成 3
+    N_SHANG=6,          # 裳幅数（V2：左 3 + 右 3 = 6 幅，关于中缝对称）
     HEM_HALF=540.0,     # 摆半宽（裳正面轮廓，≈ 半周长 2000/2 再收）
 )
 P = dict(_DEF)
 P.update(json.loads(os.environ.get("HANFU_PARAMS", "{}")))
 
 FAB_W = P["FAB_W"]; N_PANEL = int(P["N_PANEL"])
-N_SHANG = int(P.get("N_SHANG", 2))      # 裳（上段/下段）幅数：用户定 2 幅（2026-11-04）
-N_SEG = int(P["N_SEG"])
-SLIT_HALF = P["SLIT_HALF"]; LAPEL_FOLD = P["LAPEL_FOLD"]
-COLLAR_W = P["COLLAR_W"]; NECK_TOP_HALF = P["NECK_TOP_HALF"]; NECK_H = P["NECK_H"]
+N_SHANG = int(P.get("N_SHANG", 6))      # 裳幅数：V2 = 6 幅（左 3 右 3 对称）
+NECK_W = P["NECK_W"]
+SLIT_HALF = NECK_W / 2.0            # 前中开口半宽
+COLLAR_W = P["COLLAR_W"]                       # 30 领宽
+LAPEL_FOLD = COLLAR_W                          # 压边可见 = 整条带宽（不再单列）
+NECK_H = COLLAR_W                              # 立起高 ≡ 带宽
+
 ARMPIT = P["ARMPIT"]
-HEM_HALF_ASK = P["HEM_HALF"]        # 想要的摆半宽
-HEM_HALF = HEM_HALF_ASK             # 实际用的（下面按布幅夹）
+HEM_HALF_ASK = P["HEM_HALF"]        # 标准衣长下的摆半宽（只用来定斜率，不再直接当输出）
 HOOK_OUT = P["HOOK_OUT"]
 L_BODY = P["L_BODY"]                    # 衣长 = 袖肥 = 袖口
 
@@ -64,21 +67,37 @@ ARMPIT_H = P["ARMPIT_H"] * _K
 HOOK_H = P["HOOK_H"] * _K
 
 HALF_S = FAB_W * N_PANEL / 2.0          # 1000（中段＝上衣，4 幅）
-HALF_SH = FAB_W * N_SHANG / 2.0         # 500（上/下段＝裳，2 幅）→ 腰线处台阶
-HEM_HALF = min(HEM_HALF_ASK, HALF_SH)   # 摆不能比布宽；2 幅时上限 500
+HALF_SH = FAB_W * N_SHANG / 2.0         # 1000（裳段 4 幅，与上衣同宽）
 S = HALF_S * 2                          # 通袖 2000
-SEG_MID = 2.0 * L_BODY                  # 中段（对折成上衣）
+SEG_MID = 2.0 * L_BODY                  # 上衣段（水平对折成前后）
 SHANG_H = P["GARMENT_L"] - L_BODY       # 裳高 = 成衣总长 − 衣长
-SEG_OUT = SHANG_H                       # 上段 / 下段（裳·后 / 裳·前），两段等长
-CLOTH_H = SEG_MID + 2.0 * SEG_OUT       # 布片高（三段之和）
-Y_SEG1 = SEG_OUT                        # 中段下边 = 腰线（一层）
-Y_FOLD = SEG_OUT + L_BODY               # 中段正中 = 对折线 = 肩线
-Y_SEG2 = SEG_OUT + SEG_MID              # 中段上边 = 腰线（另一层）
+# ★平行 x 轴截取裳（2026-11-18 用户定）：裳的**侧边斜率固定**（由标准衣长下的摆宽/腰宽确定），
+#   改衣长＝沿平行 x 轴的截线截取，裳高 SHANG_H 随之变，摆半宽按同一斜率派生 → 斜率不随衣长变。
+#   标准（L_BODY=624, GARMENT_L=1872）下 HEM_HALF=540、斜率 170/1248≈0.136218，与旧图一致。
+_HEM_SLOPE = (HEM_HALF_ASK - ARMPIT) / (_DEF["GARMENT_L"] - _DEF["L_BODY"])
+_MAX_SHANG_H = (HALF_SH - ARMPIT) / _HEM_SLOPE
+HEM_CLIP = SHANG_H > _MAX_SHANG_H
+if HEM_CLIP:
+    SHANG_H = _MAX_SHANG_H
+HEM_HALF = ARMPIT + _HEM_SLOPE * SHANG_H
+CLOTH_H = SEG_MID + SHANG_H             # 布片高 = 上衣段 + 裳段（两段，同宽 4 幅，无台阶）
+Y_WAIST = SHANG_H                       # 裳上边 = 腰线（衣裳接缝）
+Y_FOLD = SHANG_H + L_BODY               # 上衣段正中 = 对折线 = 肩线
+
+# 领条（古制统一算法，见 pattern/collar.py）
+#   开领＝弦 P(±x_cut, y_top) → Q(0, 0)；y_top = 弦的落差
+#   ★2026-11-18 用户图示定论：V2 的弦是 **P(颈侧点) → O(衣裳接缝中点＝腰线中点)**，
+#     即弦只存在于上衣段，止于腰线；不贯通到裳摆。
+#     ⇒ y_top = L_BODY（肩线 → 腰线 的落差）⇒ 领条几何与 V1 同值。
+_CG = collar.geom(SLIT_HALF, L_BODY, COLLAR_W)
+EDGE_LEN, N_X, N_Y = _CG["edge"], _CG["nx"], _CG["ny"]
+NTH, COLLAR_L, NECK_H = _CG["top_half"], _CG["length"], _CG["stand"]
+Y_SEG1 = Y_WAIST                        # （兼容旧名）腰线
+Y_SEG2 = CLOTH_H                        # （兼容旧名）布片顶边
 HALF_WAIST = ARMPIT                     # 裳腰半宽（平铺正面轮廓）
-COLLAR_L = 2 * (L_BODY + SHANG_H) + SLIT_HALF * 2   # 一条直的，绕两襟到摆
 
 # ── 布局 ───────────────────────────────────────────────────────────
-CANVAS_W = 3100.0
+CANVAS_W = max(3100.0, 2.0 * max(HALF_S, HALF_SH) + 900.0)   # 裳比衣宽时也要放得下
 MARGIN = 150.0
 MAIN_OX = CANVAS_W / 2.0
 MAIN_OY = 360.0
@@ -92,9 +111,7 @@ TOTAL_H = COLLAR_OY + COLLAR_W + 300
 BLACK, RED, BLUE, GRAY, GREEN, ORANGE, PURPLE = (
     "#1a1a1a", "#b3241c", "#1a4d8f", "#6f6f6f", "#1d6b3a", "#b85400", "#6a2c91")
 
-NAME = ("V2 宽袖" if abs(L_BODY - 624) < 1 else
-        "V3 窄袖" if abs(L_BODY - 195) < 1 else
-        "自定义（衣长 %d）" % round(L_BODY))
+NAME = "V2 宽袖" if abs(L_BODY - 624) < 1 else "V2 宽袖（衣长 %d）" % round(L_BODY)
 
 s = []
 s.append('<?xml version="1.0" encoding="UTF-8"?>')
@@ -111,43 +128,50 @@ def FY(d): return FTOP + d                        # 平铺：d = 距顶边向下
 # ── 标题 ───────────────────────────────────────────────────────────
 s.append('<g font-family="sans-serif" fill="%s">' % BLACK)
 s.append('  <text x="%.1f" y="%.1f" font-size="52" font-weight="600">深衣 · ① 材料与 ② 制作（%s · 衣长＝袖口 %d · 总长 %d）</text>' % (MARGIN, 100, NAME, round(L_BODY), round(L_BODY + SHANG_H)))
-s.append('  <text x="%.1f" y="%.1f" font-size="32" fill="%s">中段 %d 幅（上衣）｜上下段各 %d 幅（裳）· 中段对折＝上衣（衣长 %d ＝ 袖口宽）· 上下两段折过来＝下裳（各 %d 高）· 前中剪开 %d、两襟各折 %d · 上领条</text>'
-         % (MARGIN, 158, GRAY, N_PANEL, N_SHANG, round(L_BODY), round(SHANG_H), round(SLIT_HALF * 2), round(LAPEL_FOLD)))
-s.append('  <text x="%.1f" y="%.1f" font-size="30" fill="%s">通袖 %d ＝ %d 幅 × %.0f ｜ 总料长 %d ＝ 中段 %d + 上段 %d + 下段 %d ｜ 腰线（衣身接缝）＝ 中段上下边 = 齐胸高腰 ｜ 腋点 ±%d</text>'
+s.append('  <text x="%.1f" y="%.1f" font-size="32" fill="%s">上衣段 %d 幅·水平对折＝上衣（衣长 %d ＝ 袖口宽）｜裳段 %d 幅·左右折＝下裳（裳高 %d，两侧折、中缝缝合）· 前中剪开 %d · 上领条</text>'
+         % (MARGIN, 158, GRAY, N_PANEL, round(L_BODY), N_SHANG, round(SHANG_H), round(SLIT_HALF * 2)))
+s.append('  <text x="%.1f" y="%.1f" font-size="30" fill="%s">通袖 %d ＝ %d 幅 × %.0f ｜ 总料长 %d ＝ 上衣段 %d（2×衣长）+ 裳段 %d ｜ 腰线（衣身接缝）＝ 两段交界 = 齐胸高腰 ｜ 腋点 ±%d</text>'
          % (MARGIN, 210, GRAY, round(S), N_PANEL, FAB_W, round(CLOTH_H),
-            round(SEG_MID), round(SEG_OUT), round(SEG_OUT), round(ARMPIT)))
+            round(SEG_MID), round(SHANG_H), round(ARMPIT)))
 s.append('</g>')
 
 # ── ① 布片外框 ────────────────────────────────────────────────────
 s.append('<g id="CLOTH" stroke="%s" stroke-width="3" fill="none">' % BLACK)
-# 台阶外框：下段（裳·前 N_SHANG 幅）→ 中段（衣 N_PANEL 幅）→ 上段（裳·后 N_SHANG 幅）
-s.append('  <path d="M %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f '
-         'L %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f Z"/>' % (
-    X(-HALF_SH), Y(0), X(HALF_SH), Y(0), X(HALF_SH), Y(Y_SEG1), X(HALF_S), Y(Y_SEG1),
-    X(HALF_S), Y(Y_SEG2), X(HALF_SH), Y(Y_SEG2), X(HALF_SH), Y(CLOTH_H), X(-HALF_SH), Y(CLOTH_H),
-    X(-HALF_SH), Y(Y_SEG2), X(-HALF_S), Y(Y_SEG2), X(-HALF_S), Y(Y_SEG1), X(-HALF_SH), Y(Y_SEG1)))
+# 外框：裳段（N_SHANG 幅，V2 = 6 幅）比上衣段（4 幅）宽 → 关于 x=0 对称的台阶
+if abs(HALF_SH - HALF_S) < 1e-9:
+    s.append('  <path d="M %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f Z"/>' % (
+        X(-HALF_S), Y(0), X(HALF_S), Y(0), X(HALF_S), Y(CLOTH_H), X(-HALF_S), Y(CLOTH_H)))
+else:
+    s.append('  <path d="M %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f '
+             'L %.1f %.1f L %.1f %.1f L %.1f %.1f Z"/>' % (
+        X(-HALF_SH), Y(0), X(HALF_SH), Y(0), X(HALF_SH), Y(Y_WAIST),
+        X(HALF_S), Y(Y_WAIST), X(HALF_S), Y(CLOTH_H), X(-HALF_S), Y(CLOTH_H),
+        X(-HALF_S), Y(Y_WAIST), X(-HALF_SH), Y(Y_WAIST)))
 s.append('</g>')
 
 # ── 拼幅缝（中段 N_PANEL 匹；上/下段各 N_SHANG 匹）─────────────────────────────────────────────────
 s.append('<g id="SEAM" stroke="%s" stroke-width="2" fill="none" stroke-dasharray="26 10">' % BLUE)
-for k in range(1, N_PANEL):                      # 中段（4 幅）
+for k in range(1, N_PANEL):                      # 上衣段（4 幅）
     xx = -HALF_S + FAB_W * k
-    s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(xx), Y(Y_SEG2), X(xx), Y(Y_SEG1)))
-for k in range(1, N_SHANG):                      # 上/下段（各 N_SHANG 幅）
+    if abs(xx) > 1e-9:                            # x=0 是前中缝，不画蓝虚线（下面改实线）
+        s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(xx), Y(CLOTH_H), X(xx), Y(Y_WAIST)))
+for k in range(1, N_SHANG):                      # 裳段（N_SHANG 幅）
     xx = -HALF_SH + FAB_W * k
-    s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(xx), Y(CLOTH_H), X(xx), Y(Y_SEG2)))
-    s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(xx), Y(Y_SEG1), X(xx), Y(0)))
+    if abs(xx) > 1e-9:
+        s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(xx), Y(Y_WAIST), X(xx), Y(0)))
+s.append('</g>')
+# 前中缝（x=0）：与外框边同为黑色实线宽 3（用户 2026-11-18 定，不再用蓝色虚线/文字）
+s.append('<g id="MIDSEAM" stroke="%s" stroke-width="3" fill="none">' % BLACK)
+s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(0), Y(0), X(0), Y(CLOTH_H)))
 s.append('</g>')
 
 # ── 段的分界（折后即腰线）─────────────────────────────────────────
 s.append('<g id="SEGBD" stroke="%s" stroke-width="1.8" fill="none" stroke-dasharray="34 12" opacity="0.45">' % PURPLE)
-for yy in (Y_SEG1, Y_SEG2):
-    s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(-HALF_SH - 30), Y(yy), X(HALF_SH + 30), Y(yy)))
+s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(-HALF_S - 30), Y(Y_WAIST), X(HALF_S + 30), Y(Y_WAIST)))
 s.append('</g>')
 s.append('<g font-family="sans-serif" font-size="28" fill="%s" text-anchor="end">' % PURPLE)
-s.append('  <text x="%.1f" y="%.1f">上段（折下来＝裳·后）</text>' % (X(-HALF_SH - 45), Y(CLOTH_H * 0.9)))
-s.append('  <text x="%.1f" y="%.1f">中段（对折＝上衣前后）</text>' % (X(-HALF_SH - 45), Y(Y_SEG2 - 110)))
-s.append('  <text x="%.1f" y="%.1f">下段（折上去＝裳·前）</text>' % (X(-HALF_SH - 45), Y(Y_SEG1 - 110)))
+s.append('  <text x="%.1f" y="%.1f">上衣段（水平对折＝前后；折线＝肩线）</text>' % (X(-HALF_S - 45), Y(Y_FOLD + 150)))
+s.append('  <text x="%.1f" y="%.1f">裳段（左右折：两侧折、中缝缝合）</text>' % (X(-HALF_S - 45), Y(Y_WAIST - 140)))
 s.append('</g>')
 
 # ── 对折线（中段正中 = 肩线）──────────────────────────────────────
@@ -157,24 +181,52 @@ s.append('</g>')
 s.append('<text x="%.1f" y="%.1f" font-family="sans-serif" font-size="28" fill="%s" text-anchor="end">对折线（中段正中）→ 折后即肩线，衣长 %d</text>'
          % (X(-HALF_S - 45), Y(Y_FOLD) + 34, ORANGE, round(L_BODY)))
 
-# ── 折叠箭头（上段向下、下段向上，都折到中段）─────────────────────
+# ── 折叠箭头（上衣段水平对折；裳段左右折）─────────────────────────
 def fold_arrow(xx, sx, y_from, y_to):
     """竖直弯箭头：自 y_from 折向 y_to，向 sx 侧弓出"""
     ym = (Y(y_from) + Y(y_to)) / 2.0
     s.append('<path d="M %.1f %.1f C %.1f %.1f %.1f %.1f %.1f %.1f" stroke="%s" stroke-width="6" '
              'fill="none" marker-end="url(#arr)" opacity="0.5"/>'
              % (X(xx), Y(y_from), X(xx + sx * 85), ym, X(xx + sx * 85), ym, X(xx), Y(y_to), GRAY))
+def fold_arrow_h(yy, sx, x_from, x_to):
+    """水平弯箭头：自 x_from 折向 x_to，向 sx 侧（上/下）弓出"""
+    xm = (X(x_from) + X(x_to)) / 2.0
+    s.append('<path d="M %.1f %.1f C %.1f %.1f %.1f %.1f %.1f %.1f" stroke="%s" stroke-width="6" '
+             'fill="none" marker-end="url(#arr)" opacity="0.5"/>'
+             % (X(x_from), Y(yy), xm, Y(yy + sx * 95), xm, Y(yy + sx * 95), X(x_to), Y(yy), GRAY))
 s.append('<g id="FOLDARROW">')
-fold_arrow(-HALF_SH - 130, -1, CLOTH_H - 30, Y_SEG2 + 50)
-fold_arrow(-HALF_SH - 130, -1, 30, Y_SEG1 - 50)
-fold_arrow(HALF_SH + 130, 1, CLOTH_H - 30, Y_SEG2 + 50)
-fold_arrow(HALF_SH + 130, 1, 30, Y_SEG1 - 50)
+# 上衣段：上半段水平向下对折到 Y_FOLD（折线＝肩线）
+fold_arrow(-HALF_S - 130, -1, CLOTH_H - 30, Y_FOLD + 40)
+fold_arrow(HALF_S + 130, 1, CLOTH_H - 30, Y_FOLD + 40)
+# 裳段：左右折 —— 两侧各 1 幅向中缝折过去（折线在 ±FAB_W，与幅缝同位）
+fold_arrow_h(Y_WAIST * 0.52, -1, HALF_SH - 40, HALF_SH / 2 + 90)
+fold_arrow_h(Y_WAIST * 0.52, -1, -HALF_SH + 40, -HALF_SH / 2 - 90)
 s.append('</g>')
 
-# ── 前中剪开线（两道，从折线剪到腰线）────────────────────────────
+# ── 裳段：折线（两侧＝±FAB_W，与幅缝同位）＋ 中缝（缝合）标注 ─────────────
+s.append('<g id="SHANGFOLD" stroke="%s" stroke-width="2.6" fill="none" stroke-dasharray="26 12">' % PURPLE)
+for sx in (-1, 1):
+    s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (
+        X(sx * HALF_SH / 2 - 70), Y(Y_WAIST * 0.30), X(sx * HALF_SH / 2 + 70), Y(Y_WAIST * 0.30)))
+s.append('</g>')
+s.append('<g font-family="sans-serif" font-size="26" fill="%s">' % PURPLE)
+for sx in (-1, 1):
+    s.append('  <text x="%.1f" y="%.1f" text-anchor="middle">折（两侧）</text>'
+             % (X(sx * HALF_SH / 2), Y(Y_WAIST * 0.30) - 22))
+s.append('</g>')
+# 裳上的蓝色文字标注已删（用户 2026-11-18 定）：前中缝改由实线本身表示，见下方 MIDSEAM。
+
+# ── 前中剪开线（两道弦：颈侧点 P → **腰线中点 O**）──────────────────────
+#   ★2026-11-18 用户图示定论：连接 P(颈侧点) 与 O(衣裳接缝中点＝腰线中点)，
+#     镜像得 P'。弦只存在于上衣段，止于腰线。
 s.append('<g id="SLIT" stroke="%s" stroke-width="3.6" fill="none">' % RED)
 for sx in (-1, 1):
-    s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(sx * SLIT_HALF), Y(Y_FOLD), X(sx * SLIT_HALF), Y(0)))
+    s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(sx * SLIT_HALF), Y(Y_FOLD), X(0.0), Y(Y_WAIST)))
+s.append('</g>')
+# 标注 P / O
+s.append('<g font-family="sans-serif" font-size="30" font-weight="600" fill="%s">' % RED)
+s.append('  <text x="%.1f" y="%.1f">P</text>' % (X(SLIT_HALF) + 18, Y(Y_FOLD) - 12))
+s.append('  <text x="%.1f" y="%.1f">O（衣裳接缝中点）</text>' % (X(0) + 18, Y(Y_WAIST) - 12))
 s.append('</g>')
 for sx in (-1, 1):
     cx, cy = X(sx * SLIT_HALF), Y(Y_FOLD)
@@ -184,12 +236,14 @@ for sx in (-1, 1):
              % (RED, cx - 14, cy - 30, cx + 4, cy - 10, cx + 14, cy - 30, cx - 4, cy - 10,
                 cx - 17, cy - 35, cx + 17, cy - 35))
 
-# ── 压边线（领条压边外沿 ±40）──────────────────────────────────────────
+# ── 领条内缘（＝与襟缘平行的等宽带外沿 ±COLLAR_W；压边可见＝带宽）────────────
 s.append('<g id="LAPELFOLD" stroke="%s" stroke-width="2.6" fill="none" stroke-dasharray="18 12">' % GREEN)
 for sx in (-1, 1):
-    s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(sx * LAPEL_FOLD), Y(Y_FOLD), X(sx * LAPEL_FOLD), Y(0)))
+    ox, oy = sx * SLIT_HALF + sx * N_X * COLLAR_W, Y_FOLD + N_Y * COLLAR_W   # 颈侧点 P 内移
+    qx, qy = sx * 0.0 + sx * N_X * COLLAR_W, Y_WAIST + N_Y * COLLAR_W        # O 内移
+    s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(ox), Y(oy), X(qx), Y(qy)))
     s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (
-        X(sx * SLIT_HALF), Y(Y_FOLD - 130), X(sx * LAPEL_FOLD), Y(Y_FOLD - 130)))
+        X(sx * SLIT_HALF), Y(Y_FOLD - 130), X(ox), Y(oy)))
 s.append('</g>')
 
 # ── 腋下：垂线（躯干衣身边缘）＋ 在腰线上向外弯出的转向（袖底缝）──────────
@@ -235,11 +289,11 @@ s.append('</g>')
 # ── 图例 ───────────────────────────────────────────────────────────
 ly = CLOTH_BOT + 150
 s.append('<g font-family="sans-serif" font-size="30" fill="%s">' % BLACK)
-s.append('  <text x="%.1f" y="%.1f" fill="%s">┄ 拼幅缝（中段 %d 匹＝通袖 %d；上/下段各 %d 匹）</text>' % (MARGIN, ly, BLUE, N_PANEL, round(S), N_SHANG))
-s.append('  <text x="%.1f" y="%.1f" fill="%s">┄ 段的分界（折过来即成腰线：衣身接缝 ＝ 齐胸高腰）</text>' % (MARGIN, ly + 44, PURPLE))
-s.append('  <text x="%.1f" y="%.1f" fill="%s">┈ 对折线（中段正中；折后即肩线，衣长 %d）</text>' % (MARGIN, ly + 88, ORANGE, round(L_BODY)))
-s.append('  <text x="%.1f" y="%.1f" fill="%s">— 前中剪开线（两道，间距 %d；从折线剪到腰线）</text>' % (MARGIN, ly + 132, RED, round(SLIT_HALF * 2)))
-s.append('  <text x="%.1f" y="%.1f" fill="%s">┈ 压边线（领条压边每边 %d，中间露出后片 %d）</text>' % (MARGIN, ly + 176, GREEN, round(LAPEL_FOLD), round(SLIT_HALF * 2 - LAPEL_FOLD * 2)))
+s.append('  <text x="%.1f" y="%.1f" fill="%s">┄ 拼幅缝（通高 %d 匹＝通袖 %d）</text>' % (MARGIN, ly, BLUE, N_PANEL, round(S)))
+s.append('  <text x="%.1f" y="%.1f" fill="%s">┄ 段的分界＝腰线（衣身接缝）：上衣段在上、裳段在下</text>' % (MARGIN, ly + 44, PURPLE))
+s.append('  <text x="%.1f" y="%.1f" fill="%s">┈ 对折线（上衣段正中；折后即肩线，衣长 %d）</text>' % (MARGIN, ly + 88, ORANGE, round(L_BODY)))
+s.append('  <text x="%.1f" y="%.1f" fill="%s">— 开领线（两道弦：颈侧点 P ±%d → 衣裳接缝中点 O＝腰线中点，止于腰线；间距 %d 只在颈口）</text>' % (MARGIN, ly + 132, RED, round(SLIT_HALF), round(SLIT_HALF * 2)))
+s.append('  <text x="%.1f" y="%.1f" fill="%s">┈ 领条内缘（平行于襟缘弦、内让 %d；颈口处露出后片 %d）</text>' % (MARGIN, ly + 176, GREEN, round(COLLAR_W), round(SLIT_HALF * 2 - COLLAR_W * 2)))
 s.append('  <text x="%.1f" y="%.1f" fill="%s">— 躯干衣身边缘（竖段）：自腰线往上 %d，另一端即腋点（与裳无关）</text>' % (MARGIN, ly + 220, GREEN, round(ARMPIT_H)))
 s.append('  <text x="%.1f" y="%.1f" fill="%s">— 袖底缝（腰线 ±%d 以外到袖口，前后片缝合）：与竖段在腋点共顶点 → 不加＝敞口(侧视倒U)，加了＝闭成 0</text>' % (MARGIN, ly + 264, GREEN, round(ARMPIT + HOOK_OUT)))
 s.append('</g>')
@@ -264,28 +318,33 @@ s.append('  <path d="M %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f"/>' % (
     FX(HEM_HALF), FY(L_BODY + SHANG_H), FX(ARMPIT), FY(L_BODY)))
 s.append('</g>')
 
-# 中心五条线（同 V1 ③ 的画法）：|领条|后片80|领条|，自领口贯通到摆
+# 中心五条线（同 V1 ③ 的画法）：|领条|后片80|领条|
+#   ★2026-11-18 用户图示定论：弦＝P(颈侧点) → O(腰线中点)，止于腰线；裳段 x=0
+#     那条是「裳前中缝（＝衣身前中缝）」——只不缝合、不挖开。
 s.append('<g id="CENTER" stroke="%s" fill="none">' % BLACK)
-for sx in (-1, 1):
+for sx in (-1, 1):                      # 襟缘＝弦：颈侧点 P → 腰线中点 O
     s.append('  <path d="M %.1f %.1f L %.1f %.1f" stroke-width="3"/>' % (
-        FX(sx * SLIT_HALF), FY(0), FX(sx * SLIT_HALF), FY(L_BODY + SHANG_H)))
-for sx in (-1, 1):
+        FX(sx * SLIT_HALF), FY(0), FX(0.0), FY(L_BODY)))
+for sx in (-1, 1):                      # 领条内缘：平行于弦，向内侧让 COLLAR_W
     s.append('  <path d="M %.1f %.1f L %.1f %.1f" stroke-width="1.8"/>' % (
-        FX(sx * LAPEL_FOLD), FY(-NECK_H), FX(sx * LAPEL_FOLD), FY(L_BODY + SHANG_H)))
-s.append('  <path d="M %.1f %.1f L %.1f %.1f" stroke-width="1.8" stroke-dasharray="26 14"/>' % (
-    FX(0), FY(0), FX(0), FY(L_BODY + SHANG_H)))
+        FX(sx * (SLIT_HALF + N_X * COLLAR_W)), FY(-N_Y * COLLAR_W),
+        FX(sx * N_X * COLLAR_W), FY(L_BODY + N_Y * COLLAR_W)))
+s.append('  <path d="M %.1f %.1f L %.1f %.1f" stroke-width="3"/>' % (
+    FX(0), FY(0), FX(0), FY(L_BODY + SHANG_H)))   # 前中缝：黑色实线（同边宽），不再虚线/蓝字
 s.append('</g>')
 
-# 顶部：领条在领口向上折转的那一段（梯形，同 V1）
+# 顶部领口：前襟带（弦 P→O ＋ 领条内缘）已由 CENTER 组画出；此处补颈口五块中的
+#   「前片三角×2 ＋ 后片梯形」。★全部由弦几何派生，不用 V1 写死的等宽矩形/三角：
+#     P  ＝ 颈侧点 (±SLIT_HALF, 肩线 FY(0))
+#     PB ＝ 领条内缘在颈口的起点 ＝ P + 带宽·法向 (N_X, −N_Y 在 FY)
+#     M  ＝ 转角点 (miter 顶半宽 NTH, 肩线上方 NECK_H)
+_PBX, _PBY = SLIT_HALF + N_X * COLLAR_W, -N_Y * COLLAR_W
 s.append('<g id="COLLAR" stroke="%s" stroke-width="3" fill="none">' % BLACK)
-# 恒为三件：左领条三角 + 后领方形 + 右领条三角（开口/压边怎么调都不许翻）
-NTH = min(float(NECK_TOP_HALF), float(SLIT_HALF) - 1.0)      # 后领半宽，必须 < 开口半宽
-s.append('  <path d="M %.1f %.1f L %.1f %.1f L %.1f %.1f Z"/>' % (      # 左三角
-    FX(-SLIT_HALF), FY(0), FX(-NTH), FY(-NECK_H), FX(-NTH), FY(0)))
-s.append('  <path d="M %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f Z"/>' % (  # 后领方
-    FX(-NTH), FY(-NECK_H), FX(NTH), FY(-NECK_H), FX(NTH), FY(0), FX(-NTH), FY(0)))
-s.append('  <path d="M %.1f %.1f L %.1f %.1f L %.1f %.1f Z"/>' % (      # 右三角
-    FX(NTH), FY(0), FX(NTH), FY(-NECK_H), FX(SLIT_HALF), FY(0)))
+for sx in (-1, 1):                      # 前片三角：{P, PB, M}
+    s.append('  <path d="M %.1f %.1f L %.1f %.1f L %.1f %.1f Z"/>' % (
+        FX(sx * SLIT_HALF), FY(0), FX(sx * _PBX), FY(_PBY), FX(sx * NTH), FY(-NECK_H)))
+s.append('  <path d="M %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f Z"/>' % (  # 后片梯形：底 ±SLIT_HALF → 顶 ±NTH
+    FX(-SLIT_HALF), FY(0), FX(-NTH), FY(-NECK_H), FX(NTH), FY(-NECK_H), FX(SLIT_HALF), FY(0)))
 s.append('</g>')
 
 # 腋下（平铺）：垂线（躯干衣身边缘，自腰线竖直向上 ARMPIT_H）＋ 转向（自垂线下段
@@ -320,11 +379,13 @@ s.append('  <text x="%.1f" y="%.1f" font-size="24" fill="%s" text-anchor="end">�
 s.append('</g>')
 
 s.append('<g font-family="sans-serif">')
+_CLIP_NOTE = "｜⚠裳高已截到布幅上限（衣长按可容纳范围输出）" if HEM_CLIP else ""
 s.append('  <text x="%.1f" y="%.1f" font-size="52" font-weight="600" fill="%s">③ 平铺：直领交襟 · 上衣连袖 + 下裳</text>'
          % (MARGIN, FY(L_BODY + SHANG_H) + 108, BLACK))
-s.append('  <text x="%.1f" y="%.1f" font-size="30" fill="%s">袖带高 %d（＝衣长）｜裳高 %d｜腰线即衣身接缝（齐胸高腰）｜前中 | 领条 %d | 后片 %d（后中缝居中）| 领条 %d | 贯通到摆｜裳为正面轮廓，本体是 4 幅 × %d</text>'
+s.append('  <text x="%.1f" y="%.1f" font-size="30" fill="%s">袖带高 %d（＝衣长）｜裳高 %d｜腰线即衣身接缝｜前中 | 领条 %d | 后片 %d（后中缝居中）| 领条 %d | 弦止于腰线中点 O｜裳前中缝＝衣身前中缝（只不缝合）｜裳本体 %d 幅 × %d｜领条宽＝立起高＝%d%s</text>'
          % (MARGIN, FY(L_BODY + SHANG_H) + 158, GRAY, round(L_BODY), round(SHANG_H),
-            round(LAPEL_FOLD), round(SLIT_HALF * 2 - LAPEL_FOLD * 2), round(LAPEL_FOLD), round(SHANG_H)))
+            round(COLLAR_W), round(SLIT_HALF * 2 - COLLAR_W * 2), round(COLLAR_W),
+            N_SHANG, round(SHANG_H), round(COLLAR_W), _CLIP_NOTE))
 s.append('</g>')
 
 # ── ④ 领条裁片 ────────────────────────────────────────────────────
@@ -356,26 +417,24 @@ s.append('</svg>')
 HERE = os.path.dirname(os.path.abspath(__file__))
 if os.environ.get("HANFU_OUT"):
     fp = os.environ["HANFU_OUT"]
-elif abs(L_BODY - 624) < 1:
-    fp = os.path.join(HERE, "深衣_V2.svg")      # 防止 V2 覆盖 V3 的默认文件
 else:
-    fp = os.path.join(HERE, "深衣_V3_窄袖.svg")  # V3 保持原文件名（build_pieces 默认读它）
+    fp = os.path.join(HERE, "深衣_V2.svg")
 open(fp, "w", encoding="utf-8").write("\n".join(s))
 
 json.dump({
     "params": P,
     "resolved": {"S": S, "HALF_S": HALF_S, "CLOTH_H": CLOTH_H,
-                 "SEG_MID": SEG_MID, "SEG_OUT": SEG_OUT, "GARMENT_L": L_BODY + SHANG_H,
+                 "SEG_MID": SEG_MID, "SEG_OUT": SHANG_H, "Y_WAIST": Y_WAIST, "GARMENT_L": L_BODY + SHANG_H,
                  "Y_SEG1": Y_SEG1, "Y_FOLD": Y_FOLD, "Y_SEG2": Y_SEG2,
                  "L_BODY": L_BODY, "SHANG_H": SHANG_H, "ARMPIT": ARMPIT,
                  "ARMPIT_H": ARMPIT_H, "HOOK_H": HOOK_H, "HOOK_OUT": HOOK_OUT,
-                 "HEM_HALF": HEM_HALF, "COLLAR_L": COLLAR_L},
+                 "HEM_HALF": HEM_HALF, "HEM_CLIP": HEM_CLIP, "COLLAR_L": COLLAR_L},
     "canvas": [CANVAS_W, TOTAL_H],
 }, open(fp.rsplit(".", 1)[0] + ".pieces.json", "w", encoding="utf-8"),
    ensure_ascii=False, indent=1)
 
 print(json.dumps({"file": fp, "canvas": [CANVAS_W, round(TOTAL_H, 1)],
-                  "S": S, "CLOTH_H": CLOTH_H, "SEG_MID": SEG_MID, "SEG_OUT": round(SEG_OUT, 1),
+                  "S": S, "CLOTH_H": CLOTH_H, "SEG_MID": SEG_MID, "SEG_OUT": round(SHANG_H, 1),
                   "L_BODY": L_BODY, "SHANG_H": round(SHANG_H, 1),
                   "ARMPIT": ARMPIT, "ARMPIT_H": round(ARMPIT_H, 1), "COLLAR_L": COLLAR_L},
                  ensure_ascii=False))

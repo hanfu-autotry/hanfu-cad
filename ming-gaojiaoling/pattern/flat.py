@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
-"""平铺线稿（领子由用户手绘，本程序不画领子）
+"""平铺线稿：五片铺平 ＋ 领子（领缘条原位）
 
 产物：
-  out/平铺线稿.svg  —— 五片铺平（前片/续衽 在前，内襟/内襟续衽 压在下层，后片影）＋ 领子
-  out/领条.svg      —— 由领子反推的领条（总长 × 宽）
+  out/平铺线稿.svg  —— 前片/续衽 在前，内襟/内襟续衽 压在下层，后片影；领子一条带铺在领口上
 
-领子（横卧领）：沿领口一圈的带子 —— 前领口 l 弧（外襟侧）＋ 后领口 ＋ 内襟侧 l 弧；
-带宽取模板 COL_W。领条＝这条带子展开成直条。
+领子口径（2026-11-18 定）：
+  下缘＝P 所在的 L 弧；上缘＝同心 R−C（法向等宽，宽＝领条宽 C，由 `geo.solve_collar_w` 反解）；
+  左端面沿 HH1（＝AA′）；两半在后中收成一个顶点（人字），P 连到该顶点。
 """
 import math
 
 import geo
 import sheet
 
-# 领宽（用户 2026-11-08 定 97.1）：AA- ＝ PB ＝ COLLAR_W。
-# 精确值由「左右两个 B 落在中缝 x=0 而重合」反解得到（本案 97.05141）；
-# 领宽 110 时两 B 相距 17.34mm 不重合，故不取 110。
+# 领宽：不再硬编码，由 geo.solve_collar_w() 反解（B 落中缝）；此处仅作未初始化时的兜底
 COLLAR_W = 97.05141
 
 
@@ -40,44 +38,101 @@ def shift(cmds, dx, dy=0.0):
     return out
 
 
-def ribbon(path, w, side=1):
-    A, B = [], []
-    for i, p in enumerate(path):
-        q = path[min(i + 1, len(path) - 1)]
-        r = path[max(i - 1, 0)]
-        tx, ty = q[0] - r[0], q[1] - r[1]
-        n = math.hypot(tx, ty) or 1.0
-        nx, ny = -ty / n * side, tx / n * side
-        A.append(list(p))
-        B.append([p[0] + nx * w, p[1] + ny * w])
-    return [["M", A[0]]] + [["L", p] for p in A[1:]] + [["L", p] for p in reversed(B)] + [["Z"]]
+def collar_seam(d, n=64):
+    """领子缝线（定义口径，**半条**）：P0 →(l 圆)→ 颈侧点 P → 后中 (0, L)
+
+    P0＝**续衽左边缘（HH1）与领口线（l 圆）的交点**——领缘沿门襟往上装到这儿为止
+    （旧版门襟边＝原外缘时，P0 就是 P2）。半条长 = (P0→P 的 l 弧) + 后领半段，
+    两条合起来恒等于领条长 2×(l 弧) + 后领段；**在后中 x=0 剖开**画成两半，
+    避免沿中缝交叠绕成自交（交领的 V 口在 (0,y0)，整圈画必然打结）。
+    """
+    mt = geo.pieces(d)[2]["meta"]
+    ox, oy, R = mt["l_circle"]
+    P0, PK = mt["P0"], mt["P"]
+    aH = math.atan2(P0[1] - oy, P0[0] - ox)
+    aK = math.atan2(PK[1] - oy, PK[0] - ox)
+    sw = aK - aH
+    while sw < 0:
+        sw += 2.0 * math.pi
+    arc = [(ox + R * math.cos(aH + sw * i / float(n)),
+            oy + R * math.sin(aH + sw * i / float(n))) for i in range(n + 1)]
+    half_back = [(PK[0] * (1.0 - i / 4.0), PK[1]) for i in range(1, 5)]   # P → 后中 (0,L)
+    return arc + half_back, tuple(P0)
 
 
-def neck_path(d):
-    """领口一圈：外襟 l 弧（中缝顶→颈侧点）→ 后领口 → 内襟 l 弧（镜像）"""
-    NWF, L = geo.FRONT_NECK_W, d["L"]     # 几何已由 CASE 驱动，不再读模板参数
-    front = geo.pieces(d)[0]["cmds"]
-    seg, cur = [], None
-    for c in front:
-        if c[0] == "M":
-            cur = tuple(c[1]); seg.append(cur)
-        elif c[0] == "C":
-            A, C1, C2, B = cur, tuple(c[1]), tuple(c[2]), tuple(c[3])
-            for i in range(1, 13):
-                t = i / 12.0; mt = 1 - t
-                seg.append((mt ** 3 * A[0] + 3 * mt * mt * t * C1[0] + 3 * mt * t * t * C2[0] + t ** 3 * B[0],
-                            mt ** 3 * A[1] + 3 * mt * mt * t * C1[1] + 3 * mt * t * t * C2[1] + t ** 3 * B[1]))
-            cur = B
-        elif c[0] == "L":
-            cur = tuple(c[1]); seg.append(cur)
-        if cur and cur[0] >= NWF - 0.5:
-            break
-    back_neck = [(NWF - 2 * NWF * i / 8.0, L) for i in range(1, 9)]
-    other = [(-x, y) for x, y in reversed(seg)]
-    return seg + back_neck + other
+def collar_band(d, n=96, mirror=False):
+    """领带（一条闭合轮廓，跨后中不闭合于中缝）。符号：
+
+        o, R      L 弧载体圆圆心/半径（mt["l_circle"]）
+        C         领宽 = geo.solve_collar_w(mt)
+        A = P0    HH1 ∩ Γ_L           （mt["P0"]）
+        P         颈侧点 (NECKW/2, L)（mt["P"]）
+        û         (H − H1)/|H − H1|  （HH1 方向）
+        A″        HH1 ∩ Γ_C，Γ_C = { X : |X − o| = R − C }，取 t = |A A″| 的最小正根
+
+    内缘（缝线）：
+        Γ_in  = { o + R(cosθ, sinθ) : θ ∈ [θ_A, θ_P] } ∪ [P, (0,L)] ∪ mirror(前段)
+        |Γ_in| = 2·659.245 + 130 = 1448.49 = 领条长
+    上缘：
+        Γ_out = { o + (R−C)(cosθ, sinθ) : θ ∈ [θ_A″, θ_top] }，θ_top = arg(0, L+C)
+        ⇒ ∀X ∈ Γ_out : |X − o| = R − C（法向等宽 C）
+    端面：  [A, A″] ⊂ HH1，length = |A″ − A|
+    后中：  Γ_in 取水平段 (P.x, L) → (−P.x, L)（穿过 x = 0）；Γ_out 取顶点 (0, L+C)（两半在此共点）
+    P→顶点：∀s ∈ {±1} : 线段 [ (s·P.x, L), (0, L+C) ]
+    """
+    mt = geo.pieces(d)[2]["meta"]
+    ox, oy, R = mt["l_circle"]
+    A, P, H1, H = mt["P0"], mt["P"], mt["H1"], mt["H"]
+    C = geo.solve_collar_w(mt)
+    R2 = R - C
+    u = geo._unit(H1, H)
+    ytop = P[1] + C
+
+    hx, hy = A[0] - ox, A[1] - oy
+    bq = 2.0 * (hx * u[0] + hy * u[1])
+    cq = hx * hx + hy * hy - R2 * R2
+    disc = bq * bq - 4.0 * cq
+    ts = [t for t in ((-bq + math.sqrt(max(0.0, disc))) / 2.0,
+                      (-bq - math.sqrt(max(0.0, disc))) / 2.0) if t > 0]
+    A2 = (A[0] + u[0] * min(ts), A[1] + u[1] * min(ts)) if ts else A
+
+    def ang(q):
+        return math.atan2(q[1] - oy, q[0] - ox)
+
+    aA, aP, aA2, aT = ang(A), ang(P), ang(A2), ang((0.0, ytop))
+    sw = aP - aA
+    while sw < 0:
+        sw += 2.0 * math.pi
+    inner_l = [(ox + R * math.cos(aA + sw * i / float(n)),
+                oy + R * math.sin(aA + sw * i / float(n))) for i in range(n + 1)]
+    inner_l[0] = [A[0], A[1]]
+    sw2 = aT - aA2
+    while sw2 < 0:
+        sw2 += 2.0 * math.pi
+    upper_l = [(ox + R2 * math.cos(aA2 + sw2 * i / float(n)),
+                oy + R2 * math.sin(aA2 + sw2 * i / float(n))) for i in range(n + 1)]
+    upper_l[0] = [A2[0], A2[1]]
+    upper_l[-1] = [0.0, ytop]
+
+    def mir(q):
+        return (-q[0], q[1])
+
+    inner = ([tuple(q) for q in inner_l] + [(0.0, P[1])]
+             + [mir(q) for q in reversed(inner_l)])
+    pts = (inner + [mir(A2)]
+           + [mir(q) for q in upper_l][1:]
+           + [tuple(q) for q in reversed(upper_l)])
+    if mirror:
+        pts = [(-q[0], q[1]) for q in pts]
+    path = [["M", list(pts[0])]] + [["L", list(q)] for q in pts[1:]] + [["Z"]]
+    return path, dict(A=A, A2=A2, P=P, Pu=(0.0, ytop), u=u, w=C,
+                      t_end=math.hypot(A2[0] - A[0], A2[1] - A[1]),
+                      ytop=ytop, inner=inner_l, upper=upper_l, pts=pts)
 
 
 def write(d, out_svg):
+    global COLLAR_W
+    COLLAR_W = geo.solve_collar_w(geo.pieces(d)[2]["meta"])   # 领宽反解（B 落中缝）
     pcs = geo.pieces(d)
     front, nei, xur, nei_xur, back = [p["cmds"] for p in pcs[:5]]
     # 后片与前后片共用坐标（侧缝/接袖缝重合），直接叠画成虚线，表示在后层
@@ -107,115 +162,42 @@ def write(d, out_svg):
             cm = [["M", list(mk[0])]] + [["L", list(q)] for q in mk[1:]]
             put(cm, "#4a78c8", 1.4, dash="18 10")
 
-
-
-
-
-
-    # ─── 领子构建（逐步累加；外襟与内襟同步镜像）────────────────────
-    # 第 1 步：A＝P2，领宽 AA′＝COLLAR_W（B 重合那一版）；PB 同为该值
-    A = (-d["X_ARM"] + 0.0, 0.0)          # 占位，下面用实际 P2
-    pcs0 = geo.pieces(d)[2]["cmds"]       # 续衽片：[M(摆角), L(P2), L(P'2), …]
-    P2 = tuple(pcs0[1][1])                # ★ A 取 P2（l 起点），不是 P'2
-    AA = COLLAR_W
-    segs = []
-    # A′ 在「外缘延长线」上：从摆角指向 P2 的方向，外延 w
-    heel = (-d["HALF"], d["RISE"])
-    dvx, dvy = P2[0] - heel[0], P2[1] - heel[1]
-    dn = math.hypot(dvx, dvy) or 1.0
-    dvx, dvy = dvx / dn, dvy / dn
+    # ─── 领子（领缘条原位：缝线＝领口线、带宽＝COLLAR_W、恒向领口外）───
+    seam, P0 = collar_seam(d)
+    seg_len = sum(math.hypot(seam[i + 1][0] - seam[i][0], seam[i + 1][1] - seam[i][1])
+                  for i in range(len(seam) - 1))
+    collar_pc = [p for p in pcs if p["name"].startswith("领缘条")][0]
+    bx = geo.bbox(collar_pc["cmds"])
+    band, cm = collar_band(d)
+    put(band, "#1a1a1a", 2.0)          # 外→后→内 一条带，跨后中不断
+    # 领口点 P 连到上缘顶点（后领段与前后领的交界）
+    pp, pu = cm["P"], cm["Pu"]
     for sx in (1.0, -1.0):
-        ax_, ay_ = sx * abs(P2[0]), P2[1]
-        bx_ = ax_ - sx * dvx * AA         # 沿外缘延长线外移 w（朝中缝一侧）
-        by_ = ay_ + dvy * AA
-        segs.append(((ax_, ay_), (bx_, by_)))
+        s.append('<path d="M %.1f %.1f L %.1f %.1f" stroke="#1a1a1a" stroke-width="1.8"/>'
+                 % (sx * pp[0] + ox, oy - pp[1], sx * pu[0] + ox, oy - pu[1]))
+    print("  领子：A=(%.2f,%.2f) A″=(%.2f,%.2f) 端面 %.2f｜上缘 y %.2f"
+          % (cm["A"][0], cm["A"][1], cm["A2"][0], cm["A2"][1], cm["t_end"],
+             cm["P"][1] + cm["w"]))
+    print("  领子：半条缝线 %.2f ×2 ＋ 后领 %.1f ＝ %.2f｜领条长 %.2f"
+          % (seg_len - geo.FRONT_NECK_W, geo.FRONT_NECK_W * 2, seg_len, bx[2] - bx[0]))
 
-    for (a1, b1) in segs:
+
+
+
+
+
+    # ─── A／A′ 标记：端面就落在 HH1 上，AA′ ＝ 领宽 C ───
+    A_, A2_ = cm["A"], cm["A2"]
+    for sx in (1.0, -1.0):
         s.append('<path d="M %.1f %.1f L %.1f %.1f" stroke="#c0392b" stroke-width="2.0"/>'
-                 % (a1[0] + ox, oy - a1[1], b1[0] + ox, oy - b1[1]))
-        for pt, lab in ((a1, "A"), (b1, "A′")):
-            s.append('<circle cx="%.1f" cy="%.1f" r="5" fill="#c0392b"/>' % (pt[0] + ox, oy - pt[1]))
+                 % (sx * A_[0] + ox, oy - A_[1], sx * A2_[0] + ox, oy - A2_[1]))
+        for q, lab in ((A_, "A"), (A2_, "A′")):
+            s.append('<circle cx="%.1f" cy="%.1f" r="5" fill="#c0392b"/>'
+                     % (sx * q[0] + ox, oy - q[1]))
             s.append('<text x="%.1f" y="%.1f" font-family="sans-serif" font-size="26" fill="#c0392b">%s</text>'
-                     % (pt[0] + ox + 8, oy - pt[1] - 10, lab))
+                     % (sx * q[0] + ox + (8.0 if sx > 0 else -30.0), oy - q[1] - 10, lab))
     s.append('<text x="%.1f" y="%.1f" font-family="sans-serif" font-size="26" fill="#c0392b">AA′ = PB = %.1f</text>'
-             % (segs[0][0][0] + ox - 30, oy - segs[0][0][1] + 46, AA))
-
-    # ─── 第 2 步：过 A′ 作 L 的平行线 L2（同心圆）───
-    mk = (geo.pieces(d)[2].get("marks") or [[]])[0]
-    if len(mk) >= 5:
-        p1_, p2_, p3_ = mk[0], mk[len(mk) // 2], mk[-1]
-        d2 = 2.0 * (p1_[0] * (p2_[1] - p3_[1]) + p2_[0] * (p3_[1] - p1_[1]) + p3_[0] * (p1_[1] - p2_[1]))
-        if abs(d2) > 1e-9:
-            Ox = ((p1_[0] ** 2 + p1_[1] ** 2) * (p2_[1] - p3_[1]) +
-                  (p2_[0] ** 2 + p2_[1] ** 2) * (p3_[1] - p1_[1]) +
-                  (p3_[0] ** 2 + p3_[1] ** 2) * (p1_[1] - p2_[1])) / d2
-            Oy = ((p1_[0] ** 2 + p1_[1] ** 2) * (p3_[0] - p2_[0]) +
-                  (p2_[0] ** 2 + p2_[1] ** 2) * (p1_[0] - p3_[0]) +
-                  (p3_[0] ** 2 + p3_[1] ** 2) * (p2_[0] - p1_[0])) / d2
-            # 外襟（左，P2 所在侧）：A′=segs[1][1]，圆心 (Ox,Oy)，半径 444.57
-            # 内襟（右，镜像）    ：A′=segs[0][1]，圆心 (-Ox,Oy)，半径同为 444.57
-            # L2 暂不截断：画出整个圆弧 = 完整一圈 360°，左右各一条、互为镜像
-            N = 720
-            for Ap, Oc in ((segs[1][1], (Ox, Oy)),
-                           (segs[0][1], (-Ox, Oy))):
-                R2 = math.hypot(Ap[0] - Oc[0], Ap[1] - Oc[1])
-                pts = [[Oc[0] + R2 * math.cos(2 * math.pi * i / N),
-                        Oc[1] + R2 * math.sin(2 * math.pi * i / N)] for i in range(N + 1)]
-                cm = [["M", pts[0]]] + [["L", q] for q in pts[1:]] + [["Z"]]
-                put(cm, "#2e8b57", 1.6, dash="14 9")
-                top = (Oc[0], Oc[1] + R2)
-                s.append('<text x="%.1f" y="%.1f" font-family="sans-serif" font-size="26" fill="#2e8b57">L2</text>'
-                         % (top[0] + ox + 8, oy - top[1] - 10))
-
-            # ─── 第 3 步：颈侧点 P 与 L2 上的点 B，使 PB = AA′ = 领宽 w ───
-            # 以 P 为圆心、w 为半径的圆与 L2 求交，一般两个解；取与 A′ 同向角偏移的
-            # 那个（与 AA′ 的构造对应），另一个是反向解。
-            # 领宽取 COLLAR_W，使左右两个 B 落在中缝 x=0 上而重合。
-            # 只画 点P、点B、线PB，不画定位圆、不留多余辅助线。
-            PB = AA
-            Pn = (geo.FRONT_NECK_W, d["L"])       # 颈侧点 (65, 800)
-            A0, Ap0 = segs[1][0], segs[1][1]      # 外襟：A=P2，A′
-
-            def _inter(c0, r0, c1, r1):
-                dx, dy = c1[0] - c0[0], c1[1] - c0[1]
-                D = math.hypot(dx, dy)
-                if D < 1e-9:
-                    return []
-                a = (r0 * r0 - r1 * r1 + D * D) / (2.0 * D)
-                h = math.sqrt(max(0.0, r0 * r0 - a * a))
-                ux, uy = dx / D, dy / D
-                bx, by = c0[0] + a * ux, c0[1] + a * uy
-                return [(bx - h * uy, by + h * ux), (bx + h * uy, by - h * ux)]
-
-            def _wrap(t):
-                return math.atan2(math.sin(t), math.cos(t))
-
-            for mir in (1.0, -1.0):
-                if mir > 0:                       # 外襟
-                    Oc, Pc, Ac, Apc = (Ox, Oy), Pn, A0, Ap0
-                else:                             # 内襟＝镜像同步
-                    Oc = (-Ox, Oy)
-                    Pc = (-Pn[0], Pn[1])
-                    Ac, Apc = (-A0[0], A0[1]), (-Ap0[0], Ap0[1])
-                R2b = math.hypot(Apc[0] - Oc[0], Apc[1] - Oc[1])
-                dA = _wrap(math.atan2(Apc[1] - Oc[1], Apc[0] - Oc[0]) -
-                           math.atan2(Ac[1] - Oc[1], Ac[0] - Oc[0]))
-                aP = math.atan2(Pc[1] - Oc[1], Pc[0] - Oc[0])
-                cands = _inter(Oc, R2b, Pc, PB)
-                B = next((q for q in cands
-                          if _wrap(math.atan2(q[1] - Oc[1], q[0] - Oc[0]) - aP) * dA > 0),
-                         cands[0] if cands else Pc)
-                s.append('<path d="M %.1f %.1f L %.1f %.1f" stroke="#c0392b" stroke-width="2.0"/>'
-                         % (Pc[0] + ox, oy - Pc[1], B[0] + ox, oy - B[1]))
-                for pt, lab in ((Pc, "P"), (B, "B")):
-                    s.append('<circle cx="%.1f" cy="%.1f" r="5" fill="#c0392b"/>'
-                             % (pt[0] + ox, oy - pt[1]))
-                    # 两侧 B 已重合于中缝，标签只标一个
-                    if lab == "B" and mir < 0:
-                        continue
-                    labx = pt[0] + ox + (8.0 if mir > 0 else -30.0)
-                    s.append('<text x="%.1f" y="%.1f" font-family="sans-serif" font-size="26" fill="#c0392b">%s</text>'
-                             % (labx, oy - pt[1] - 10, lab))
+             % (A_[0] + ox - 30, oy - A_[1] + 46, cm["w"]))
 
     s.append('<path d="M %.1f %.1f L %.1f %.1f" stroke="#e0e6ec" stroke-width="1.4" stroke-dasharray="14 12"/>'
              % (ox, oy - 900, ox, oy + 100))
@@ -223,6 +205,10 @@ def write(d, out_svg):
              '平铺线稿</text>')
     s.append('<text x="150" y="210" font-family="sans-serif" font-size="26" fill="#555">'
              '实线＝前片＋续衽（外襟）｜灰细线＝内襟／内襟续衽｜灰虚线＝后片（共用侧缝与接袖缝，标在后层）</text>')
+    s.append('<text x="150" y="250" font-family="sans-serif" font-size="26" fill="#555">'
+             '黑粗带＝领子（领缘条原位，一条跨后中不断）：下缘＝L、上缘＝同心 R−C（法向等宽 %.1f）、'
+             '左端面沿 HH1、P 连顶点；两半缝线 %.1f×2＋后领 %.0f＝领条长 %.1f</text>'
+             % (COLLAR_W, seg_len - geo.FRONT_NECK_W, geo.FRONT_NECK_W * 2, bx[2] - bx[0]))
     s.append('</svg>')
     open(out_svg, "w", encoding="utf-8").write("\n".join(s))
 

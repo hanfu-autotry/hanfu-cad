@@ -20,26 +20,29 @@
 坐标系：服饰坐标 x 右为正、y 上为正，原点 = 布片下边中点
 """
 import math, os, json
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import collar
 
 _DEF = dict(
     FAB_W=500.0,        # 单幅宽
     N_PANEL=4,          # 拼幅数
     HALF_L=624.0,       # 对折线上下各一段（对称对折）
-    SLIT_HALF=80.0,     # 前中剪开线半间距（两道剪口 → 间距 160）
-    LAPEL_FOLD=40.0,    # 领条压边可见宽（每边 40；中间露出后片 80）——不是折边量
-    COLLAR_L=1700.0,    # 领条长
-    COLLAR_W=95.0,      # 领条宽
-    NECK_TOP_HALF=44.5, # 领条向上折转段顶半宽
-    NECK_H=77.0,        # 领条折转露出高度
+    NECK_W=160.0,       # ★领口宽（旋钮）＝前中剪开两道之间的间距
+    COLLAR_W=30.0,      # ★领条宽（旋钮）＝领宽＝立起高（与 V2/V3 同一算法，见 pattern/collar.py）
 )
 P = dict(_DEF)
 P.update(json.loads(os.environ.get("HANFU_PARAMS", "{}")))
 
 FAB_W = P["FAB_W"]; N_PANEL = int(P["N_PANEL"])
-HALF_L = P["HALF_L"]; SLIT_HALF = P["SLIT_HALF"]; LAPEL_FOLD = P["LAPEL_FOLD"]
-COLLAR_L = P["COLLAR_L"]; COLLAR_W = P["COLLAR_W"]
-NECK_TOP_HALF = P["NECK_TOP_HALF"]   # 后领梯形顶半宽
-NECK_H = P["NECK_H"]                 # 后领露出高度
+HALF_L = P["HALF_L"]
+NECK_W = P["NECK_W"]; COLLAR_W = P["COLLAR_W"]
+SLIT_HALF = NECK_W / 2.0             # 领口宽的一半 = 颈侧点到中缝
+# 领条（古制统一算法）：开领＝颈侧点→下摆中点的弦；领条＝平行襟缘等宽带
+_CG = collar.geom(SLIT_HALF, HALF_L, COLLAR_W)
+EDGE_LEN, N_X, N_Y = _CG["edge"], _CG["nx"], _CG["ny"]
+COLLAR_L, NTH, NECK_H = _CG["length"], _CG["top_half"], _CG["stand"]
+LAPEL_FOLD = COLLAR_W                # 压边可见 = 带宽
 
 CLOTH_H = HALF_L * 2
 Y_FOLD = HALF_L                 # 对折线 = 肩线
@@ -161,7 +164,7 @@ s.append('</g>')
 # 前中剪开线（两道，红色实线 + 剪刀标记）
 s.append('<g id="SLIT" stroke="%s" stroke-width="3.4" fill="none">' % RED)
 for sx in (-1, 1):
-    s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(sx * SLIT_HALF), Y(Y_FOLD), X(sx * SLIT_HALF), Y(0)))
+    s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(sx * SLIT_HALF), Y(Y_FOLD), X(0.0), Y(0)))
 s.append('</g>')
 # 剪刀符号（剪开线顶端）
 for sx in (-1, 1):
@@ -175,9 +178,11 @@ for sx in (-1, 1):
 # 压边线（领条压边外沿 ±40；剪开后不折，靠领条压住毛边）
 s.append('<g id="LAPELFOLD" stroke="%s" stroke-width="2.6" fill="none" stroke-dasharray="18 12">' % GREEN)
 for sx in (-1, 1):
-    s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(sx * LAPEL_FOLD), Y(Y_FOLD), X(sx * LAPEL_FOLD), Y(0)))
+    ox, oy = sx * (SLIT_HALF + N_X * COLLAR_W), Y_FOLD + N_Y * COLLAR_W
+    qx, qy = sx * (N_X * COLLAR_W), N_Y * COLLAR_W
+    s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(ox), Y(oy), X(qx), Y(qy)))
     s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (
-        X(sx * SLIT_HALF), Y(Y_FOLD - 120), X(sx * LAPEL_FOLD), Y(Y_FOLD - 120)))
+        X(sx * SLIT_HALF), Y(Y_FOLD - 120), X(ox), Y(oy)))
 s.append('</g>')
 
 # 布纹（每幅一个，经向竖直，双向）
@@ -194,8 +199,8 @@ s.append('</g>')
 # 标题与说明
 s.append('<g font-family="sans-serif" fill="%s">' % BLACK)
 s.append('  <text x="%.1f" y="%.1f" font-size="52" font-weight="600">原始直领交襟衣 · ① 材料与 ② 制作（V1）</text>' % (MARGIN, 96))
-s.append('  <text x="%.1f" y="%.1f" font-size="32" fill="%s">4 匹拼幅 · 整块不裁肩 · 上下对折成前后 · 前中直接剪开 160（不折）· 领条压边每边 40（中间露出后片 80）· 上领条</text>'
-         % (MARGIN, 150, GRAY))
+s.append('  <text x="%.1f" y="%.1f" font-size="32" fill="%s">4 匹拼幅 · 整块不裁肩 · 上下对折成前后 · 开领＝颈侧点→下摆中点的弦（领口宽 %d）· 领条宽 %d（立起＝带宽，露出后片 %d）· 上领条</text>'
+         % (MARGIN, 150, GRAY, round(NECK_W), round(COLLAR_W), round(NECK_W - 2 * COLLAR_W)))
 s.append('  <text x="%.1f" y="%.1f" font-size="30" fill="%s">通袖 %d ＝ %d 幅 × %.0f ｜ 布片高 %d ＝ 对折线上下各 %d ｜ 成衣衣长 %d ｜ 剪口间距 %d</text>'
          % (MARGIN, 200, GRAY, round(S), N_PANEL, FAB_W, round(CLOTH_H), round(HALF_L), round(HALF_L), round(SLIT_HALF * 2)))
 s.append('</g>')
@@ -208,8 +213,8 @@ s.append('<g font-family="sans-serif" font-size="30" fill="%s"><text x="%.1f" y=
          % (ORANGE, MARGIN, ly + 46))
 s.append('<g font-family="sans-serif" font-size="30" fill="%s"><text x="%.1f" y="%.1f">— 前中剪开线（从对折线剪到下摆，两道）</text></g>'
          % (RED, MARGIN, ly + 92))
-s.append('<g font-family="sans-serif" font-size="30" fill="%s"><text x="%.1f" y="%.1f">┈ 压边线（领条压边外沿 ±40，即领条缝位）</text></g>'
-         % (GREEN, MARGIN, ly + 138))
+s.append('<g font-family="sans-serif" font-size="30" fill="%s"><text x="%.1f" y="%.1f">┈ 领条内缘（平行于襟缘弦、内让 %d）</text></g>'
+         % (GREEN, MARGIN, ly + 138, round(COLLAR_W)))
 
 # ---- 副图：成衣平铺 ----
 s.append('<g id="FLAT" stroke="%s" stroke-width="3" fill="none">' % BLACK)
@@ -218,7 +223,7 @@ s.append('  <path d="M %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f"/>' % (
     X(-HALF_S), FLAT_OY, X(-HALF_S), FLAT_OY + FLAT_H, X(HALF_S), FLAT_OY + FLAT_H, X(HALF_S), FLAT_OY))
 # 顶边：领条经过的两处（±80→±40）断开，只留中间后片露出的一段
 s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(-HALF_S), FLAT_OY, X(-SLIT_HALF), FLAT_OY))
-s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(-LAPEL_FOLD), FLAT_OY, X(LAPEL_FOLD), FLAT_OY))
+s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(-(SLIT_HALF + N_X * COLLAR_W)), FLAT_OY, X(SLIT_HALF + N_X * COLLAR_W), FLAT_OY))
 s.append('  <path d="M %.1f %.1f L %.1f %.1f"/>' % (X(SLIT_HALF), FLAT_OY, X(HALF_S), FLAT_OY))
 for k in range(1, N_PANEL):
     xx = -HALF_S + FAB_W * k
@@ -230,11 +235,12 @@ s.append('<g id="CENTER" stroke="%s" fill="none">' % BLACK)
 # 剪开线（开口两侧 = 领条外边）
 for sx in (-1, 1):
     s.append('  <path d="M %.1f %.1f L %.1f %.1f" stroke-width="3"/>' % (
-        X(sx * SLIT_HALF), FLAT_OY, X(sx * SLIT_HALF), FLAT_OY + FLAT_H))
+        X(sx * SLIT_HALF), FLAT_OY, X(0.0), FLAT_OY + FLAT_H))
 # 领条内边：从下摆一直通到梯形顶边（原图 723 / 760 贯通于此）
 for sx in (-1, 1):
     s.append('  <path d="M %.1f %.1f L %.1f %.1f" stroke-width="1.8"/>' % (
-        X(sx * LAPEL_FOLD), FLAT_OY - NECK_H, X(sx * LAPEL_FOLD), FLAT_OY + FLAT_H))
+        X(sx * (SLIT_HALF + N_X * COLLAR_W)), FLAT_OY - N_Y * COLLAR_W,
+        X(sx * N_X * COLLAR_W), FLAT_OY + FLAT_H + N_Y * COLLAR_W))
 # 后中缝：只在横带内，不进领口
 s.append('  <path d="M %.1f %.1f L %.1f %.1f" stroke-width="1.8" stroke-dasharray="26 14"/>' % (
     X(0), FLAT_OY, X(0), FLAT_OY + FLAT_H))
@@ -243,14 +249,16 @@ s.append('</g>')
 # 顶部：领条在领口向上折转的那一段（实心，内部不再画线）
 s.append('<g id="COLLAR" stroke="%s" stroke-width="3" fill="none">' % BLACK)
 s.append('  <path d="M %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f Z"/>' % (
-    X(-SLIT_HALF), FLAT_OY, X(-NECK_TOP_HALF), FLAT_OY - NECK_H,
-    X(NECK_TOP_HALF), FLAT_OY - NECK_H, X(SLIT_HALF), FLAT_OY))
+    X(-SLIT_HALF), FLAT_OY, X(-NTH), FLAT_OY - NECK_H,
+    X(NTH), FLAT_OY - NECK_H, X(SLIT_HALF), FLAT_OY))
 s.append('</g>')
 
 s.append('<g font-family="sans-serif" fill="%s">' % BLACK)
 s.append('  <text x="%.1f" y="%.1f" font-size="52" font-weight="600">③ 成衣平铺：领襟一体，连肩接袖</text>' % (MARGIN, FLAT_OY + FLAT_H + 105))
-s.append('  <text x="%.1f" y="%.1f" font-size="30" fill="%s">平铺高 %d ｜ 通袖 %d ｜ 前中：| 领条 40 | 露出后片 80（后中缝居中）| 领条 40 | ｜ 顶部 = 领条在领口向上折转（底 %d → 顶 %.0f，露出 %.0f）</text>'
-         % (MARGIN, FLAT_OY + FLAT_H + 155, GRAY, round(FLAT_H), round(S), round(SLIT_HALF * 2), round(NECK_TOP_HALF * 2), round(NECK_H)))
+s.append('  <text x="%.1f" y="%.1f" font-size="30" fill="%s">平铺高 %d ｜ 通袖 %d ｜ 前中：| 领条 %d | 露出后片 %d（后中缝居中）| 领条 %d | ｜ 顶部 = 领条在领口向上折转（底 %d → 顶 %.0f，露出 %.0f）</text>'
+         % (MARGIN, FLAT_OY + FLAT_H + 155, GRAY, round(FLAT_H), round(S),
+            round(COLLAR_W), round(NECK_W - 2 * COLLAR_W), round(COLLAR_W),
+            round(NECK_W), round(NTH * 2), round(NECK_H)))
 s.append('</g>')
 
 # ---- 领条裁片 ----

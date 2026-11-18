@@ -1,0 +1,122 @@
+{
+ "id": "shenyiv3",
+ "label": "深衣·窄袖（V3）",
+ "cut": "古制",
+ "project": "hanfu-shenyi",
+ "project_dir": "hanfu-shenyi",
+ "script": "pattern/build_v3.py",
+ "script_exists": true,
+ "run": {
+  "kind": "params",
+  "fixtures": {
+   "V3": {
+    "L_BODY": 195.0,
+    "GARMENT_L": 770.0,
+    "N_SHANG": 4
+   }
+  }
+ },
+ "modes": [
+  {
+   "id": "V3",
+   "label": "窄袖便服",
+   "note": "衣长 195、总长 770（厂商实测男 M）；裳＝一条 4 幅带·左右折（两侧折、后中缝），前中剪开贯通到摆"
+  }
+ ],
+ "mode_kind": "fixture",
+ "ease": null,
+ "knobs": [
+  {
+   "key": "L_BODY",
+   "label": "衣长（＝袖肥＝袖口）",
+   "min": 120,
+   "max": 700,
+   "step": 5,
+   "unit": "mm"
+  },
+  {
+   "key": "GARMENT_L",
+   "label": "成衣总长",
+   "min": 600,
+   "max": 2000,
+   "step": 10,
+   "unit": "mm"
+  },
+  {
+   "key": "NECK_W",
+   "label": "领口宽",
+   "min": 80,
+   "max": 240,
+   "step": 10,
+   "unit": "mm"
+  },
+  {
+   "key": "COLLAR_W",
+   "label": "领宽（＝领条宽＝立起高）",
+   "min": 20,
+   "max": 60,
+   "step": 5,
+   "unit": "mm"
+  }
+ ],
+ "extras": [
+  "whole_dxf",
+  "cmp"
+ ],
+ "gates": {
+  "fab_w": 500,
+  "max_panels": 4,
+  "min_radius": 10,
+  "invariants": [
+   {
+    "name": "panels",
+    "n": 4,
+    "fab_w": 500
+   },
+   {
+    "name": "slit",
+    "width": 160
+   },
+   {
+    "name": "piece_names",
+    "expect": [
+     "领条"
+    ]
+   }
+  ],
+  "reference": [
+   {
+    "name": "剪裁图对照（幅数/前中开口/领条）",
+    "cmd": "（harness 量图：sources/fig_深衣_剪裁与平铺.jpg）",
+    "where": "hanfu-shenyi/sources/",
+    "last": "2 段（上衣段 390 + 裳段 575）、裳 4 幅一条带左右折、领口宽 160 / 领条宽 30（古制统一算法）"
+   }
+  ],
+  "parent": null,
+  "delta": {},
+  "seam_ledger": []
+ },
+ "scripts": {
+  "pattern": [
+   "build.py",
+   "build_pieces_shenyi.py",
+   "build_shenyi.py",
+   "build_v3.py",
+   "collar.py",
+   "export_dxf.py",
+   "export_dxf_whole.py",
+   "export_dxf_whole_v1.py",
+   "make_cmp.py",
+   "preview.py"
+  ],
+  "verification": []
+ },
+ "docs": [
+  "README.md",
+  "archive/V1_原始直领交襟衣_定稿/STATUS.md",
+  "archive/V2_深衣型矩领_定稿/README.md",
+  "verification/形制核对表.md",
+  "直交一体_盲区解说.md"
+ ],
+ "subject": "09-深衣·窄袖（V3）_古制"
+}

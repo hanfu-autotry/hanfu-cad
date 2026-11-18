@@ -8,6 +8,7 @@
 import os, json, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import preview
+import collar
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -15,10 +16,11 @@ ROOT = os.path.dirname(HERE)
 FAB_W, N_PANEL = 500.0, 4
 HALF_S = FAB_W * N_PANEL / 2.0          # 1000（通袖半宽）
 S = HALF_S * 2                          # 2000
-SLIT_HALF, LAPEL_FOLD = 80.0, 40.0
+NECK_W, COLLAR_W = 160.0, 30.0   # 领口宽 / 领条宽（＝立起高；古制统一算法）
+SLIT_HALF = NECK_W / 2.0
+LAPEL_FOLD = COLLAR_W             # 压边可见 = 带宽
 ARMPIT, HEM_HALF = 370.0, 540.0
 HOOK_OUT = 60.0
-NECK_H = 77.0
 
 # 两档：衣长（＝袖肥＝袖口），成衣总长
 CASES = [
@@ -41,7 +43,8 @@ for name, lb, gl, _tag in CASES:
     shang = gl - lb
     k = lb / 624.0
     ah, hh = 200.0 * k, 70.0 * k
-    _rows.append((name, lb, gl, shang, ah, hh, _h, _tag))
+    cg = collar.geom(SLIT_HALF, lb + shang, COLLAR_W)
+    _rows.append((name, lb, gl, shang, ah, hh, _h, _tag, cg))
     _h += (lb + shang) + 190.0            # 衣服高 + 标题/标注余量
 _h += GAP + 60
 TOTAL_H = _h
@@ -65,7 +68,8 @@ def fx(x):
     return CX + x
 
 
-for name, lb, gl, shang, ah, hh, top, tag in _rows:
+for name, lb, gl, shang, ah, hh, top, tag, cg in _rows:
+    NTH = cg["top_half"]; NECK_H = cg["stand"]
     # 标题（含橙色一句配档逻辑）
     s.append('<text x="%.1f" y="%.1f" font-family="sans-serif" font-size="40" font-weight="600" fill="%s">'
              '%s<tspan font-size="31" font-weight="400" fill="%s">　｜　%s</tspan></text>'
@@ -101,7 +105,7 @@ for name, lb, gl, shang, ah, hh, top, tag in _rows:
             fx(sx * SLIT_HALF), ty, fx(sx * SLIT_HALF), by))
     for sx in (-1, 1):
         c.append('  <path d="M %.1f %.1f L %.1f %.1f" stroke-width="1.6"/>' % (
-            fx(sx * LAPEL_FOLD), ty - NECK_H * min(1.0, lb / 624.0), fx(sx * LAPEL_FOLD), by))
+            fx(sx * LAPEL_FOLD), ty - NECK_H, fx(sx * LAPEL_FOLD), by))
     c.append('  <path d="M %.1f %.1f L %.1f %.1f" stroke-width="1.6" stroke-dasharray="24 14"/>' % (
         fx(0), ty, fx(0), by))
     c.append('</g>')
@@ -109,8 +113,8 @@ for name, lb, gl, shang, ah, hh, top, tag in _rows:
 
     # 领条折转段（梯形）
     s.append('<path d="M %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f Z" stroke="%s" stroke-width="3" fill="none"/>' % (
-        fx(-SLIT_HALF), ty, fx(-44.5), ty - NECK_H * min(1.0, lb / 624.0),
-        fx(44.5), ty - NECK_H * min(1.0, lb / 624.0), fx(SLIT_HALF), ty, BLACK))
+        fx(-SLIT_HALF), ty, fx(-NTH), ty - NECK_H,
+        fx(NTH), ty - NECK_H, fx(SLIT_HALF), ty, BLACK))
 
     # 腋下：垂线 + 外弯
     a = ['<g stroke="%s" stroke-width="3" fill="none">' % GREEN]

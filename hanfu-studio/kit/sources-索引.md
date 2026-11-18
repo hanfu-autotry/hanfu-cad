@@ -32,25 +32,28 @@
 - 新建版型 明制高交领（高交领·默认）（minggaojiaoling）的素材：补 rules 或把图投到 intake/
 - 喂给：minggaojiaoling
 - 类型：暂无
-- **新建：请补规则或往 intake/ 投放素材**
 
 ## 06-唐圆领（默认·本案）_默认
 
 - 新建版型 唐圆领（默认·本案）（tangyuanling）的素材：补 rules 或把图投到 intake/
 - 喂给：tangyuanling
 - 类型：暂无
-- **新建：请补规则或往 intake/ 投放素材**
 
 ## 07-直领对襟（默认·本案）_默认
 
 - 新建版型 直领对襟（默认·本案）（zhilingduijin）的素材：补 rules 或把图投到 intake/
 - 喂给：zhilingduijin
 - 类型：暂无
-- **新建：请补规则或往 intake/ 投放素材**
 
 ## 08-试验竖领浅交襟（竖领·默认）_默认
 
 - 新建版型 试验竖领浅交襟（竖领·默认）（shiyanshuling）的素材：补 rules 或把图投到 intake/
 - 喂给：shiyanshuling
+- 类型：暂无
+
+## 09-深衣·窄袖（V3）_古制
+
+- 新建版型 深衣·窄袖（V3）（shenyiv3）的素材：补 rules 或把图投到 intake/
+- 喂给：shenyiv3
 - 类型：暂无
 - **新建：请补规则或往 intake/ 投放素材**

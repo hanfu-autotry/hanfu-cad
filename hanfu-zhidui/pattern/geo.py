@@ -9,10 +9,12 @@
 第 1 步（用户 2026-11-09）：在现有模板上移除所有，只留**领条**与**后片**；
   再把后片**复制一份命名为前片**。几何全部照抄模板。
 第 2 步（用户 2026-11-09）：**完全参照 通裁·原始直领 的处理 开领宽、装领条**：
-  · 开领宽 160（＝V1 `SLIT_HALF` 80 ×2）→ 前片沿中缝侧全高切掉 80；
-  · 装领条：领条宽 40 压在剪口线上（每边可见 40 ＝V1 `LAPEL_FOLD`），中间露出后片 80；
-  · 后领：领条在领口向上折转成梯形，底 160 → 顶 89（`NECK_TOP_HALF` 44.5×2），
-    露出 77（`NECK_H`）。
+  · 开领宽 160（＝V1 `SLIT_HALF` 80 ×2）⇒ 前片内边＝弦 P→Q，
+    P＝领口点 (80, L)、Q＝下摆曲线∩中缝 (0, 0)（用户 2026-11-18 改「开领法」，
+    此前是沿 x=80 全高直切、下摆在 x=80 处截断）；
+  · 装领条：领条宽 30（用户 2026-11-18 定）压在前襟边上，中间露出后片 160−2×30＝100；
+  · 后领：领条在领口向上折转成梯形，底 NECK_W → 顶 2·M.x（由带宽 miter 得出），
+    立起高 NECK_H ≡ 带宽 COLLAR_W（用户 2026-11-18；V1 的 77/89 作废）。
   领条本身沿用模板 1850×40（notch 825 / 1025 → 后领段 200），未改；见 OPEN_ITEM。
 
 模板里被移除的：前片、三角拼接 A/B、系带、下摆绢衬条。
@@ -20,6 +22,7 @@
 import ast
 import copy
 import json
+import math
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -57,35 +60,72 @@ def v1_def():
 
 V1 = v1_def()
 
-# 可调量（＝studio 上的旋钮）；默认值全部来自 V1 的 _DEF，没有一个是自己拍的。
+# 可调量（＝studio 上的旋钮）。除 COLLAR_W 外默认值来自 V1 的 _DEF。
 DEFAULTS = dict(
-    NECK_W=float(V1["SLIT_HALF"]) * 2.0,   # 160 开领宽（＝两条剪口线的间距）
-    COLLAR_W=float(V1["COLLAR_W"]),        # 95  领条宽（可见 40，其余折在里面）
-    LAPEL_FOLD=float(V1["LAPEL_FOLD"]),    # 40  领条压边（每边可见宽）
-    NECK_H=float(V1["NECK_H"]),            # 77  领条在领口立起的露出高
+    NECK_W=float(V1["NECK_W"]),             # 160 开领宽（＝两条前襟边在肩线处的间距）
+    COLLAR_W=30.0,                         # 30 领条宽（用户 2026-11-18 定 =3cm；V1 的 95 作废）
 )
-# 不挂旋钮、照 V1 固定：折转段顶半宽（顶边 89）
-NECK_TOP_HALF = float(V1["NECK_TOP_HALF"])
+# 派生量（不挂旋钮）：
+#   NECK_H ≡ COLLAR_W   立起高就是带宽（用户 2026-11-18 定）
+#   顶半宽 M.x           由带宽在转角处的 miter 决定，见 trap_top_half()
+#   LAPEL_FOLD           随 V1 的 95 一并取消（领条就是一条 3cm 带子）
 
 
 def params(overrides=None):
-    """本版型的参数表：DEFAULTS 上叠 overrides。"""
+    """本版型的参数表：DEFAULTS 上叠 overrides，再补派生量 NECK_H ≡ COLLAR_W。"""
     q = dict(DEFAULTS)
     q.update({k: float(v) for k, v in (overrides or {}).items()})
+    q["NECK_H"] = q["COLLAR_W"]                 # 立起高 ≡ 带宽（用户 2026-11-18）
+    lim = collar_w_limit(q)
+    if not (0.0 < q["COLLAR_W"] < lim):
+        raise ValueError(
+            "领条宽 %.1f 超出开领宽 %.0f 下的可用范围 (0, %.1f)：再宽，后领带顶边会反折"
+            % (q["COLLAR_W"], q["NECK_W"], lim))
     return q
 
 
 def slit_half(q):
-    """剪口线半间距 ＝ 开领宽的一半。"""
+    """前襟边到中缝的距离 ＝ 开领宽的一半。"""
     return q["NECK_W"] / 2.0
+
+
+def _neck(q):
+    """(x_cut, L, n)：领口点半间距、肩线 y、襟缘长 √(x_cut²+L²)。"""
+    x_cut = slit_half(q)
+    y_top = float(tpl_piece("后片半")["cmds"][-2][1][1])      # 肩线（顶边）y
+    return x_cut, y_top, math.hypot(x_cut, y_top)
+
+
+def _k_miter(q):
+    """顶半宽随带宽的衰减系数 k：M.x ＝ x_cut − k·COLLAR_W。
+
+    M ＝ (P + COAR_W·n̂) 沿 û 走到 y ＝ L+COLLAR_W：
+        M.x ＝ x_cut − LB·(L/n) + LB·(1 − x_cut/n)·(x_cut/L)
+    """
+    x_cut, L, n = _neck(q)
+    return L / n - (1.0 - x_cut / n) * (x_cut / L)
+
+
+def trap_top_half(q=None):
+    """后领带顶边半宽 M.x（梯形上底的一半）。"""
+    q = q or params()
+    x_cut, _L, _n = _neck(q)
+    return x_cut - _k_miter(q) * q["COLLAR_W"]
+
+
+def collar_w_limit(q=None):
+    """带宽上限：顶边半宽 > 0 ⇒ COLLAR_W < x_cut / k（本案开领宽 160 时 ≈88.1）。"""
+    q = q or params()
+    x_cut, _L, _n = _neck(q)
+    return x_cut / _k_miter(q)
 
 
 # 领子的几何关系（用户 2026-11-09「领子几何关系错误，重看直领交襟」后重推）：
 #   V1 的领条是一条**直的整带**，成型后呈倒 U：左前襟 → 绕后颈 → 右前襟。
-#   · 前襟那两段的长度 ＝ 前片剪口边长（沿 x = 剪口线那条直边，摆→肩线）；
-#   · 绕后颈那一段的长度 ＝ 开领宽（＝两条剪口线在肩线处的间距），
+#   · 前襟那两段的长度 ＝ 前片内边长 ＝ 弦 |PQ| ＝ √(x_cut² + L²)；
+#   · 绕后颈那一段的长度 ＝ 开领宽（＝两条前襟边在肩线处的间距），
 #     折起来立起的那个梯形是**带子的宽度**立起来，不额外吃长度：
-#     可见高 NECK_H 77 ≤ 带宽 95，顶边 89 比底边 160 短是因为内侧转弯短。
+#     立起高 NECK_H ≡ 带宽 COLLAR_W；顶边由 miter 得出（trap_top_half），不再是 V1 的 89。
 #   ⇒ 领条长 ＝ 2 × 剪口边长 ＋ 开领宽。
 #   模板那条 1850×40（notch 825/1025 → 后领段 200）是**对穿交半臂**的口径，
 #   与开领宽 160 对不上、宽度也不够压边，故本版按上式重算（见 collar_piece）。
@@ -115,80 +155,46 @@ def base_pieces():
     return [collar, back, front]
 
 
-# ── 第 2 步：开领（沿 x=x_cut 全高切掉中缝侧窄条）──────────────────
-def _cubic_x_at(p0, p1, p2, p3, t):
-    mt = 1.0 - t
-    return (mt ** 3 * p0[0] + 3 * mt * mt * t * p1[0]
-            + 3 * mt * t * t * p2[0] + t ** 3 * p3[0])
-
-
-def _cubic_y_at(p0, p1, p2, p3, t):
-    mt = 1.0 - t
-    return (mt ** 3 * p0[1] + 3 * mt * mt * t * p1[1]
-            + 3 * mt * t * t * p2[1] + t ** 3 * p3[1])
-
-
-def _cubic_t_at_x(p0, p1, p2, p3, x, n=80):
-    """三次贝塞尔上 x(t)=x 的 t（用二分；这一段 x 单调，适用）。"""
-    lo, hi = 0.0, 1.0
-    for _ in range(n):
-        mid = (lo + hi) / 2.0
-        if _cubic_x_at(p0, p1, p2, p3, mid) < x:
-            lo = mid
-        else:
-            hi = mid
-    return (lo + hi) / 2.0
-
-
-def _split_cubic(p0, p1, p2, p3, t):
-    """de Casteljau 在 t 处切开，返回 (左半 4 点, 右半 4 点)。"""
-    def lerp(a, b, s):
-        return (a[0] + (b[0] - a[0]) * s, a[1] + (b[1] - a[1]) * s)
-
-    a = lerp(p0, p1, t)
-    b = lerp(p1, p2, t)
-    c = lerp(p2, p3, t)
-    d = lerp(a, b, t)
-    e = lerp(b, c, t)
-    f = lerp(d, e, t)
-    return ((p0, a, d, f), (f, e, c, p3))
-
-
+# ── 第 2 步：开领（内边 ＝ 弦 P→Q）──────────────────────────────────
 def open_neck_cmds(cmds, x_cut):
-    """把「后片半」的闭合 cmds 沿 x = x_cut 全高切掉中缝侧那一条。
+    """开领（用户 2026-11-18 令）：前片内边 ＝ **弦 P→Q**。
 
-    只动两处、其余原样（曲线仍是曲线，不退化成折线）：
-      · 第一段（下摆三次曲线）在 x=x_cut 处 de Casteljau 截断，起点改到截点；
-      · 顶边最后一点 (0, L) 改成 (x_cut, L)。
-    `x_cut = SLIT_HALF` → 前中留出 2×80 = 160 的开口（开领宽）。
+        P ＝ 领口点 (x_cut, L)：开领边与前片顶边（肩线 y=L）的交点
+        Q ＝ 下摆曲线 ∩ 中缝：模板下摆曲线的起点 (0, 0)
+        |PQ| ＝ √(x_cut² + L²)  ＝ 前襟边长
+
+    等价说法：前片 ＝ 后片半 − △(Q, (0,L), P)；面积差 ＝ x_cut·L/2（本案 80×825/2 ＝ 33000）。
+    下摆曲线**整条保留**（不再在 x=x_cut 处截断），cmds 仍只有 M/C/L/Z；
+    收边用 Z 画弦 P→Q，不另加折线。
 
     依赖后片半的 cmds 次序：M (0,0) / C 下摆 / L / C / C / C / L / C / L / L / L (0,L) / Z。
     """
     assert cmds[0][0] == "M" and cmds[1][0] == "C", "后片半的 cmds 结构与预期不符"
 
-    p0 = tuple(cmds[0][1])
-    p1, p2, p3 = [tuple(q) for q in cmds[1][1:4]]
-    t = _cubic_t_at_x(p0, p1, p2, p3, x_cut)
-    left, right = _split_cubic(p0, p1, p2, p3, t)
+    y_top = float(cmds[-2][1][1])
+    P = (float(x_cut), y_top)
+    Q = (float(cmds[0][1][0]), float(cmds[0][1][1]))
 
-    out = [["M", [round(right[0][0], 4), round(right[0][1], 4)]]]
-    out.append(["C"] + [[round(q[0], 4), round(q[1], 4)] for q in right[1:4]])
+    out = [["M", [Q[0], Q[1]]], ["C"] + [list(q) for q in cmds[1][1:]]]   # 下摆曲线整条
     for seg in cmds[2:-2]:                      # 腋圆角 → 袖口 → 肩点 → (95, L)
         out.append([seg[0]] + [list(q) for q in seg[1:]])
-    y_top = cmds[-2][1][1]                      # 顶边高度（＝肩线 y）
-    out.append(["L", [x_cut, y_top]])
-    out.append(["Z"])
-    return out, dict(low=right[0], top=(x_cut, y_top))
+    out.append(["L", [P[0], P[1]]])
+    out.append(["Z"])                           # 收边 ＝ 弦 P→Q
+    return out, dict(P=P, Q=Q, low=Q, top=P)
+
+
+def neck_pts(q=None):
+    """(P, Q)：P＝领口点 (x_cut, L)，Q＝下摆曲线∩中缝 (0, 0)。"""
+    q = q or params()
+    _cmds, pts = open_neck_cmds(tpl_piece("后片半")["cmds"], slit_half(q))
+    return pts["P"], pts["Q"]
 
 
 def neck_cut_len(q=None):
-    """前片剪口边长：沿剪口线那条直边，从摆到肩线。
-
-    ＝ 肩线 y − 下摆弧在 x=剪口线 处的 y（用切开时算出来的那两个端点，不另量）。
-    """
+    """前襟边长 ＝ |PQ|（P＝领口点 (x_cut, L)，Q＝下摆 ∩ 中缝 (0, 0)）。"""
     q = q or params()
     cmds, pts = open_neck_cmds(tpl_piece("后片半")["cmds"], slit_half(q))
-    return pts["top"][1] - pts["low"][1]
+    return math.hypot(pts["P"][0] - pts["Q"][0], pts["P"][1] - pts["Q"][1])
 
 
 def collar_length(q=None):
@@ -200,7 +206,7 @@ def collar_length(q=None):
 def collar_piece(q=None):
     """领条 ×1：长＝2×前襟＋开领宽，宽＝COLLAR_W；直丝沿长。
 
-    两条 notch 标出后领段的两端（＝两条剪口线落在带子上的位置）。
+    两条 notch 标出后领段的两端（＝两条前襟边落在带子上的位置）。
     """
     q = q or params()
     CL = collar_length(q)
@@ -228,9 +234,9 @@ def step2_pieces(q=None):
     front = tpl_piece("后片半")
     front["name"] = "前片"
     front["cmds"], neck_pts = open_neck_cmds(front["cmds"], x_cut)
-    # 中缝侧原来的刀口 (0,0) 落在切掉的那条里，去掉；补一个剪口点 (x_cut, L)
-    front["notches"] = [n for n in (front.get("notches") or []) if n[0] >= x_cut]
-    front["notches"].append([x_cut, neck_pts["top"][1]])
+    # 模板原刀口全留：中缝 (0,0) 正是 Q＝弦的下端（片子的一个角），不是被切掉的边
+    front["notches"] = [list(n) for n in (front.get("notches") or [])]
+    front["notches"].append([x_cut, neck_pts["P"][1]])          # P ＝ 领口点
 
     return [collar, back, front]
 
@@ -261,9 +267,16 @@ def sheet_pieces(pieces=None, step=1, q=None):
                     ("L", [x1, y0], [x1, y1], "宽 %.0f" % h)]
             note = "后领段 %.0f＝开领宽" % q["NECK_W"]
         elif nm == "前片":
-            dims = [("L", [x0, y0], [x0, y1], "前襟 %.0f" % h)]
-            note = ("中缝侧切 %.0f（开领宽 %.0f）" % (x_cut, q["NECK_W"])
-                    if step == 2 else "＝后片复制，几何相同")
+            if step == 2:
+                Qp = tuple(p["cmds"][0][1])                 # Q ＝ 下摆 ∩ 中缝
+                Pp = tuple(p["cmds"][-2][1])                # P ＝ 领口点
+                dims = [("L", [Qp[0], Qp[1]], [Pp[0], Pp[1]],
+                         "前襟 %.0f" % neck_cut_len(q))]
+                note = "内边＝弦 P→Q（P 领口点 x=%.0f，Q 下摆∩中缝），开领宽 %.0f" % (
+                    x_cut, q["NECK_W"])
+            else:
+                dims = [("L", [x0, y0], [x0, y1], "前襟 %.0f" % h)]
+                note = "＝后片复制，几何相同"
         else:
             dims = [("L", [x0, y0], [x0, y1], "后中长 %.0f" % h)]
             note = "模板后片半原样"

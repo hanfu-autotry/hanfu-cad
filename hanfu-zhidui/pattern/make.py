@@ -28,19 +28,21 @@ def build(q, out):
     grid = geo.sheet_pieces(geo.step2_pieces(q), step=2, q=q)
     CL, CW = geo.collar_size(q)
     FL = geo.neck_cut_len(q)
-    show_back = q["NECK_W"] - q["LAPEL_FOLD"] * 2
+    NECK_P, NECK_Q = geo.neck_pts(q)
+    show_back = q["NECK_W"] - q["COLLAR_W"] * 2      # 领条压在前襟边上，中间露出后片的宽
     info = sheet.write_sheet(
         q, grid, os.path.join(out, STEM + ".svg"),
         "直领对襟 · 裁片图 · 本案",
         "底＝hanfu-cad 对穿交半臂的后片（只读）　｜　领襟口径＝通裁·原始直领交襟衣 V1"
         "　｜　净版 mm",
         [
-            "开领宽 %.0f：前片沿中缝侧全高切掉 %.0f，前襟边 %.1f；开领宽＝两条剪口线间距"
-            % (q["NECK_W"], q["NECK_W"] / 2.0, FL),
+            "开领宽 %.0f：前片内边＝弦 P→Q（P 领口点 (%.0f, %.0f)，Q 下摆∩中缝 (0,0)），前襟 %.1f"
+            % (q["NECK_W"], NECK_P[0], NECK_P[1], FL),
             "领条（全衣一条）×1：长 %.1f ＝ 2×前襟 %.1f ＋ 后领段 %.0f（＝开领宽），"
             "宽 %.0f；两条 notch ＝ 后领段两端" % (CL, FL, q["NECK_W"], CW),
-            "装领条：压在剪口线上，每边可见 %.0f，中间露出后片 %.0f；"
-            "后领由领条立起 %.0f" % (q["LAPEL_FOLD"], show_back, q["NECK_H"]),
+            "装领条：领条宽 %.0f 压在前襟边上，中间露出后片 %.0f；"
+            "后领立起 %.0f（＝带宽），顶边 %.0f 比底 %.0f 短"
+            % (q["COLLAR_W"], show_back, q["NECK_H"], 2 * geo.trap_top_half(q), q["NECK_W"]),
             "后片＝模板后片半原样 ×2（不挖领）；内襟/外襟不做，对襟左右各一片前片",
         ])
     return dict(svg=info["svg"], pieces_json=info["side"], canvas=info["size"],

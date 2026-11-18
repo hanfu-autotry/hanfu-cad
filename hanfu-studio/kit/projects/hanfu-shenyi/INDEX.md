@@ -1,7 +1,7 @@
 # hanfu-shenyi（素材索引 · 不复制源码）
 
 - 目录：`hanfu-shenyi`（相对仓根）
-- 本包内登记的版型：`shenyi`、`zhiling`
+- 本包内登记的版型：`shenyi`、`shenyiv3`、`zhiling`
 
 ## 能跑的脚本（只列名字）
 
@@ -10,6 +10,8 @@
 | 版型/出图 | `hanfu-shenyi/pattern/build.py` |
 | 版型/出图 | `hanfu-shenyi/pattern/build_pieces_shenyi.py` |
 | 版型/出图 | `hanfu-shenyi/pattern/build_shenyi.py` |
+| 版型/出图 | `hanfu-shenyi/pattern/build_v3.py` |
+| 版型/出图 | `hanfu-shenyi/pattern/collar.py` |
 | 版型/出图 | `hanfu-shenyi/pattern/export_dxf.py` |
 | 版型/出图 | `hanfu-shenyi/pattern/export_dxf_whole.py` |
 | 版型/出图 | `hanfu-shenyi/pattern/export_dxf_whole_v1.py` |

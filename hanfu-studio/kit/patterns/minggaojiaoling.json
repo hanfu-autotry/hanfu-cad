@@ -85,6 +85,14 @@
    "max": 130,
    "step": 2,
    "unit": "mm"
+  },
+  {
+   "key": "XUR_H",
+   "label": "续衽 H 移动量（HH1）",
+   "min": 0,
+   "max": 200,
+   "step": 5,
+   "unit": "mm"
   }
  ],
  "extras": [],

@@ -1,916 +1,1024 @@
 {
- "_note": "版型注册表：每条指向**已有项目里的现成脚本**，框架不复制任何几何。run.kind=make 走号型；run.kind=params 走夹具+旋钮。",
- "workspace": "..",
- "patterns": [
-  {
-   "id": "banbi",
-   "label": "对穿交半臂",
-   "cut": "默认",
-   "project": "hanfu-cad",
-   "script": "pattern/make.py",
-   "run": {
-    "kind": "make",
-    "argstyle": "--sex {sex} --size {size} --ease {ease} --profile {profile} --out {out}"
-   },
-   "sexes": [
-    "女",
-    "男"
-   ],
-   "sizes": {
-    "女": [
-     "XS",
-     "S",
-     "M",
-     "L",
-     "XL",
-     "2XL"
-    ],
-    "男": [
-     "S",
-     "M",
-     "L",
-     "XL",
-     "2XL"
-    ]
-   },
-   "knobs": [
+  "_note": "版型注册表：每条指向**已有项目里的现成脚本**，框架不复制任何几何。run.kind=make 走号型；run.kind=params 走夹具+旋钮。",
+  "workspace": "..",
+  "patterns": [
     {
-     "key": "L",
-     "label": "衣长（后中）",
-     "min": 700,
-     "max": 1050,
-     "step": 5,
-     "unit": "mm"
+      "id": "banbi",
+      "label": "对穿交半臂",
+      "cut": "默认",
+      "project": "hanfu-cad",
+      "script": "pattern/make.py",
+      "run": {
+        "kind": "make",
+        "argstyle": "--sex {sex} --size {size} --ease {ease} --profile {profile} --out {out}"
+      },
+      "sexes": [
+        "女",
+        "男"
+      ],
+      "sizes": {
+        "女": [
+          "XS",
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ],
+        "男": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ]
+      },
+      "knobs": [
+        {
+          "key": "L",
+          "label": "衣长（后中）",
+          "min": 700,
+          "max": 1050,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "W_HEM",
+          "label": "平铺摆宽",
+          "min": 700,
+          "max": 1800,
+          "step": 10,
+          "unit": "mm"
+        },
+        {
+          "key": "OV",
+          "label": "交叠（越中量）",
+          "min": 120,
+          "max": 450,
+          "step": 10,
+          "unit": "mm"
+        },
+        {
+          "key": "Y_ARM",
+          "label": "袖根高（腋点高）",
+          "min": 380,
+          "max": 660,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "SLEEVE_LEN",
+          "label": "衣身袖长",
+          "min": 180,
+          "max": 340,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "CUFF",
+          "label": "袖口宽",
+          "min": 120,
+          "max": 300,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "NECK",
+          "label": "领口宽（通口）",
+          "min": 120,
+          "max": 280,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "COL_W",
+          "label": "领缘条宽",
+          "min": 30,
+          "max": 80,
+          "step": 2,
+          "unit": "mm"
+        }
+      ],
+      "modes": [
+        {
+          "id": "artifact",
+          "label": "文物基准",
+          "note": "按钱氏墓形制图反推（女装默认）；叠合闸门对标官图"
+        },
+        {
+          "id": "vendor",
+          "label": "厂商基准",
+          "note": "按厂商号型表（男装默认）；含接袖/长袖等实物尺寸"
+        }
+      ],
+      "mode_kind": "profile",
+      "mode_note": "基准＝版型的「取数依据」：文物基准按丝博形制图反推，厂商基准按厂商号型表；放量档在基准上整体松紧。",
+      "ease": [
+        "紧身",
+        "合体",
+        "宽松"
+      ],
+      "gates": {
+        "fab_w": 500,
+        "max_panels": 4,
+        "min_radius": 10,
+        "invariants": [
+          {
+            "name": "lapel",
+            "half": 135
+          },
+          {
+            "name": "piece_names",
+            "expect": [
+              "后片半",
+              "前片",
+              "领缘条",
+              "系带"
+            ]
+          }
+        ],
+        "reference": [
+          {
+            "name": "像素叠合（可叠合判定）",
+            "cmd": "python verification/overlay.py front back",
+            "where": "hanfu-cad/",
+            "last": "正视 0.8793 / 背视 0.8996（2026-11-02 实测）"
+          },
+          {
+            "name": "形制核对表",
+            "cmd": "python verification/verify.py",
+            "where": "hanfu-cad/",
+            "last": "叠合根＝archive/v3 含接袖原尺寸版"
+          }
+        ],
+        "parent": null,
+        "delta": {},
+        "seam_ledger": []
+      },
+      "knob_note": "参数级调版：左侧先选号型/基准/放量（那套数是版型自己算的），右边滑杆在同一套数上覆写，不换程序、不动几何算法。"
     },
     {
-     "key": "W_HEM",
-     "label": "平铺摆宽",
-     "min": 700,
-     "max": 1800,
-     "step": 10,
-     "unit": "mm"
+      "id": "jiexiu",
+      "label": "对穿交接袖",
+      "cut": "默认",
+      "project": "hanfu-jiexiu",
+      "script": "pattern/make.py",
+      "run": {
+        "kind": "make",
+        "argstyle": "--sex {sex} --size {size} --ease {ease} --profile {profile} --out {out}"
+      },
+      "sexes": [
+        "女",
+        "男"
+      ],
+      "sizes": {
+        "女": [
+          "XS",
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ],
+        "男": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ]
+      },
+      "knobs": [
+        {
+          "key": "L",
+          "label": "衣长（后中）",
+          "min": 700,
+          "max": 1050,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "W_HEM",
+          "label": "平铺摆宽",
+          "min": 700,
+          "max": 1800,
+          "step": 10,
+          "unit": "mm"
+        },
+        {
+          "key": "OV",
+          "label": "交叠（越中量）",
+          "min": 120,
+          "max": 450,
+          "step": 10,
+          "unit": "mm"
+        },
+        {
+          "key": "Y_ARM",
+          "label": "袖根高（腋点高）",
+          "min": 380,
+          "max": 660,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "SLEEVE_LEN",
+          "label": "衣身袖长（已砍半）",
+          "min": 60,
+          "max": 220,
+          "step": 2,
+          "unit": "mm"
+        },
+        {
+          "key": "CUFF",
+          "label": "袖口宽",
+          "min": 120,
+          "max": 300,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "NECK",
+          "label": "预开领宽（通口）",
+          "min": 60,
+          "max": 280,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "COL_W",
+          "label": "领缘条宽",
+          "min": 30,
+          "max": 80,
+          "step": 2,
+          "unit": "mm"
+        },
+        {
+          "key": "JS",
+          "label": "接袖长",
+          "min": 100,
+          "max": 560,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "WRIST",
+          "label": "腕口宽",
+          "min": 90,
+          "max": 200,
+          "step": 5,
+          "unit": "mm"
+        }
+      ],
+      "modes": [
+        {
+          "id": "artifact",
+          "label": "文物基准",
+          "note": "按钱氏墓形制图反推（女装默认）"
+        },
+        {
+          "id": "vendor",
+          "label": "厂商基准",
+          "note": "按厂商号型表（男装默认）；接袖×4"
+        }
+      ],
+      "mode_kind": "profile",
+      "mode_note": "接袖长袖版：基准同上；接袖长与腕口随档位走厂商表。",
+      "ease": [
+        "紧身",
+        "合体",
+        "宽松"
+      ],
+      "gates": {
+        "fab_w": 500,
+        "max_panels": 4,
+        "min_radius": 10,
+        "invariants": [
+          {
+            "name": "lapel",
+            "half": 135
+          },
+          {
+            "name": "piece_names",
+            "expect": [
+              "后片半",
+              "前片",
+              "接袖",
+              "领缘条"
+            ]
+          }
+        ],
+        "reference": [
+          {
+            "name": "形制核对表（接袖版）",
+            "cmd": "python verification/verify.py",
+            "where": "hanfu-jiexiu/",
+            "last": "28 项全过、FAILS 0（2026-11-02）"
+          }
+        ],
+        "parent": null,
+        "delta": {},
+        "seam_ledger": []
+      },
+      "knob_note": "参数级调版：左侧先选号型/基准/放量（那套数是版型自己算的），右边滑杆在同一套数上覆写，不换程序、不动几何算法。"
     },
     {
-     "key": "OV",
-     "label": "交叠（越中量）",
-     "min": 120,
-     "max": 450,
-     "step": 10,
-     "unit": "mm"
+      "id": "shenyi",
+      "label": "深衣",
+      "cut": "古制",
+      "project": "hanfu-shenyi",
+      "script": "pattern/build_shenyi.py",
+      "pieces_post": "pattern/build_pieces_shenyi.py",
+      "run": {
+        "kind": "params",
+        "fixtures": {
+          "V2": {
+            "L_BODY": 624.0,
+            "GARMENT_L": 1872.0,
+            "N_SHANG": 6,
+            "NECK_W": 160.0,
+            "COLLAR_W": 30.0
+          }
+        }
+      },
+      "note_split": "2026-11-18：V3 窄袖已独立为 shenyiv3（script build_v3.py，裳左右折）；本条目只管 V2。",
+      "sexes": [
+        "—"
+      ],
+      "sizes": {
+        "—": [
+          "V2"
+        ]
+      },
+      "knobs": [
+        {
+          "key": "L_BODY",
+          "label": "衣长（＝袖肥＝袖口）",
+          "min": 120,
+          "max": 700,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "GARMENT_L",
+          "label": "成衣总长",
+          "min": 600,
+          "max": 2000,
+          "step": 10,
+          "unit": "mm"
+        },
+        {
+          "key": "NECK_W",
+          "label": "领口宽",
+          "min": 80,
+          "max": 240,
+          "step": 10,
+          "unit": "mm"
+        },
+        {
+          "key": "COLLAR_W",
+          "label": "领条宽（＝立起高）",
+          "min": 20,
+          "max": 60,
+          "step": 5,
+          "unit": "mm"
+        }
+      ],
+      "extras": [
+        {
+          "id": "whole_dxf",
+          "label": "整衣 DXF（方案B：一条连续外轮廓+标注）",
+          "script": "pattern/export_dxf_whole.py",
+          "note": "整衣铺开一片：裳后+衣(中段对折)+裳前；V2 开领＝弦 P(颈侧点)→O(腰线中点)止于腰线（V3 仍贯通到摆）；收褶不画、只进标注；预览 PNG 同步出"
+        },
+        {
+          "id": "cmp",
+          "label": "仅 ③ 平铺（V2/V3 同比例对照）",
+          "script": "pattern/make_cmp.py",
+          "note": "只画平铺那一节，是附加对照，不是全部产物"
+        }
+      ],
+      "product": "①材料 ②制作(对折/折起/剪开/压边) ③平铺 ④领条 —— 由脚本一次画全；导出另含整衣 DXF",
+      "modes": [
+        {
+          "id": "V2",
+          "label": "宽袖礼服",
+          "note": "衣长 624（=袖口），总长 1872 及踝；裳＝一条 6 幅带·左右折（左 3 右 3 对称、两端在后中相接）；开领＝弦 P(颈侧点)→O(腰线中点)，止于腰线；裳前中缝＝衣身前中缝·只不缝合"
+        }
+      ],
+      "mode_kind": "fixture",
+      "mode_note": "古制深衣：夹具即「可复用模式」，每个模式是一组已定的版型参数。",
+      "gates": {
+        "fab_w": 500,
+        "max_panels": 4,
+        "min_radius": 10,
+        "invariants": [
+          {
+            "name": "panels",
+            "n": 4,
+            "fab_w": 500
+          },
+          {
+            "name": "slit",
+            "width": 160
+          },
+          {
+            "name": "piece_names",
+            "expect": [
+              "领条"
+            ]
+          }
+        ],
+        "reference": [
+          {
+            "name": "剪裁图对照（幅数/前中开口/领条）",
+            "cmd": "（harness 量图：sources/fig_深衣_剪裁与平铺.jpg）",
+            "where": "hanfu-shenyi/sources/",
+            "last": "2 段（上衣段 624×2 + 裳段 1248）、裳 6 幅一条带左右折、领口宽 160 / 领条宽 30；V2 领条 1418.2（弦 P→O 止于腰线）"
+          }
+        ],
+        "parent": null,
+        "delta": {},
+        "seam_ledger": []
+      }
     },
     {
-     "key": "Y_ARM",
-     "label": "袖根高（腋点高）",
-     "min": 380,
-     "max": 660,
-     "step": 5,
-     "unit": "mm"
+      "id": "shenyiv3",
+      "label": "深衣·窄袖（V3）",
+      "cut": "古制",
+      "project": "hanfu-shenyi",
+      "script": "pattern/build_v3.py",
+      "pieces_post": "pattern/build_pieces_shenyi.py",
+      "run": {
+        "kind": "params",
+        "fixtures": {
+          "V3": {
+            "L_BODY": 195.0,
+            "GARMENT_L": 770.0,
+            "N_SHANG": 4,
+            "NECK_W": 160.0,
+            "COLLAR_W": 30.0
+          }
+        }
+      },
+      "note_split": "2026-11-18 起与 shenyi(V2) 分离：材料 2 段、裳左右折；V2 的 3 段·上下折见 shenyi。",
+      "sexes": [
+        "—"
+      ],
+      "sizes": {
+        "—": [
+          "V3"
+        ]
+      },
+      "knobs": [
+        {
+          "key": "L_BODY",
+          "label": "衣长（＝袖肥＝袖口）",
+          "min": 120,
+          "max": 700,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "GARMENT_L",
+          "label": "成衣总长",
+          "min": 600,
+          "max": 2000,
+          "step": 10,
+          "unit": "mm"
+        },
+        {
+          "key": "NECK_W",
+          "label": "领口宽",
+          "min": 80,
+          "max": 240,
+          "step": 10,
+          "unit": "mm"
+        },
+        {
+          "key": "COLLAR_W",
+          "label": "领宽（＝领条宽＝立起高）",
+          "min": 20,
+          "max": 60,
+          "step": 5,
+          "unit": "mm"
+        }
+      ],
+      "extras": [
+        {
+          "id": "whole_dxf",
+          "label": "整衣 DXF（方案B：一条连续外轮廓+标注）",
+          "script": "pattern/export_dxf_whole.py",
+          "note": "整衣铺开一片：裳段 + 上衣段（水平对折）；前中开口贯通到摆；收褶不画、只进标注；预览 PNG 同步出"
+        },
+        {
+          "id": "cmp",
+          "label": "仅 ③ 平铺（V2/V3 同比例对照）",
+          "script": "pattern/make_cmp.py",
+          "note": "只画平铺那一节，是附加对照，不是全部产物"
+        }
+      ],
+      "product": "①材料 ②制作(对折/折起/剪开/压边) ③平铺 ④领条 —— 由脚本一次画全；导出另含整衣 DXF",
+      "modes": [
+        {
+          "id": "V3",
+          "label": "窄袖便服",
+          "note": "衣长 195、总长 770（厂商实测男 M）；裳＝一条 4 幅带·左右折（两侧折、后中缝），前中剪开贯通到摆"
+        }
+      ],
+      "mode_kind": "fixture",
+      "mode_note": "古制深衣：夹具即「可复用模式」，每个模式是一组已定的版型参数。",
+      "gates": {
+        "fab_w": 500,
+        "max_panels": 4,
+        "min_radius": 10,
+        "invariants": [
+          {
+            "name": "panels",
+            "n": 4,
+            "fab_w": 500
+          },
+          {
+            "name": "slit",
+            "width": 160
+          },
+          {
+            "name": "piece_names",
+            "expect": [
+              "领条"
+            ]
+          }
+        ],
+        "reference": [
+          {
+            "name": "剪裁图对照（幅数/前中开口/领条）",
+            "cmd": "（harness 量图：sources/fig_深衣_剪裁与平铺.jpg）",
+            "where": "hanfu-shenyi/sources/",
+            "last": "2 段（上衣段 390 + 裳段 575）、裳 4 幅一条带左右折、领口宽 160 / 领条宽 30（古制统一算法）"
+          }
+        ],
+        "parent": null,
+        "delta": {},
+        "seam_ledger": []
+      }
     },
     {
-     "key": "SLEEVE_LEN",
-     "label": "衣身袖长",
-     "min": 180,
-     "max": 340,
-     "step": 5,
-     "unit": "mm"
+      "id": "zhiling",
+      "label": "原始直领交襟衣",
+      "cut": "古制",
+      "project": "hanfu-shenyi",
+      "script": "pattern/build.py",
+      "run": {
+        "kind": "params",
+        "fixtures": {
+          "V1": {
+            "HALF_L": 624.0,
+            "NECK_W": 160.0,
+            "COLLAR_W": 30.0
+          }
+        }
+      },
+      "sexes": [
+        "—"
+      ],
+      "sizes": {
+        "—": [
+          "V1"
+        ]
+      },
+      "knobs": [
+        {
+          "key": "HALF_L",
+          "label": "对折后衣长",
+          "min": 400,
+          "max": 900,
+          "step": 4,
+          "unit": "mm"
+        },
+        {
+          "key": "NECK_W",
+          "label": "领口宽",
+          "min": 80,
+          "max": 240,
+          "step": 10,
+          "unit": "mm"
+        },
+        {
+          "key": "COLLAR_W",
+          "label": "领条宽（＝立起高）",
+          "min": 20,
+          "max": 60,
+          "step": 5,
+          "unit": "mm"
+        }
+      ],
+      "product": "①材料 ②制作(对折/折起/剪开/压边) ③平铺 ④领条 —— 由脚本一次画全；导出另含整衣 DXF",
+      "extras": [
+        {
+          "id": "whole_dxf",
+          "label": "整衣 DXF（方案B：一条连续外轮廓+标注）",
+          "script": "pattern/export_dxf_whole_v1.py",
+          "note": "本件无裳：一块布 2000×1248，前中开口贯通到摆，领条另裁；预览 PNG 同步出"
+        },
+        {
+          "id": "cmp",
+          "label": "仅 ③ 平铺（V2/V3 同比例对照）",
+          "script": "pattern/make_cmp.py",
+          "note": "只画平铺那一节，是附加对照，不是全部产物"
+        }
+      ],
+      "modes": [
+        {
+          "id": "V1",
+          "label": "原衣 V1",
+          "note": "衣长 624（对折线上下各一段）；无裳"
+        }
+      ],
+      "mode_kind": "fixture",
+      "mode_note": "原始直领交襟衣：一块布，前中剪开贯通，两襟交叠可调。",
+      "gates": {
+        "fab_w": 500,
+        "max_panels": 4,
+        "min_radius": 10,
+        "invariants": [
+          {
+            "name": "slit",
+            "width": 160
+          },
+          {
+            "name": "piece_names",
+            "expect": [
+              "领条"
+            ]
+          }
+        ],
+        "reference": [
+          {
+            "name": "三步图对照",
+            "cmd": "（harness 量图：sources/fig_原始直领交襟衣_三步.png）",
+            "where": "hanfu-shenyi/sources/",
+            "last": "前中开口 160 贯通、领条＝平行弦的等带宽 30（立起≡带宽）"
+          }
+        ],
+        "parent": null,
+        "delta": {},
+        "seam_ledger": []
+      }
     },
     {
-     "key": "CUFF",
-     "label": "袖口宽",
-     "min": 120,
-     "max": 300,
-     "step": 5,
-     "unit": "mm"
+      "id": "minggaojiaoling",
+      "label": "明制高交领（高交领·默认）",
+      "cut": "默认",
+      "project": "ming-gaojiaoling",
+      "script": "pattern/make.py",
+      "run": {
+        "kind": "make",
+        "argstyle": "--sex {sex} --size {size} --out {out}"
+      },
+      "sexes": [
+        "—"
+      ],
+      "sizes": {
+        "—": [
+          "本案"
+        ]
+      },
+      "modes": [
+        {
+          "id": "case",
+          "label": "图纸本案",
+          "note": "用户手绘标准图：后中845／腋深328／摆半585／起翘80／肩点570／衣身袖270／袖根208／接袖265／袖口130／前单边摆722／门襟276／开领条宽98／领缘条1178.3×97.1（反推）"
+        }
+      ],
+      "ease": [
+        "合体"
+      ],
+      "knobs": [
+        {
+          "key": "L",
+          "label": "后中长",
+          "min": 700,
+          "max": 1000,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "HALF",
+          "label": "摆半宽",
+          "min": 450,
+          "max": 700,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "DARM",
+          "label": "腋深",
+          "min": 260,
+          "max": 420,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "RISE",
+          "label": "下摆起翘",
+          "min": 40,
+          "max": 140,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "X_SH",
+          "label": "肩点",
+          "min": 480,
+          "max": 650,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "SLV",
+          "label": "衣身袖长",
+          "min": 180,
+          "max": 360,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "SEAM_H",
+          "label": "袖根（接袖缝处袖高）",
+          "min": 160,
+          "max": 280,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "NECKW",
+          "label": "领口宽",
+          "min": 70,
+          "max": 130,
+          "step": 2,
+          "unit": "mm"
+        },
+        {
+          "key": "XUR_H",
+          "label": "续衽 H 移动量（HH1）",
+          "min": 0,
+          "max": 200,
+          "step": 5,
+          "unit": "mm"
+        }
+      ],
+      "gates": {
+        "fab_w": 600.0,
+        "max_panels": 4,
+        "min_radius": 10,
+        "invariants": [
+          {
+            "name": "slit",
+            "width": 274.0,
+            "note": "前中开口 274 贯通（＝续衽越中 137 ×2）；前片轮廓上应有 x=±137"
+          },
+          {
+            "name": "piece_names",
+            "expect": [
+              "后片半",
+              "前片",
+              "接袖",
+              "领缘条",
+              "系带（长）",
+              "系带（短）"
+            ]
+          }
+        ],
+        "reference": [
+          {
+            "name": "拼合自检",
+            "cmd": "python pattern/check.py",
+            "where": "ming-gaojiaoling/",
+            "last": "领条 1178.3×97.1／B 重合／6 片全 PASS（2026-11-08）"
+          }
+        ],
+        "parent": null,
+        "delta": {},
+        "seam_ledger": []
+      },
+      "custom": true,
+      "knob_note": "袖根是输入、腕口是派生：改袖根会让腕口跟着直线袖底走（当前算得 131.3，标准图 130）。后片由接袖版（谱系父）的构造直接生成，不再读模板坐标。XUR_H＝续衽 H 点沿上边缘自 P2′ 向中缝的弧长；过 H 作平行原左外缘的直线落到下摆得 H1，HH1 即新的续衽左边缘（0＝退回原外缘版）。"
     },
     {
-     "key": "NECK",
-     "label": "领口宽（通口）",
-     "min": 120,
-     "max": 280,
-     "step": 5,
-     "unit": "mm"
+      "id": "tangyuanling",
+      "label": "唐圆领（默认·本案）",
+      "cut": "默认",
+      "project": "tang-yuanling",
+      "script": "pattern/make.py",
+      "run": {
+        "kind": "make",
+        "argstyle": "--sex {sex} --size {size} --out {out}"
+      },
+      "sexes": [
+        "—"
+      ],
+      "sizes": {
+        "—": [
+          "本案"
+        ]
+      },
+      "modes": [
+        {
+          "id": "case",
+          "label": "本案",
+          "note": "逐步绘图定稿：P/P' 直径圆取下半圆为领口；续衽左缘斜率可调；领子三段连续不闭合；四片裁片（后片按模板后片半 ×2，不挖领）"
+        }
+      ],
+      "ease": [
+        "合体"
+      ],
+      "knobs": [
+        {
+          "key": "P_SHIFT",
+          "label": "领口点右移",
+          "min": 0,
+          "max": 80,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "COLLAR_W",
+          "label": "领宽",
+          "min": 30,
+          "max": 120,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "COLLAR_SPLIT",
+          "label": "P′ 在 AB 上的位置",
+          "min": 0.2,
+          "max": 0.8,
+          "step": 0.05,
+          "unit": ""
+        },
+        {
+          "key": "XUREN_TILT_DEG",
+          "label": "续衽左缘倾角",
+          "min": 5,
+          "max": 21,
+          "step": 1,
+          "unit": "°"
+        }
+      ],
+      "gates": {
+        "fab_w": 600.0,
+        "max_panels": 4,
+        "min_radius": 10,
+        "invariants": [],
+        "reference": [
+          {
+            "name": "四片裁片自检",
+            "cmd": "python pattern/step6.py",
+            "where": "tang-yuanling/",
+            "last": "领条/前片原生/前片续衽/后片（半·模板原样）×2（2026-11-09，出图走 sheet.write_sheet）"
+          }
+        ],
+        "parent": null,
+        "delta": {},
+        "seam_ledger": []
+      },
+      "product": "四片：领条（三段连续开放长条）／前片原生／前片续衽／后片（半·模板原样）×2；另有平铺预览、领子完整数据、续衽分段积分数据",
+      "knob_note": "照 ming-gaojiaoling 的 make 契约；只暴露改动后几何确实联动的四个量，CASE 里的模板只读参数不挂滑杆。",
+      "custom": true
     },
     {
-     "key": "COL_W",
-     "label": "领缘条宽",
-     "min": 30,
-     "max": 80,
-     "step": 2,
-     "unit": "mm"
+      "id": "zhilingduijin",
+      "label": "直领对襟（默认·本案）",
+      "cut": "默认",
+      "project": "hanfu-zhidui",
+      "script": "pattern/make.py",
+      "run": {
+        "kind": "make",
+        "argstyle": "--sex {sex} --size {size} --out {out}"
+      },
+      "sexes": [
+        "—"
+      ],
+      "sizes": {
+        "—": [
+          "本案"
+        ]
+      },
+      "modes": [
+        {
+          "id": "case",
+          "label": "本案",
+          "note": "逐步绘图定稿：先只留领条与后片、后片复制成前片；再按古制·原始直领 V1 开领宽 160、装领条（领条宽 30＝3cm，中间露出后片 100，后领立起 30＝带宽）"
+        }
+      ],
+      "ease": [
+        "合体"
+      ],
+      "knobs": [
+        {
+          "key": "NECK_W",
+          "label": "开领宽",
+          "min": 80,
+          "max": 240,
+          "step": 10,
+          "unit": "mm"
+        },
+        {
+          "key": "COLLAR_W",
+          "label": "领条宽（＝立起高）",
+          "min": 20,
+          "max": 80,
+          "step": 5,
+          "unit": "mm"
+        }
+      ],
+      "gates": {
+        "fab_w": 600.0,
+        "max_panels": 4,
+        "min_radius": 10,
+        "invariants": [],
+        "reference": [
+          {
+            "name": "裁片自检",
+            "cmd": "python pattern/step2.py",
+            "where": "hanfu-zhidui/",
+            "last": "领条 1817.7×30 ／ 开领宽 160 ／ 前襟 828.9 ／ 立起 30＝带宽（2026-11-18）"
+          }
+        ],
+        "parent": null,
+        "delta": {},
+        "seam_ledger": []
+      },
+      "product": "三片：领条（全衣一条，长＝2×|PQ|＋开领宽，宽 30）／前片（内边＝弦 P→Q）／后片（模板原样）；另有正面平铺线稿（领条与襟缘平行、宽 30，颈口两三角＋后片梯形）",
+      "knob_note": "领条长由 2×|PQ|（前襟边长＝√((NECK_W/2)²+L²)）＋开领宽 现算，不挂旋钮。领条宽默认 30（3cm），可调 20–80；立起高 ≡ 带宽（派生）、后领带顶边由带宽 miter 得出：顶宽＝NECK_W−1.8155×带宽；带宽上限＝(NECK_W/2)/0.9077（开领宽 160 时 88.1，超了会报错）。",
+      "custom": true
+    },
+    {
+      "id": "shiyanshuling",
+      "label": "试验竖领浅交襟（竖领·默认）",
+      "cut": "默认",
+      "project": "shiyan-shuling",
+      "script": "pattern/make.py",
+      "run": {
+        "kind": "make",
+        "argstyle": "--sex {sex} --size {size} --out {out}"
+      },
+      "sexes": [
+        "—"
+      ],
+      "sizes": {
+        "—": [
+          "本案"
+        ]
+      },
+      "modes": [
+        {
+          "id": "case",
+          "label": "试验本案",
+          "note": "以厂商基准半臂 L770 为底逐步构造：P₁/P₂ 解析 → VP=50 → P₁P₂ 60° 弧作新领口 → 上领子等高 30mm 连续竖起（A 在 P₁ 右上方）→ 领子按衣片分三块 → 根据共边做成一条带状（三段沿 P₁A / P₁′A′ 相接、两端分开首尾不接、不自交）"
+        }
+      ],
+      "ease": [
+        "合体"
+      ],
+      "knobs": [],
+      "gates": {
+        "fab_w": 600.0,
+        "max_panels": 4,
+        "min_radius": 10,
+        "invariants": [
+          {
+            "name": "piece_names",
+            "expect": [
+              "前片（右）",
+              "前片（左·镜像）",
+              "后片（右·半）",
+              "后片（左·半·镜像）",
+              "领条"
+            ]
+          }
+        ],
+        "reference": [
+          {
+            "name": "第 6 步自检",
+            "cmd": "python pattern/step6.py",
+            "where": "shiyan-shuling/",
+            "last": "26/26 PASS；领条 8 边 / 共边 2×30 / 端头 2×30 / 自交 0 / 面积 7023.330613（2026-11-11）"
+          },
+          {
+            "name": "模板自检",
+            "cmd": "python pattern/save_template.py",
+            "where": "shiyan-shuling/",
+            "last": "11/11 PASS（2026-11-11）"
+          }
+        ],
+        "parent": null,
+        "delta": {},
+        "seam_ledger": []
+      },
+      "custom": true,
+      "knob_note": "定稿几何（第 6 步），暂无旋钮；改版型走改 pattern/*.py 或重新派生（不造假滑杆）。"
     }
-   ],
-   "modes": [
-    {
-     "id": "artifact",
-     "label": "文物基准",
-     "note": "按钱氏墓形制图反推（女装默认）；叠合闸门对标官图"
-    },
-    {
-     "id": "vendor",
-     "label": "厂商基准",
-     "note": "按厂商号型表（男装默认）；含接袖/长袖等实物尺寸"
-    }
-   ],
-   "mode_kind": "profile",
-   "mode_note": "基准＝版型的「取数依据」：文物基准按丝博形制图反推，厂商基准按厂商号型表；放量档在基准上整体松紧。",
-   "ease": [
-    "紧身",
-    "合体",
-    "宽松"
-   ],
-   "gates": {
-    "fab_w": 500,
-    "max_panels": 4,
-    "min_radius": 10,
-    "invariants": [
-     {
-      "name": "lapel",
-      "half": 135
-     },
-     {
-      "name": "piece_names",
-      "expect": [
-       "后片半",
-       "前片",
-       "领缘条",
-       "系带"
-      ]
-     }
-    ],
-    "reference": [
-     {
-      "name": "像素叠合（可叠合判定）",
-      "cmd": "python verification/overlay.py front back",
-      "where": "hanfu-cad/",
-      "last": "正视 0.8793 / 背视 0.8996（2026-11-02 实测）"
-     },
-     {
-      "name": "形制核对表",
-      "cmd": "python verification/verify.py",
-      "where": "hanfu-cad/",
-      "last": "叠合根＝archive/v3 含接袖原尺寸版"
-     }
-    ],
-    "parent": null,
-    "delta": {},
-    "seam_ledger": []
-   },
-   "knob_note": "参数级调版：左侧先选号型/基准/放量（那套数是版型自己算的），右边滑杆在同一套数上覆写，不换程序、不动几何算法。"
-  },
-  {
-   "id": "jiexiu",
-   "label": "对穿交接袖",
-   "cut": "默认",
-   "project": "hanfu-jiexiu",
-   "script": "pattern/make.py",
-   "run": {
-    "kind": "make",
-    "argstyle": "--sex {sex} --size {size} --ease {ease} --profile {profile} --out {out}"
-   },
-   "sexes": [
-    "女",
-    "男"
-   ],
-   "sizes": {
-    "女": [
-     "XS",
-     "S",
-     "M",
-     "L",
-     "XL",
-     "2XL"
-    ],
-    "男": [
-     "S",
-     "M",
-     "L",
-     "XL",
-     "2XL"
-    ]
-   },
-   "knobs": [
-    {
-     "key": "L",
-     "label": "衣长（后中）",
-     "min": 700,
-     "max": 1050,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "W_HEM",
-     "label": "平铺摆宽",
-     "min": 700,
-     "max": 1800,
-     "step": 10,
-     "unit": "mm"
-    },
-    {
-     "key": "OV",
-     "label": "交叠（越中量）",
-     "min": 120,
-     "max": 450,
-     "step": 10,
-     "unit": "mm"
-    },
-    {
-     "key": "Y_ARM",
-     "label": "袖根高（腋点高）",
-     "min": 380,
-     "max": 660,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "SLEEVE_LEN",
-     "label": "衣身袖长（已砍半）",
-     "min": 60,
-     "max": 220,
-     "step": 2,
-     "unit": "mm"
-    },
-    {
-     "key": "CUFF",
-     "label": "袖口宽",
-     "min": 120,
-     "max": 300,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "NECK",
-     "label": "预开领宽（通口）",
-     "min": 60,
-     "max": 280,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "COL_W",
-     "label": "领缘条宽",
-     "min": 30,
-     "max": 80,
-     "step": 2,
-     "unit": "mm"
-    },
-    {
-     "key": "JS",
-     "label": "接袖长",
-     "min": 100,
-     "max": 560,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "WRIST",
-     "label": "腕口宽",
-     "min": 90,
-     "max": 200,
-     "step": 5,
-     "unit": "mm"
-    }
-   ],
-   "modes": [
-    {
-     "id": "artifact",
-     "label": "文物基准",
-     "note": "按钱氏墓形制图反推（女装默认）"
-    },
-    {
-     "id": "vendor",
-     "label": "厂商基准",
-     "note": "按厂商号型表（男装默认）；接袖×4"
-    }
-   ],
-   "mode_kind": "profile",
-   "mode_note": "接袖长袖版：基准同上；接袖长与腕口随档位走厂商表。",
-   "ease": [
-    "紧身",
-    "合体",
-    "宽松"
-   ],
-   "gates": {
-    "fab_w": 500,
-    "max_panels": 4,
-    "min_radius": 10,
-    "invariants": [
-     {
-      "name": "lapel",
-      "half": 135
-     },
-     {
-      "name": "piece_names",
-      "expect": [
-       "后片半",
-       "前片",
-       "接袖",
-       "领缘条"
-      ]
-     }
-    ],
-    "reference": [
-     {
-      "name": "形制核对表（接袖版）",
-      "cmd": "python verification/verify.py",
-      "where": "hanfu-jiexiu/",
-      "last": "28 项全过、FAILS 0（2026-11-02）"
-     }
-    ],
-    "parent": null,
-    "delta": {},
-    "seam_ledger": []
-   },
-   "knob_note": "参数级调版：左侧先选号型/基准/放量（那套数是版型自己算的），右边滑杆在同一套数上覆写，不换程序、不动几何算法。"
-  },
-  {
-   "id": "shenyi",
-   "label": "深衣",
-   "cut": "古制",
-   "project": "hanfu-shenyi",
-   "script": "pattern/build_shenyi.py",
-   "pieces_post": "pattern/build_pieces_shenyi.py",
-   "run": {
-    "kind": "params",
-    "fixtures": {
-     "V2": {
-      "L_BODY": 624.0,
-      "GARMENT_L": 1872.0,
-      "N_SHANG": 3
-     },
-     "V3": {
-      "L_BODY": 195.0,
-      "GARMENT_L": 770.0,
-      "N_SHANG": 2
-     }
-    }
-   },
-   "sexes": [
-    "—"
-   ],
-   "sizes": {
-    "—": [
-     "V2",
-     "V3"
-    ]
-   },
-   "knobs": [
-    {
-     "key": "L_BODY",
-     "label": "衣长（＝袖肥＝袖口）",
-     "min": 120,
-     "max": 700,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "GARMENT_L",
-     "label": "成衣总长",
-     "min": 600,
-     "max": 2000,
-     "step": 10,
-     "unit": "mm"
-    },
-    {
-     "key": "SLIT_HALF",
-     "label": "前中剪开半间距",
-     "min": 40,
-     "max": 120,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "LAPEL_FOLD",
-     "label": "领条压边（每边可见）",
-     "min": 20,
-     "max": 60,
-     "step": 5,
-     "unit": "mm"
-    }
-   ],
-   "extras": [
-    {
-     "id": "whole_dxf",
-     "label": "整衣 DXF（方案B：一条连续外轮廓+标注）",
-     "script": "pattern/export_dxf_whole.py",
-     "note": "整衣铺开一片：裳后+衣(中段对折)+裳前；前中开口贯通到摆；收褶不画、只进标注；预览 PNG 同步出"
-    },
-    {
-     "id": "cmp",
-     "label": "仅 ③ 平铺（V2/V3 同比例对照）",
-     "script": "pattern/make_cmp.py",
-     "note": "只画平铺那一节，是附加对照，不是全部产物"
-    }
-   ],
-   "product": "①材料 ②制作(对折/折起/剪开/压边) ③平铺 ④领条 —— 由脚本一次画全；导出另含整衣 DXF",
-   "modes": [
-    {
-     "id": "V2",
-     "label": "宽袖礼服",
-     "note": "衣长 624（=袖口），总长 1872 及踝；裳 3 幅（摆 1080 够走路）"
-    },
-    {
-     "id": "V3",
-     "label": "窄袖便服",
-     "note": "衣长 195，总长 770（厂商实测男 M）；裳 2 幅（直筒窄摆）"
-    }
-   ],
-   "mode_kind": "fixture",
-   "mode_note": "古制深衣：夹具即「可复用模式」，每个模式是一组已定的版型参数。",
-   "gates": {
-    "fab_w": 500,
-    "max_panels": 4,
-    "min_radius": 10,
-    "invariants": [
-     {
-      "name": "panels",
-      "n": 4,
-      "fab_w": 500
-     },
-     {
-      "name": "slit",
-      "width": 160
-     },
-     {
-      "name": "piece_names",
-      "expect": [
-       "领条"
-      ]
-     }
-    ],
-    "reference": [
-     {
-      "name": "剪裁图对照（幅数/前中开口/领条）",
-      "cmd": "（harness 量图：sources/fig_深衣_剪裁与平铺.jpg）",
-      "where": "hanfu-shenyi/sources/",
-      "last": "4 幅带 + 上/下块各 3 幅、开口 160 已对齐"
-     }
-    ],
-    "parent": null,
-    "delta": {},
-    "seam_ledger": []
-   }
-  },
-  {
-   "id": "zhiling",
-   "label": "原始直领交襟衣",
-   "cut": "古制",
-   "project": "hanfu-shenyi",
-   "script": "pattern/build.py",
-   "run": {
-    "kind": "params",
-    "fixtures": {
-     "V1": {}
-    }
-   },
-   "sexes": [
-    "—"
-   ],
-   "sizes": {
-    "—": [
-     "V1"
-    ]
-   },
-   "knobs": [
-    {
-     "key": "HALF_L",
-     "label": "对折后衣长",
-     "min": 400,
-     "max": 900,
-     "step": 4,
-     "unit": "mm"
-    },
-    {
-     "key": "SLIT_HALF",
-     "label": "前中剪开半间距",
-     "min": 40,
-     "max": 120,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "LAPEL_FOLD",
-     "label": "领条压边（每边可见）",
-     "min": 20,
-     "max": 60,
-     "step": 5,
-     "unit": "mm"
-    }
-   ],
-   "product": "①材料 ②制作(对折/折起/剪开/压边) ③平铺 ④领条 —— 由脚本一次画全；导出另含整衣 DXF",
-   "extras": [
-    {
-     "id": "whole_dxf",
-     "label": "整衣 DXF（方案B：一条连续外轮廓+标注）",
-     "script": "pattern/export_dxf_whole_v1.py",
-     "note": "本件无裳：一块布 2000×1248，前中开口贯通到摆，领条另裁；预览 PNG 同步出"
-    },
-    {
-     "id": "cmp",
-     "label": "仅 ③ 平铺（V2/V3 同比例对照）",
-     "script": "pattern/make_cmp.py",
-     "note": "只画平铺那一节，是附加对照，不是全部产物"
-    }
-   ],
-   "modes": [
-    {
-     "id": "V1",
-     "label": "原衣 V1",
-     "note": "衣长 624（对折线上下各一段）；无裳"
-    }
-   ],
-   "mode_kind": "fixture",
-   "mode_note": "原始直领交襟衣：一块布，前中剪开贯通，两襟交叠可调。",
-   "gates": {
-    "fab_w": 500,
-    "max_panels": 4,
-    "min_radius": 10,
-    "invariants": [
-     {
-      "name": "slit",
-      "width": 160
-     },
-     {
-      "name": "piece_names",
-      "expect": [
-       "领条"
-      ]
-     }
-    ],
-    "reference": [
-     {
-      "name": "三步图对照",
-      "cmd": "（harness 量图：sources/fig_原始直领交襟衣_三步.png）",
-      "where": "hanfu-shenyi/sources/",
-      "last": "前中开口贯通、领条绕颈后"
-     }
-    ],
-    "parent": null,
-    "delta": {},
-    "seam_ledger": []
-   }
-  },
-  {
-   "id": "minggaojiaoling",
-   "label": "明制高交领（高交领·默认）",
-   "cut": "默认",
-   "project": "ming-gaojiaoling",
-   "script": "pattern/make.py",
-   "run": {
-    "kind": "make",
-    "argstyle": "--sex {sex} --size {size} --out {out}"
-   },
-   "sexes": [
-    "—"
-   ],
-   "sizes": {
-    "—": [
-     "本案"
-    ]
-   },
-   "modes": [
-    {
-     "id": "case",
-     "label": "图纸本案",
-     "note": "用户手绘标准图：后中845／腋深328／摆半585／起翘80／肩点570／衣身袖270／袖根208／接袖265／袖口130／前单边摆722／门襟276／开领条宽98／领缘条1178.3×97.1（反推）"
-    }
-   ],
-   "ease": [
-    "合体"
-   ],
-   "knobs": [
-    {
-     "key": "L",
-     "label": "后中长",
-     "min": 700,
-     "max": 1000,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "HALF",
-     "label": "摆半宽",
-     "min": 450,
-     "max": 700,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "DARM",
-     "label": "腋深",
-     "min": 260,
-     "max": 420,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "RISE",
-     "label": "下摆起翘",
-     "min": 40,
-     "max": 140,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "X_SH",
-     "label": "肩点",
-     "min": 480,
-     "max": 650,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "SLV",
-     "label": "衣身袖长",
-     "min": 180,
-     "max": 360,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "SEAM_H",
-     "label": "袖根（接袖缝处袖高）",
-     "min": 160,
-     "max": 280,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "NECKW",
-     "label": "领口宽",
-     "min": 70,
-     "max": 130,
-     "step": 2,
-     "unit": "mm"
-    }
-   ],
-   "gates": {
-    "fab_w": 600.0,
-    "max_panels": 4,
-    "min_radius": 10,
-    "invariants": [
-     {
-      "name": "slit",
-      "width": 274.0,
-      "note": "前中开口 274 贯通（＝续衽越中 137 ×2）；前片轮廓上应有 x=±137"
-     },
-     {
-      "name": "piece_names",
-      "expect": [
-       "后片半",
-       "前片",
-       "接袖",
-       "领缘条",
-       "系带（长）",
-       "系带（短）"
-      ]
-     }
-    ],
-    "reference": [
-     {
-      "name": "拼合自检",
-      "cmd": "python pattern/check.py",
-      "where": "ming-gaojiaoling/",
-      "last": "领条 1178.3×97.1／B 重合／6 片全 PASS（2026-11-08）"
-     }
-    ],
-    "parent": null,
-    "delta": {},
-    "seam_ledger": []
-   },
-   "custom": true,
-   "knob_note": "袖根是输入、腕口是派生：改袖根会让腕口跟着直线袖底走（当前算得 131.3，标准图 130）。后片由接袖版（谱系父）的构造直接生成，不再读模板坐标。"
-  },
-  {
-   "id": "tangyuanling",
-   "label": "唐圆领（默认·本案）",
-   "cut": "默认",
-   "project": "tang-yuanling",
-   "script": "pattern/make.py",
-   "run": {
-    "kind": "make",
-    "argstyle": "--sex {sex} --size {size} --out {out}"
-   },
-   "sexes": [
-    "—"
-   ],
-   "sizes": {
-    "—": [
-     "本案"
-    ]
-   },
-   "modes": [
-    {
-     "id": "case",
-     "label": "本案",
-     "note": "逐步绘图定稿：P/P' 直径圆取下半圆为领口；续衽左缘斜率可调；领子三段连续不闭合；四片裁片（后片按模板后片半 ×2，不挖领）"
-    }
-   ],
-   "ease": [
-    "合体"
-   ],
-   "knobs": [
-    {
-     "key": "P_SHIFT",
-     "label": "领口点右移",
-     "min": 0,
-     "max": 80,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "COLLAR_W",
-     "label": "领宽",
-     "min": 30,
-     "max": 120,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "COLLAR_SPLIT",
-     "label": "P′ 在 AB 上的位置",
-     "min": 0.2,
-     "max": 0.8,
-     "step": 0.05,
-     "unit": ""
-    },
-    {
-     "key": "XUREN_TILT_DEG",
-     "label": "续衽左缘倾角",
-     "min": 5,
-     "max": 21,
-     "step": 1,
-     "unit": "°"
-    }
-   ],
-   "gates": {
-    "fab_w": 600.0,
-    "max_panels": 4,
-    "min_radius": 10,
-    "invariants": [],
-    "reference": [
-     {
-      "name": "四片裁片自检",
-      "cmd": "python pattern/step6.py",
-      "where": "tang-yuanling/",
-      "last": "领条/前片原生/前片续衽/后片（半·模板原样）×2（2026-11-09，出图走 sheet.write_sheet）"
-     }
-    ],
-    "parent": null,
-    "delta": {},
-    "seam_ledger": []
-   },
-   "product": "四片：领条（三段连续开放长条）／前片原生／前片续衽／后片（半·模板原样）×2；另有平铺预览、领子完整数据、续衽分段积分数据",
-   "knob_note": "照 ming-gaojiaoling 的 make 契约；只暴露改动后几何确实联动的四个量，CASE 里的模板只读参数不挂滑杆。",
-   "custom": true
-  },
-  {
-   "id": "zhilingduijin",
-   "label": "直领对襟（默认·本案）",
-   "cut": "默认",
-   "project": "hanfu-zhidui",
-   "script": "pattern/make.py",
-   "run": {
-    "kind": "make",
-    "argstyle": "--sex {sex} --size {size} --out {out}"
-   },
-   "sexes": [
-    "—"
-   ],
-   "sizes": {
-    "—": [
-     "本案"
-    ]
-   },
-   "modes": [
-    {
-     "id": "case",
-     "label": "本案",
-     "note": "逐步绘图定稿：先只留领条与后片、后片复制成前片；再按古制·原始直领 V1 开领宽 160、装领条（压边 40，中间露出后片 80，后领立起 77）"
-    }
-   ],
-   "ease": [
-    "合体"
-   ],
-   "knobs": [
-    {
-     "key": "NECK_W",
-     "label": "开领宽",
-     "min": 80,
-     "max": 240,
-     "step": 10,
-     "unit": "mm"
-    },
-    {
-     "key": "COLLAR_W",
-     "label": "领条宽",
-     "min": 60,
-     "max": 140,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "LAPEL_FOLD",
-     "label": "领条压边（可见）",
-     "min": 20,
-     "max": 60,
-     "step": 5,
-     "unit": "mm"
-    },
-    {
-     "key": "NECK_H",
-     "label": "领条立起高",
-     "min": 40,
-     "max": 120,
-     "step": 5,
-     "unit": "mm"
-    }
-   ],
-   "gates": {
-    "fab_w": 600.0,
-    "max_panels": 4,
-    "min_radius": 10,
-    "invariants": [],
-    "reference": [
-     {
-      "name": "裁片自检",
-      "cmd": "python pattern/step2.py",
-      "where": "hanfu-zhidui/",
-      "last": "领条 1803.9×95 ／ 开领宽 160 ／ 压边 40 ／ 立起 77（2026-11-09）"
-     }
-    ],
-    "parent": null,
-    "delta": {},
-    "seam_ledger": []
-   },
-   "product": "三片：领条（全衣一条，长＝2×前襟＋开领宽）／前片（开领 80）／后片（模板原样）；另有正面平铺线稿",
-   "knob_note": "领条长由 2×前襟剪口边长＋开领宽 现算，不挂旋钮；折转段顶半宽照 V1 固定 44.5。",
-   "custom": true
-  },
-  {
-   "id": "shiyanshuling",
-   "label": "试验竖领浅交襟（竖领·默认）",
-   "cut": "默认",
-   "project": "shiyan-shuling",
-   "script": "pattern/make.py",
-   "run": {
-    "kind": "make",
-    "argstyle": "--sex {sex} --size {size} --out {out}"
-   },
-   "sexes": [
-    "—"
-   ],
-   "sizes": {
-    "—": [
-     "本案"
-    ]
-   },
-   "modes": [
-    {
-     "id": "case",
-     "label": "试验本案",
-     "note": "以厂商基准半臂 L770 为底逐步构造：P₁/P₂ 解析 → VP=50 → P₁P₂ 60° 弧作新领口 → 上领子等高 30mm 连续竖起（A 在 P₁ 右上方）→ 领子按衣片分三块 → 根据共边做成一条带状（三段沿 P₁A / P₁′A′ 相接、两端分开首尾不接、不自交）"
-    }
-   ],
-   "ease": [
-    "合体"
-   ],
-   "knobs": [],
-   "gates": {
-    "fab_w": 600.0,
-    "max_panels": 4,
-    "min_radius": 10,
-    "invariants": [
-     {
-      "name": "piece_names",
-      "expect": [
-       "前片（右）",
-       "前片（左·镜像）",
-       "后片（右·半）",
-       "后片（左·半·镜像）",
-       "领条"
-      ]
-     }
-    ],
-    "reference": [
-     {
-      "name": "第 6 步自检",
-      "cmd": "python pattern/step6.py",
-      "where": "shiyan-shuling/",
-      "last": "26/26 PASS；领条 8 边 / 共边 2×30 / 端头 2×30 / 自交 0 / 面积 7023.330613（2026-11-11）"
-     },
-     {
-      "name": "模板自检",
-      "cmd": "python pattern/save_template.py",
-      "where": "shiyan-shuling/",
-      "last": "11/11 PASS（2026-11-11）"
-     }
-    ],
-    "parent": null,
-    "delta": {},
-    "seam_ledger": []
-   },
-   "custom": true,
-   "knob_note": "定稿几何（第 6 步），暂无旋钮；改版型走改 pattern/*.py 或重新派生（不造假滑杆）。"
-  }
- ]
+  ]
 }

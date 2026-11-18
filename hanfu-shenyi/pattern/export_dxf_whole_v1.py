@@ -12,23 +12,28 @@ import json, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+sys.path.insert(0, HERE)
+import collar
 
 _DEF = dict(FAB_W=500.0, N_PANEL=4, HALF_L=624.0,
-            SLIT_HALF=80.0, LAPEL_FOLD=40.0,
-            COLLAR_L=2000.0, COLLAR_W=95.0,
-            NECK_TOP_HALF=44.5, NECK_H=77.0)
+            NECK_W=160.0,        # ★领口宽＝前中开口宽（旋钮）
+            COLLAR_W=30.0)       # ★领条宽＝立起高（旋钮；古制统一算法 pattern/collar.py）
 P = dict(_DEF)
 P.update(json.loads(os.environ.get("HANFU_PARAMS", "{}")))
 
 FAB_W = P["FAB_W"]; N = int(P["N_PANEL"])
-L = P["HALF_L"]; SLIT = P["SLIT_HALF"]; LFLD = P["LAPEL_FOLD"]
-COLLAR_L = P["COLLAR_L"]; COLLAR_W = P["COLLAR_W"]
-NTH = P["NECK_TOP_HALF"]; NH = P["NECK_H"]
+L = P["HALF_L"]; NECK_W = P["NECK_W"]
+SLIT = NECK_W / 2.0                 # 前中开口半宽
+COLLAR_W = P["COLLAR_W"]
 
 S = FAB_W * N / 2.0            # 布片半宽 1000
 H = L * 2                      # 布片总高
 F = L                          # 对折线＝肩线
 SLIT_W = SLIT * 2
+# 领条（古制统一算法）：开领＝颈侧点→下摆中点的弦；领条＝平行襟缘等宽带
+_CG = collar.geom(SLIT, F, COLLAR_W)
+COLLAR_L = _CG["length"]; NTH = _CG["top_half"]; NH = _CG["stand"]
+LFLD = COLLAR_W                 # 压边可见 = 带宽
 
 NAME = "V1直领交襟"
 _ho = os.environ.get("HANFU_OUT")

@@ -13,6 +13,7 @@
 | `06-唐圆领（默认·本案）_默认/` | 新建版型 唐圆领（默认·本案）（tangyuanling）的素材：补 rules 或把图投到 intake/ | tangyuanling | 暂无 |
 | `07-直领对襟（默认·本案）_默认/` | 新建版型 直领对襟（默认·本案）（zhilingduijin）的素材：补 rules 或把图投到 intake/ | zhilingduijin | 暂无 |
 | `08-试验竖领浅交襟（竖领·默认）_默认/` | 新建版型 试验竖领浅交襟（竖领·默认）（shiyanshuling）的素材：补 rules 或把图投到 intake/ | shiyanshuling | 暂无 |
+| `09-深衣·窄袖（V3）_古制/` | 新建版型 深衣·窄袖（V3）（shenyiv3）的素材：补 rules 或把图投到 intake/ | shenyiv3 | 暂无 |
 | `99-来历待考/` | 来源未核实（不得用于交付） | — | 1 |
 | `_来源清单/` | 项目自带的 csv/md/html | — | 查出处用，不当素材 |
 | `intake/` | **harness 投放口** | — | 新素材放这里并登记一行 |
