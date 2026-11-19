@@ -2,19 +2,18 @@
 """古制 · 整衣铺开一片 DXF（方案 B：一条连续闭合外轮廓 + 标注）
 ────────────────────────────────────────────────────────────────
 口径（2026-11-02 与用户对齐后重写，替代已删除的旧版）：
-  · 外轮廓 = 一条连续闭合线：裳段(4幅) + 上衣段(4幅, 水平对折) —— 两段同宽，没有台阶
-    （2026-11-18 用户改「裳＝左右折」：裳是一条 4 幅带，两侧折、中缝缝合）。
+  · 外轮廓 = 一条连续闭合线：裳段 + 上衣段(4幅, 水平对折)。裳＝左右折、中缝缝合。
+    ★V2/V3 已分离：V2 下裳 = 6 幅（3000，左3+右3，两侧 ±750 折）；V3 下裳 = 4 幅（2000，两侧 ±500 折）。
+    V2 裳比上衣宽（6 幅 > 4 幅），腰线处**有台阶**；V3 裳与上衣同宽（4 幅），无台阶。
   · 前中 = 斜线开领：颈侧点（±SLIT_HALF，肩线）两条斜线向下摆汇聚（V2 止于腰线 / V3 贯通到裳摆），
     两襟各自独立可滑动（"左右衣襟活动"）；与画图 build_shenyi.py / build_v3.py 的 SLIT 弦一致。
   · 几何里没有"交"：交襟是穿法（两襟交叠着系，交叠量决定上身领形），只进标注。
   · 裳收褶：真实存在，但 DXF 不画褶线，只在标注里写差值（由幅宽推算）。
   · 领条 = 直条另裁（压边可见 40，绕颈后连成一条）；后领不是折出来的部件。
-  · 不新增任何尺寸：全部取自 build_shenyi.py 的 DEF / HANFU_PARAMS；
-    唯一补充 N_SHANG=3（裳每片 3 幅）—— 剪裁图实测：上/下块 168..477，
-    中带 111..519，内缩 57px ≈ 半幅（fig_深衣_剪裁与平铺.jpg）。
+  · 不新增任何尺寸：全部取自 build_shenyi.py / build_v3.py 的 DEF / HANFU_PARAMS。
 用法：
-  python export_dxf_whole.py            # 默认 V3 窄袖
-  HANFU_PARAMS='{"L_BODY":624,"GARMENT_L":1872}' python export_dxf_whole.py
+  python export_dxf_whole.py            # 默认 V3 窄袖（裳 4 幅）
+  HANFU_PARAMS='{"L_BODY":624,"GARMENT_L":1872,"N_SHANG":6}' python export_dxf_whole.py   # V2 宽袖（裳 6 幅）
 输出：out/整衣_<名称>.dxf + out/整衣_<名称>_preview.svg/.png（交付前必须自己看过）
 """
 import json, os, sys
@@ -30,10 +29,13 @@ _DEF = dict(
     NECK_W=160.0,        # ★领口宽＝前中开口宽（旋钮）
     COLLAR_W=30.0,       # ★领条宽＝立起高（旋钮；古制统一算法 pattern/collar.py）
     ARMPIT=370.0, ARMPIT_H=200.0, HOOK_OUT=60.0, HOOK_H=70.0,
-    N_SHANG=4,           # 裳幅数（左右折：一条 N 幅带）
+    N_SHANG=None,        # 裳幅数（None=按版型自动：V2→6 / V3→4；也可由 HANFU_PARAMS 显式覆盖）
 )
 P = dict(_DEF)
 P.update(json.loads(os.environ.get("HANFU_PARAMS", "{}")))
+# ★V2/V3 分离：未显式给 N_SHANG 时按衣长判版型定裳幅数（V2=6、V3=4）
+if P["N_SHANG"] is None:
+    P["N_SHANG"] = 6 if abs(float(P["L_BODY"]) - 624.0) < 1 else 4
 
 FAB_W = P["FAB_W"]; N = int(P["N_PANEL"]); NS = int(P["N_SHANG"])
 L_BODY = P["L_BODY"]; SHANG_H = P["GARMENT_L"] - L_BODY
@@ -44,7 +46,7 @@ ARP = P["ARMPIT"]; ARP_H = P["ARP_H" if "ARP_H" in P else "ARMPIT_H"] * (L_BODY 
 HK_H = P["HOOK_H"] * (L_BODY / 624.0)   # 挖弧矢高（弧的腰线端已实测改落在幅缝 ±FAB_W）
 
 S = FAB_W * N / 2.0            # 布片半宽 1000
-SH = FAB_W * NS / 2.0          # 裳半宽（左右折后＝1000，与上衣同宽）
+SH = FAB_W * NS / 2.0          # 裳半宽：V2 6 幅→1500（比上衣宽，有台阶）；V3 4 幅→1000（同宽）
 SEG_MID = 2 * L_BODY
 W1 = SHANG_H                   # 前腰线（衣带下边）
 F = SHANG_H + L_BODY           # 肩线（对折线）
@@ -73,14 +75,26 @@ os.makedirs(OUTDIR, exist_ok=True)
 # V2 弦止于腰线 W1；V3 弦贯通到下摆 0。布片轮廓保持完整矩形，斜线走 cutline 图层；
 # 不再挖 x=±SLIT 的垂线矩形口（那与画图的斜线构造不符）。
 _SLIT_END = W1 if abs(L_BODY - 624) < 1 else 0        # V2→腰线；V3→下摆（同 build_v3 的 Y(0)）
-outline = [(-S, 0), (S, 0), (S, H), (-S, H)]
+# 外框按 build_shenyi.py 的权威画法：下裳段用 ±SH（V2=1500/6 幅），上衣段用 ±S（1000/4 幅）。
+# V2 两段不同宽 → 腰线 y=W1 处有台阶；V3 同宽（±SH==±S）→ 退化为矩形。
+if abs(SH - S) < 1e-9:
+    outline = [(-S, 0), (S, 0), (S, H), (-S, H)]
+else:
+    outline = [(-SH, 0), (SH, 0), (SH, W1), (S, W1), (S, H), (-S, H), (-S, W1), (-SH, W1)]
 
-seams = []   # 拼幅缝（衣带 ±FAB_W；裳块 ±FAB_W；背中缝 x=0 自肩线到顶）
+seams = []   # 拼幅缝：下裳段按 NS 幅、上衣段按 N 幅分别画；背中缝 x=0 单列
+# 下裳段（y: 0 → W1）：NS 幅，幅缝在 -SH + FAB_W*k
+for k in range(1, NS):
+    x = -SH + FAB_W * k
+    if abs(x) < 1:
+        continue
+    seams.append(((x, 0), (x, W1)))
+# 上衣段（y: W1 → H）：N 幅，幅缝在 -S + FAB_W*k
 for k in range(1, N):
     x = -S + FAB_W * k
-    if abs(x) < 1:                       # 中缝/背中缝单独画
+    if abs(x) < 1:
         continue
-    seams.append(((x, 0), (x, H)))       # 4 幅通缝
+    seams.append(((x, W1), (x, H)))
 seams.append(((0, 0), (0, H)))           # 中缝（裳段）＋ 背中缝（上衣段）同一条线
 
 fold = [((-S, F), (-SLIT, F)), ((SLIT, F), (S, F))]      # 折线（中段正中=肩线）
@@ -90,7 +104,9 @@ cutline = [((-SLIT, F), (0, _SLIT_END)), ((SLIT, F), (0, _SLIT_END))]  # 斜线�
 #   「袖底缝」（与镜像缝合）。裳（另一块布）：腰边 1500(3幅)，比 740 宽，差值收褶吃掉。
 #   两片布的线各归各，互不抢地盘；腰线(±750)在排料图里同时是「裳/衣分界＝下剪线」。
 # 腰线＝裳/衣分界（下剪线；缝合时收褶）。前腰线在前中 ±SLIT 处断开——那里布已挖掉。
-waist = [((-S, W1), (-SLIT, W1)), ((SLIT, W1), (S, W1))]      # 腰线＝衣裳接缝（前中处让开剪口）
+# 腰线＝衣裳接缝：V2 下裳更宽，接缝线从 -SH 到 +SH（台阶两端也在此y）；前中 ±SLIT 处让开剪口
+_waist_half = SH if abs(SH - S) >= 1e-9 else S
+waist = [((-_waist_half, W1), (-SLIT, W1)), ((SLIT, W1), (_waist_half, W1))]
 sleeve = []; hooks = []                                   # 袖底缝(衣) + 侧缝垂线记号(衣) + 腋下挖弧
 def hook_pts(sx, yy, d):
     """腋下挖弧（剪裁图实测）：自幅缝脚 (±FAB_W, yy) 沿腰线向内，向「中段内侧」（肩线方向）
@@ -128,16 +144,17 @@ ANN = [
     "通袖 %d ＝ %d 幅 × %.0f ｜ 布片高 %d ＝ 上衣段 %d（水平对折＝上衣，衣长 %d＝袖口）＋ 裳段 %d" % (
         round(S * 2), N, FAB_W, round(H), round(SEG_MID), round(L_BODY), round(SHANG_H)),
     "裳段：一条 %d 幅 × %d 的带子，左右折 —— 两侧（±%d）折、两端在中缝（x=0）缝合" % (
-        NS, round(SHANG_H), round(FAB_W)),
+        NS, round(SHANG_H), round(SH / 2)),
     "前中开口 %d：颈侧点 ±%d 斜向汇聚到下摆（V2 止腰线 / V3 贯通到摆）；裳段不开衩（中缝缝合），穿着时整衣套头" % (round(SLIT_W), round(SLIT)),
     "领条压边可见 %d（中间露出后片 %d）；领条另裁 %d × %d，直条绕颈后" % (
         round(LFLD), round(SLIT_W - LFLD * 2), round(COLLAR_L), round(COLLAR_W)),
     "外轮廓各段角色：裳摆=自由边 ｜ 裳两侧=折线（不缝） ｜ 腰线(±%d)=衣裳接缝 ｜ ±%d=袖口(自由) "
-    "｜ ±%d=前中剪开 ｜ 肩线=折线" % (round(S), round(S), round(SLIT)),
+    "｜ ±%d=前中剪开 ｜ 肩线=折线" % (round(_waist_half), round(S), round(SLIT)),
     "衣身底边 ±%d 以内＝衣身摆线（接收褶的裳：裳腰 %d 收褶接 %d，比≈2.7:1，推算）；"
     "幅缝 ±%d 到袖口 ±%d＝袖底缝（与镜像缝合，沿外幅整条）；本图不画褶线" % (
         round(ARP), round(SH * 2), round(ARP * 2), round(FAB_W), round(S)),
-    "净版未含缝份 ｜ 单位 mm ｜ 裳段与上衣段同宽（%d 幅），腰线处**无台阶**（2026-11-18 改）" % N,
+    "净版未含缝份 ｜ 单位 mm ｜ 上衣 %d 幅 / 下裳 %d 幅；%s" % (
+        N, NS, "下裳更宽，腰线处有台阶（V2）" if NS > N else "裳与上衣同宽，腰线无台阶（V3）"),
 ]
 
 # ── 写 DXF ─────────────────────────────────────────────────────────

@@ -3,8 +3,10 @@
 <rect width="100%" height="100%" fill="#ffffff"/>
 <polyline points="250 1485 2250 1485 2250 520 250 520" stroke="#111111" stroke-width="7.01" fill="none" stroke-linejoin="round"/>
 <polyline points="2550 1485 4258.29 1485 4258.29 1455 2550 1455" stroke="#111111" stroke-width="7.01" fill="none" stroke-linejoin="round"/>
-<line x1="750.0" y1="1485.0" x2="750.0" y2="520.0" stroke="#1a4d8f" stroke-width="3.77" fill="none" stroke-dasharray="26 10"/>
-<line x1="1750.0" y1="1485.0" x2="1750.0" y2="520.0" stroke="#1a4d8f" stroke-width="3.77" fill="none" stroke-dasharray="26 10"/>
+<line x1="750.0" y1="1485.0" x2="750.0" y2="910.0" stroke="#1a4d8f" stroke-width="3.77" fill="none" stroke-dasharray="26 10"/>
+<line x1="1750.0" y1="1485.0" x2="1750.0" y2="910.0" stroke="#1a4d8f" stroke-width="3.77" fill="none" stroke-dasharray="26 10"/>
+<line x1="750.0" y1="910.0" x2="750.0" y2="520.0" stroke="#1a4d8f" stroke-width="3.77" fill="none" stroke-dasharray="26 10"/>
+<line x1="1750.0" y1="910.0" x2="1750.0" y2="520.0" stroke="#1a4d8f" stroke-width="3.77" fill="none" stroke-dasharray="26 10"/>
 <line x1="1250.0" y1="1485.0" x2="1250.0" y2="520.0" stroke="#1a4d8f" stroke-width="3.77" fill="none" stroke-dasharray="26 10"/>
 <line x1="250.0" y1="910.0" x2="1170.0" y2="910.0" stroke="#1a4d8f" stroke-width="3.77" fill="none" stroke-dasharray="26 10"/>
 <line x1="1330.0" y1="910.0" x2="2250.0" y2="910.0" stroke="#1a4d8f" stroke-width="3.77" fill="none" stroke-dasharray="26 10"/>
@@ -47,7 +49,7 @@
 <text x="60" y="262" font-size="27" fill="#444444">领条压边可见 30（中间露出后片 100）；领条另裁 1708 × 30，直条绕颈后</text>
 <text x="60" y="306" font-size="27" fill="#444444">外轮廓各段角色：裳摆=自由边 ｜ 裳两侧=折线（不缝） ｜ 腰线(±1000)=衣裳接缝 ｜ ±1000=袖口(自由) ｜ ±80=前中剪开 ｜ 肩线=折线</text>
 <text x="60" y="350" font-size="27" fill="#444444">衣身底边 ±370 以内＝衣身摆线（接收褶的裳：裳腰 2000 收褶接 740，比≈2.7:1，推算）；幅缝 ±500 到袖口 ±1000＝袖底缝（与镜像缝合，沿外幅整条）；本图不画褶线</text>
-<text x="60" y="394" font-size="27" fill="#444444">净版未含缝份 ｜ 单位 mm ｜ 裳段与上衣段同宽（4 幅），腰线处**无台阶**（2026-11-18 改）</text>
+<text x="60" y="394" font-size="27" fill="#444444">净版未含缝份 ｜ 单位 mm ｜ 上衣 4 幅 / 下裳 4 幅；裳与上衣同宽，腰线无台阶（V3）</text>
 <text x="2550" y="1441" font-size="28">领条 ×1（另裁）</text>
 </g>
 <text x="60" y="1635" font-size="24" fill="#8a8a8a">预览：CUT 黑 / 拼缝·腰线·袖底 蓝虚 / 折线·压边 橙点划 / 剪开 红 / 领条 绿 / 布纹 灰</text>

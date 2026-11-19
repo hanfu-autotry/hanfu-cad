@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="4077" height="1981" viewBox="0 0 6577 3196">
 <rect width="100%" height="100%" fill="#ffffff"/>
-<polyline points="250 3016 2250 3016 2250 520 250 520" stroke="#111111" stroke-width="10.52" fill="none" stroke-linejoin="round"/>
+<polyline points="-250 3016 2750 3016 2750 1768 2250 1768 2250 520 250 520 250 1768 -250 1768" stroke="#111111" stroke-width="10.52" fill="none" stroke-linejoin="round"/>
 <polyline points="2550 3016 6457.42 3016 6457.42 2986 2550 2986" stroke="#111111" stroke-width="10.52" fill="none" stroke-linejoin="round"/>
-<line x1="750.0" y1="3016.0" x2="750.0" y2="520.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
-<line x1="1750.0" y1="3016.0" x2="1750.0" y2="520.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
+<line x1="250.0" y1="3016.0" x2="250.0" y2="1768.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
+<line x1="750.0" y1="3016.0" x2="750.0" y2="1768.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
+<line x1="1750.0" y1="3016.0" x2="1750.0" y2="1768.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
+<line x1="2250.0" y1="3016.0" x2="2250.0" y2="1768.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
+<line x1="750.0" y1="1768.0" x2="750.0" y2="520.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
+<line x1="1750.0" y1="1768.0" x2="1750.0" y2="520.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
 <line x1="1250.0" y1="3016.0" x2="1250.0" y2="520.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
-<line x1="250.0" y1="1768.0" x2="1170.0" y2="1768.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
-<line x1="1330.0" y1="1768.0" x2="2250.0" y2="1768.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
+<line x1="-250.0" y1="1768.0" x2="1170.0" y2="1768.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
+<line x1="1330.0" y1="1768.0" x2="2750.0" y2="1768.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
 <line x1="750.0" y1="1768.0" x2="250.0" y2="1768.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
 <line x1="880.0" y1="1768.0" x2="880.0" y2="1568.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
 <line x1="1750.0" y1="1768.0" x2="2250.0" y2="1768.0" stroke="#1a4d8f" stroke-width="5.67" fill="none" stroke-dasharray="26 10"/>
@@ -42,12 +46,12 @@
 <g font-family="sans-serif" fill="#111111">
 <text x="60" y="70" font-size="42" font-weight="600">古制 · 整衣铺开一片（V2宽袖）｜ 一条连续外轮廓：裳段 + 上衣段（水平对折）</text>
 <text x="60" y="130" font-size="27" fill="#444444">通袖 2000 ＝ 4 幅 × 500 ｜ 布片高 2496 ＝ 上衣段 1248（水平对折＝上衣，衣长 624＝袖口）＋ 裳段 1248</text>
-<text x="60" y="174" font-size="27" fill="#444444">裳段：一条 6 幅 × 1248 的带子，左右折 —— 两侧（±500）折、两端在中缝（x=0）缝合</text>
+<text x="60" y="174" font-size="27" fill="#444444">裳段：一条 6 幅 × 1248 的带子，左右折 —— 两侧（±750）折、两端在中缝（x=0）缝合</text>
 <text x="60" y="218" font-size="27" fill="#444444">前中开口 160：颈侧点 ±80 斜向汇聚到下摆（V2 止腰线 / V3 贯通到摆）；裳段不开衩（中缝缝合），穿着时整衣套头</text>
 <text x="60" y="262" font-size="27" fill="#444444">领条压边可见 30（中间露出后片 100）；领条另裁 3907 × 30，直条绕颈后</text>
-<text x="60" y="306" font-size="27" fill="#444444">外轮廓各段角色：裳摆=自由边 ｜ 裳两侧=折线（不缝） ｜ 腰线(±1000)=衣裳接缝 ｜ ±1000=袖口(自由) ｜ ±80=前中剪开 ｜ 肩线=折线</text>
+<text x="60" y="306" font-size="27" fill="#444444">外轮廓各段角色：裳摆=自由边 ｜ 裳两侧=折线（不缝） ｜ 腰线(±1500)=衣裳接缝 ｜ ±1000=袖口(自由) ｜ ±80=前中剪开 ｜ 肩线=折线</text>
 <text x="60" y="350" font-size="27" fill="#444444">衣身底边 ±370 以内＝衣身摆线（接收褶的裳：裳腰 3000 收褶接 740，比≈2.7:1，推算）；幅缝 ±500 到袖口 ±1000＝袖底缝（与镜像缝合，沿外幅整条）；本图不画褶线</text>
-<text x="60" y="394" font-size="27" fill="#444444">净版未含缝份 ｜ 单位 mm ｜ 裳段与上衣段同宽（4 幅），腰线处**无台阶**（2026-11-18 改）</text>
+<text x="60" y="394" font-size="27" fill="#444444">净版未含缝份 ｜ 单位 mm ｜ 上衣 4 幅 / 下裳 6 幅；下裳更宽，腰线处有台阶（V2）</text>
 <text x="2550" y="2972" font-size="28">领条 ×1（另裁）</text>
 </g>
 <text x="60" y="3166" font-size="24" fill="#8a8a8a">预览：CUT 黑 / 拼缝·腰线·袖底 蓝虚 / 折线·压边 橙点划 / 剪开 红 / 领条 绿 / 布纹 灰</text>
