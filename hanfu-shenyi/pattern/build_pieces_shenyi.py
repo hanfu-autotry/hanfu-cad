@@ -41,14 +41,17 @@ def rect(w, h):
 
 
 pieces = [
-    # ① 上衣：整幅 2000 × 上衣段高，前中从下边剪进 160 × 衣长（剪到折线）
+    # ① 上衣：整幅 2000 × 上衣段高，前中开领＝斜线（与画图 build_shenyi.py / build_v3.py 一致）。
+    #    裁片轮廓保持完整矩形（同 V1 的 body_blank）；斜线开领只用刀口标记端点：
+    #      · 下摆中点 (0, 0) —— 两道斜线在下摆的汇聚点；
+    #      · 肩线颈侧点 (±SLIT, SEG/2) —— 斜线在折线/肩线的起点。
+    #    不在轮廓上挖 x=±SLIT 的垂线矩形口（那与画图的斜线构造不符）。
     dict(
         name="上衣（中段·对折）", qty=1, ox=100 + S_HALF, oy=H,
-        cmds=[["M", [-S_HALF, 0]], ["L", [-SLIT, 0]], ["L", [-SLIT, SEG / 2]],
-              ["L", [SLIT, SEG / 2]], ["L", [SLIT, 0]], ["L", [S_HALF, 0]],
+        cmds=[["M", [-S_HALF, 0]], ["L", [S_HALF, 0]],
               ["L", [S_HALF, SEG]], ["L", [-S_HALF, SEG]], ["Z"]],
         grain=[0, 1],
-        notches=[[-SLIT, 0], [SLIT, 0],
+        notches=[[0, 0], [-SLIT, SEG / 2], [SLIT, SEG / 2],
                  [-ARM, ARM_H], [-ARM, SEG - ARM_H], [ARM, ARM_H], [ARM, SEG - ARM_H],
                  [-ARM - HOOK, 0], [ARM + HOOK, 0],
                  [-ARM - HOOK, SEG], [ARM + HOOK, SEG],
