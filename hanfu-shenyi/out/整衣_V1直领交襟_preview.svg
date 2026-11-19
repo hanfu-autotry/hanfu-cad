@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="2534" height="1207" viewBox="0 0 4088 1948">
 <rect width="100%" height="100%" fill="#ffffff"/>
-<polyline points="250 1768 1170 1768 1170 1144 1330 1144 1330 1768 2250 1768 2250 520 250 520" stroke="#111111" stroke-width="6.54" fill="none" stroke-linejoin="round"/>
+<polyline points="250 1768 2250 1768 2250 520 250 520" stroke="#111111" stroke-width="6.54" fill="none" stroke-linejoin="round"/>
 <polyline points="2550 1768 3968.21 1768 3968.21 1738 2550 1738" stroke="#111111" stroke-width="6.54" fill="none" stroke-linejoin="round"/>
 <line x1="750.0" y1="1768.0" x2="750.0" y2="520.0" stroke="#1a4d8f" stroke-width="3.52" fill="none" stroke-dasharray="26 10"/>
 <line x1="1250.0" y1="1144.0" x2="1250.0" y2="520.0" stroke="#1a4d8f" stroke-width="3.52" fill="none" stroke-dasharray="26 10"/>
@@ -16,8 +16,8 @@
 <line x1="1330.0" y1="1768.0" x2="1280.0" y2="1768.0" stroke="#b85400" stroke-width="5.53" fill="none" stroke-dasharray="46 16 10 16"/>
 <line x1="1170.0" y1="1144.0" x2="1220.0" y2="1144.0" stroke="#b85400" stroke-width="5.53" fill="none" stroke-dasharray="46 16 10 16"/>
 <line x1="1330.0" y1="1144.0" x2="1280.0" y2="1144.0" stroke="#b85400" stroke-width="5.53" fill="none" stroke-dasharray="46 16 10 16"/>
-<line x1="1170.0" y1="1768.0" x2="1170.0" y2="1144.0" stroke="#b3241c" stroke-width="6.54" fill="none"/>
-<line x1="1330.0" y1="1768.0" x2="1330.0" y2="1144.0" stroke="#b3241c" stroke-width="6.54" fill="none"/>
+<line x1="1170.0" y1="1144.0" x2="1250.0" y2="1768.0" stroke="#b3241c" stroke-width="6.54" fill="none"/>
+<line x1="1330.0" y1="1144.0" x2="1250.0" y2="1768.0" stroke="#b3241c" stroke-width="6.54" fill="none"/>
 <polyline points="1170 1144 1196.4 1114 1303.6 1114 1330 1144" stroke="#1d6b3a" stroke-width="6.54" fill="none" stroke-linejoin="round"/>
 <line x1="500.0" y1="1648.0" x2="500.0" y2="640.0" stroke="#8a8a8a" stroke-width="2.77" fill="none"/>
 <line x1="1000.0" y1="1648.0" x2="1000.0" y2="640.0" stroke="#8a8a8a" stroke-width="2.77" fill="none"/>
@@ -26,8 +26,8 @@
 <g font-family="sans-serif" fill="#111111">
 <text x="60" y="70" font-size="42" font-weight="600">古制 · V1 原始直领交襟衣 · 整衣铺开一片</text>
 <text x="60" y="130" font-size="27" fill="#444444">通袖 2000 ＝ 4 幅 × 500 ｜ 布片高 1248 ＝ 对折线 ×2（衣长 624 ＝ 肩线到下摆）</text>
-<text x="60" y="174" font-size="27" fill="#444444">上下对折（肩线折出，不另裁前后片）→ 前中剪开两道（不折），领条压边</text>
-<text x="60" y="218" font-size="27" fill="#444444">前中开口 160 贯通到下摆：两襟独立可滑（左右衣襟活动）；交襟＝系出来的，几何里没有'交'</text>
+<text x="60" y="174" font-size="27" fill="#444444">上下对折（肩线折出，不另裁前后片）→ 前中开领＝两道斜线（颈侧点→下摆中点，不折），领条压边</text>
+<text x="60" y="218" font-size="27" fill="#444444">前中开口 160：颈侧点 ±80 斜向汇聚到下摆中点（两襟独立可滑）；交襟＝系出来的，几何里没有'交'</text>
 <text x="60" y="262" font-size="27" fill="#444444">领条压边可见 30（中间露出后片 100）；领条另裁 1418 × 30，直条绕颈后</text>
 <text x="60" y="306" font-size="27" fill="#444444">袖底缝：幅缝 ±500 到袖口 ±1000（与镜像缝合，沿外幅整条）；幅缝 ±500＝拼幅缝</text>
 <text x="60" y="350" font-size="27" fill="#444444">净版未含缝份 ｜ 单位 mm ｜ 本件无裳（上衣下裳另接）</text>
