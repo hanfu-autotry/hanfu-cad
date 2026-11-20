@@ -1002,17 +1002,18 @@ def build_svg(pid, size, sex="女", overrides=None, use_cache=True, profile=None
     overrides = overrides or {}
     log("build.start", pid=pid, size=size, sex=sex, profile=profile or "-", ease=ease or "-",
         overrides=json.dumps(overrides, ensure_ascii=False))
-    key = (pid, size, sex, profile or "", ease or "",
-           tuple(sorted(overrides.items())))
-    if use_cache and key in CACHE:
-        return CACHE[key]
-
     spec = spec_of(pid)
     ws = ws_root()
     proj = os.path.join(ws, spec["project"])
     script = os.path.join(proj, spec["script"])
     if not os.path.exists(script):
         raise FileNotFoundError("脚本不存在：%s" % script)
+
+    # 缓存键带上脚本 mtime：一步一画改完脚本，界面重选即出新图，不会被旧图缓存卡住
+    key = (pid, size, sex, profile or "", ease or "",
+           tuple(sorted(overrides.items())), os.path.getmtime(script))
+    if use_cache and key in CACHE:
+        return CACHE[key]
 
     tmp = tempfile.mkdtemp(prefix="studio_")
     env = child_env()

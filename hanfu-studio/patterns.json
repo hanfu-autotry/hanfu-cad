@@ -563,6 +563,135 @@
       }
     },
     {
+      "id": "shenyiv4",
+      "label": "试验-矩领",
+      "cut": "古制",
+      "project": "hanfu-shenyi",
+      "script": "pattern/build_v4.py",
+      "pieces_post": "pattern/build_pieces_shenyi.py",
+      "run": {
+        "kind": "params",
+        "fixtures": {
+          "V4": {
+            "L_BODY": 195.0,
+            "GARMENT_L": 770.0,
+            "N_SHANG": 4,
+            "NECK_W": 160.0,
+            "PD": 70.0,
+            "LL_W": 30.0
+          }
+        }
+      },
+      "note_split": "2026-11-20：基于 V3 派生的独立程序 build_v4.py；一步一画①新领口 PP′D′D（D 距 P 沿弦 PD=30），原贯通开领剪除移除。",
+      "sexes": [
+        "—"
+      ],
+      "sizes": {
+        "—": [
+          "V4"
+        ]
+      },
+      "knobs": [
+        {
+          "key": "L_BODY",
+          "label": "衣长（＝袖肥＝袖口）",
+          "min": 120,
+          "max": 700,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "GARMENT_L",
+          "label": "成衣总长",
+          "min": 600,
+          "max": 2000,
+          "step": 10,
+          "unit": "mm"
+        },
+        {
+          "key": "NECK_W",
+          "label": "领口宽",
+          "min": 80,
+          "max": 240,
+          "step": 10,
+          "unit": "mm"
+        },
+        {
+          "key": "PD",
+          "label": "领口深（颈侧点P→D沿弦）",
+          "min": 10,
+          "max": 190,
+          "step": 5,
+          "unit": "mm"
+        },
+        {
+          "key": "LL_W",
+          "label": "领宽（领条与中缝两边统一）",
+          "min": 10,
+          "max": 80,
+          "step": 5,
+          "unit": "mm"
+        }
+      ],
+      "extras": [
+        {
+          "id": "whole_dxf",
+          "label": "整衣 DXF（方案B：一条连续外轮廓+标注）",
+          "script": "pattern/export_dxf_whole.py",
+          "note": "整衣铺开一片：裳段 + 上衣段（水平对折）；前中开口贯通到摆；收褶不画、只进标注；预览 PNG 同步出"
+        },
+        {
+          "id": "cmp",
+          "label": "仅 ③ 平铺（V2/V3 同比例对照）",
+          "script": "pattern/make_cmp.py",
+          "note": "只画平铺那一节，是附加对照，不是全部产物"
+        }
+      ],
+      "product": "①材料 ②制作(对折/折起/剪开/压边) ③平铺 ④领条 —— 由脚本一次画全；导出另含整衣 DXF",
+      "modes": [
+        {
+          "id": "V4",
+          "label": "矩领（EC 交叉版）",
+          "note": "矩领定稿：领条两条镜像带（右带压左带）。E＝中缝上 O′E=领宽、C＝DD′ 上 O′C=领宽，连接 EC 为 45° 自由缘。左带：肩左角 P→左斜边(内让)→领边角 D 45°斜接→DD′ 上方横段(D→E)→沿 EC 斜下→C→右竖带外缘(x=+30)垂到摆；右带镜像（E→C′→左竖带）。肩段共用向外过肩（转到背面）；中缝不缝合；O′ 不接缝。"
+        }
+      ],
+      "mode_kind": "fixture",
+      "mode_note": "古制深衣：夹具即「可复用模式」，每个模式是一组已定的版型参数。",
+      "gates": {
+        "fab_w": 500,
+        "max_panels": 4,
+        "min_radius": 10,
+        "invariants": [
+          {
+            "name": "panels",
+            "n": 4,
+            "fab_w": 500
+          },
+          {
+            "name": "slit",
+            "width": 160
+          },
+          {
+            "name": "piece_names",
+            "expect": [
+              "领条"
+            ]
+          }
+        ],
+        "reference": [
+          {
+            "name": "剪裁图对照（幅数/前中开口/领条）",
+            "cmd": "（harness 量图：sources/fig_深衣_剪裁与平铺.jpg）",
+            "where": "hanfu-shenyi/sources/",
+            "last": "2 段（上衣段 390 + 裳段 575）、裳 4 幅一条带左右折、领口宽 160 / 领条宽 30（古制统一算法）"
+          }
+        ],
+        "parent": null,
+        "delta": {},
+        "seam_ledger": []
+      }
+    },
+    {
       "id": "zhiling",
       "label": "原始直领交襟衣",
       "cut": "古制",

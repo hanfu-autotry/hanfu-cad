@@ -1,0 +1,49 @@
+{
+ "params": {
+  "FAB_W": 500.0,
+  "N_PANEL": 4,
+  "L_BODY": 195.0,
+  "GARMENT_L": 770.0,
+  "NECK_W": 160.0,
+  "COLLAR_W": 30.0,
+  "PD": 70.0,
+  "LL_W": 30.0,
+  "ARMPIT": 370.0,
+  "ARMPIT_H": 200.0,
+  "HOOK_OUT": 60.0,
+  "HOOK_H": 70.0,
+  "N_SHANG": 4,
+  "HEM_HALF": 540.0
+ },
+ "resolved": {
+  "S": 2000.0,
+  "HALF_S": 1000.0,
+  "CLOTH_H": 965.0,
+  "SEG_MID": 390.0,
+  "SEG_OUT": 575.0,
+  "Y_WAIST": 575.0,
+  "GARMENT_L": 770.0,
+  "Y_SEG1": 575.0,
+  "Y_FOLD": 770.0,
+  "Y_SEG2": 965.0,
+  "L_BODY": 195.0,
+  "SHANG_H": 575.0,
+  "ARMPIT": 370.0,
+  "ARMPIT_H": 62.5,
+  "HOOK_H": 21.875,
+  "HOOK_OUT": 60.0,
+  "HEM_HALF": 500.0,
+  "HEM_CLIP": false,
+  "COLLAR_L": 1708.2893786369523,
+  "PD": 70.0,
+  "DX": 72.76621014486322,
+  "DY": 700.3747726443086,
+  "D1_X": 30.0,
+  "LAPEL_W": 30.0,
+  "DO_W": 30.0
+ },
+ "canvas": [
+  3100.0,
+  3485.0
+ ]
+}
