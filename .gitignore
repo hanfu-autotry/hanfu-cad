@@ -63,3 +63,10 @@ secrets*.json
 # ── 试验项目里已作废的反例 / 对比产物（留在本地复查，不入库）──
 /shiyan-shuling/out/verify_*
 /shiyan-shuling/pattern/verify_fit.py
+
+# ── V4 试验过程的中间快照 / 量图 / 回归临时图（留本地复查，不入库）──
+**/_build_v4_backup_*.py
+**/_ec_regress.*
+**/_ref[0-9]_*.png
+**/古制过渡-襦_*.png
+**/_studio_v4b.svg

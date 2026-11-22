@@ -8,6 +8,7 @@
   "COLLAR_W": 30.0,
   "PD": 70.0,
   "LL_W": 30.0,
+  "NECK_MODE": "ec",
   "ARMPIT": 370.0,
   "ARMPIT_H": 200.0,
   "HOOK_OUT": 60.0,
