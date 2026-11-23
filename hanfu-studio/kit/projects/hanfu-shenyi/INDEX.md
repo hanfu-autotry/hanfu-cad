@@ -21,7 +21,5 @@
 ## 项目自带文档
 
 - `hanfu-shenyi/README.md`
-- `hanfu-shenyi/archive/V1_原始直领交襟衣_定稿/STATUS.md`
-- `hanfu-shenyi/archive/V2_深衣型矩领_定稿/README.md`
 - `hanfu-shenyi/verification/形制核对表.md`
 - `hanfu-shenyi/直交一体_盲区解说.md`

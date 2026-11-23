@@ -10,7 +10,7 @@
 
 | 文件 | 来自 | 原始路径 |
 |---|---|---|
-| `三步图/fig_深衣型矩领_三步.png` | hanfu-shenyi | `hanfu-shenyi/sources/fig_深衣型矩领_三步.png` |
+| `三步图/fig_深衣型矩领_三步.png` | hanfu-shenyi | `hanfu-shenyi/sources/fig_深衣型矩领_三步.png`（原路径，文件已并入本包） |
 
 ## 剪裁与平铺（2 个）
 
@@ -18,7 +18,7 @@
 
 | 文件 | 来自 | 原始路径 |
 |---|---|---|
-| `剪裁与平铺/fig_深衣型矩领_剪裁与平铺.jpg` | hanfu-shenyi | `hanfu-shenyi/sources/fig_深衣型矩领_剪裁与平铺.jpg` |
-| `剪裁与平铺/fig_窄袖深衣_腰线齐胸_上身拼缝.jpg` | hanfu-shenyi | `hanfu-shenyi/sources/fig_窄袖深衣_腰线齐胸_上身拼缝.jpg` |
+| `剪裁与平铺/fig_深衣型矩领_剪裁与平铺.jpg` | hanfu-shenyi | `hanfu-shenyi/sources/fig_深衣型矩领_剪裁与平铺.jpg`（原路径，文件已并入本包） |
+| `剪裁与平铺/fig_窄袖深衣_腰线齐胸_上身拼缝.jpg` | hanfu-shenyi | `hanfu-shenyi/sources/fig_窄袖深衣_腰线齐胸_上身拼缝.jpg`（原路径，文件已并入本包） |
 
 > 出处与 sha1：`../MANIFEST.csv`；投放新素材：`../intake/README.md`

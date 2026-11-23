@@ -34,7 +34,35 @@
 | **V1 原始直领交襟衣** | 4 匹拼幅 → 上下对折 → 前中**弦开领**（颈侧点 ±80 → 下摆中点的弦）、领条＝与弦平行的等带宽 30 → 上领条（1418.2 × 30） | 🟡 已出图 |
 | **V2 深衣（宽袖）** | 材料 **2 段**（上衣段 1248 = 2×624 ＋ 裳段 1248）；与 V3 **同一套排布**：裳＝一条 **6 幅（3000）** 带、**左 3 右 3 对称**，两侧（±750）折、两端在后中相接；**开领＝弦 P(颈侧点 ±80, 肩线) → O(0, 腰线中点)，止于腰线**（裳段 x=0 前中缝只不缝合）。领条 1418.2 × 30。脚本 `pattern/build_shenyi.py`（studio `shenyi`） | 🟡 已出图 |
 | **V3 深衣·窄袖（便服）** | **2026-11-18 与 V2 分离**，独立脚本 `pattern/build_v3.py`（studio 条目 `shenyiv3`）：材料 **2 段**（上衣段 390 + 裳段 575，同宽 4 幅、无台阶）；裳＝一条 4 幅带**左右折**（两侧折、两端在后中相接）；**开领＝连接颈侧点 (±80, 肩线) 与下摆中点 (0,0) 的弦**（V 形、贯通到摆，前中不合）；领条 1708.3 × 30 | 🟡 已出图 |
+| **V4 / V4B（试验）** | `pattern/build_v4.py`（studio 条目 `shenyiv4`）。V4＝EC 交叉矩领；**V4B＝古制过渡-襦**（2026-11-22 定稿）：左片取右片镜像＋古制通用上领＋续衽，领条沿 H→F→P′ 路线量长。详见下节「V4 / V4B」 | 🔬 试验 |
 | ~~矩领短衣~~ | 文章正文的衍生款，**不在交付路线内**（2026-10-29 判定方向错，已清理） | ✗ |
+
+## V4 / V4B（试验：古制过渡-襦）
+
+脚本 `pattern/build_v4.py` ＋ `pattern/build_pieces_v4.py`，在 studio 注册为 `shenyiv4`（两个模式＝两组夹具：`V4` / `V4B`）。
+**V4 是矩领 EC 交叉版，V4B 是古制过渡-襦**；后者 2026-11-22 定稿，是本节的主线。两者共用 `NECK_MODE` 切换几何分支。
+
+### V4（EC 交叉矩领）
+
+领条两条**镜像带**（右带压左带）：E ＝ 中缝上 O′E ＝ 领宽、C ＝ DD′ 上 O′C ＝ 领宽，连接 EC 为 45° 自由缘。
+左带：肩左角 P → 左斜边（内让）→ 领边角 D 45° 斜接 → DD′ 上方横段（D→E）→ 沿 EC 斜下 → C → 右竖带外缘（x=+30）垂到摆；
+右带镜像（E→C′→左竖带）。肩段共用向外过肩（转到背面）；中缝不缝合；O′ 不接缝。
+夹具：`L_BODY 195 / GARMENT_L 770 / N_SHANG 4 / NECK_W 160 / PD 70 / LL_W 30 / NECK_MODE ec`。
+
+### V4B（古制过渡-襦）
+
+`NECK_MODE: arc_po`。夹具：`L_BODY 385`（＝总长一半）/`GARMENT_L 770 / N_SHANG 4 / NECK_W 200 / PD 70 / LL_W 30 / COLLAR_W 100 / H_X −270`。
+构造五步（**权威口径，studio 的 `modes[V4B].note` 只留指针**）：
+
+1. **左片＝右片 x 取反镜像**，内外襟完全对称（镜像是第一步，不再单独构造左片）。
+2. **古制通用上领**（`collar.py`）：与襟缘平行的等宽带，带宽 ＝ `COLLAR_W` ＝ 立起高 ＝ 100 mm；颈口前片两三角 ＋ 后片梯形。
+3. **H ＝ 下摆上的自由点**（布面 `H_X = −270`），**F ＝ 右片边缘上与腋点同高的点**；上领路线 ＝ H → F → P′（内襟 H′ → F′ → P 镜像）。
+4. **三角形 O-H-F 与 O-H′-F′ ＝ 续衽**（左右各一片）。
+5. **领条长 ＝ 2×(|HF| + |FP′|) ＋ 后领宽**。
+
+刀口只在 V4B 出（F 与 P′／P 处上下各一组），不污染 V4。`build_pieces_v4.py` 由 pieces.json 的 `params/resolved` 反推裁片组件。
+
+> V4B 表示例图：`pattern/古制过渡-襦_成衣平铺.png`、`pattern/古制过渡-襦_领口放大.png`；出图产物 `pattern/深衣_V4_新领口.svg/.pieces.json`。
 
 ## 领条算法（唯一来源：`pattern/collar.py`）
 
@@ -115,6 +143,11 @@ python build_pieces_shenyi.py 深衣_V2.pieces.json        # 并入 3 片裁片�
 python export_dxf_whole.py             # 深衣（吃 HANFU_PARAMS 区分 V2/V3）
 python export_dxf_whole_v1.py          # V1
 
+# V4 / V4B —— 模式即夹具（NECK_MODE 切分支）
+HANFU_PARAMS='{"L_BODY":195,"GARMENT_L":770,"N_SHANG":4,"NECK_W":160,"PD":70,"LL_W":30,"NECK_MODE":"ec"}' python build_v4.py                     # V4 矩领
+HANFU_PARAMS='{"L_BODY":385,"GARMENT_L":770,"N_SHANG":4,"NECK_W":200,"PD":70,"LL_W":30,"NECK_MODE":"arc_po","COLLAR_W":100,"H_X":-270}' python build_v4.py  # V4B 古制过渡-襦
+python build_pieces_v4.py 深衣_V4_新领口.pieces.json      # 并入裁片组件（由 params/resolved 反推）
+
 # 同比例对照图
 python make_cmp.py
 ```
@@ -147,28 +180,27 @@ V3 追加：衣长 195、总长 **770**、中段 390、裳高 **575**（布片�
 
 ## 归档
 
-每个被验收的版本在 `archive/` 留一份**自包含快照**（生成器 ＋ 产物 ＋ 当时口径）：
+原 `archive/` 定稿快照已于 2026-11-23 移除（历史可 `git show d7c07e9:hanfu-shenyi/archive/...` 取回），现行口径直接看 `pattern/` 脚本与 `out/` 产物。留档信息备查：
 
-| 目录 | 验收语 | 快照 |
+| 旧目录 | 验收语 | 当时内容 |
 |---|---|---|
 | `archive/V1_原始直领交襟衣_定稿/` | 「对了，对了，正是如此，真正的完美」 | `build_V1.py` ＋ SVG/DXF/pieces ＋ `STATUS.md`（**2026-10-29 旧口径：领条 1700×95、压边 40**） |
 | `archive/V2_深衣型矩领_定稿/` | 「完美，存档，这个已经可以作为非常正式的礼服了」 | 旧排布（上下折）快照，**已被 2026-11-18 的左右折方案取代** |
-| V2 / V3（现行口径） | 尚未验收 | 现行脚本与产物在 `pattern/` 与 `out/` |
 
 ## 目录
 
 ```
-sources/        原始过程图（三步图 ×2、剪裁与平铺、窄袖上身拼缝）
 _ref/           读图用的裁切放大，中间产物，不入库
 pattern/        build.py（V1）· build_v3.py（V3）· build_shenyi.py（V2）· build_pieces_shenyi.py
                 · collar.py（★领条算法唯一来源）· export_dxf.py
                 · export_dxf_whole{,_v1}.py · preview.py · make_cmp.py
 verification/   形制核对表.md（术语 / 量测 / 口径 / 腋下重测 / V2 收口 / V3 窄袖）
 out/            交付物 SVG · DXF · 预览 PNG（`_` 开头的是调试图，`_cmp_v2_v3.png` 例外：对外引用）
-archive/        V1 / V2 定稿自包含快照
 直交一体_盲区解说.md   写给 AI 的术语长文：为什么"交领/直领"不是两类，是一个连续量的读数
 ```
 
+> 原始过程图**统一存放在 `hanfu-studio/kit/sources/`**（02-深衣_古制 / 03-原始直领交襟衣_古制 / 04-直交一体_术语证据），本目录不再重复存放。
+
 ## 许可
 
-代码 MIT。`sources/` 图片版权归原作者（孙韬），仅作研究与比对留证。
+代码 MIT。

@@ -70,3 +70,7 @@ secrets*.json
 **/_ref[0-9]_*.png
 **/古制过渡-襦_*.png
 **/_studio_v4b.svg
+
+# ── 出图/预览过程产生的浏览器临时目录与壳页（不入库）──
+**/_edgeprofile/
+**/out/_preview.html

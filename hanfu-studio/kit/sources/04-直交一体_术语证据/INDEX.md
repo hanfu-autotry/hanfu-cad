@@ -10,9 +10,9 @@
 
 | 文件 | 来自 | 原始路径 |
 |---|---|---|
-| `证据/1_四形态_x_y_v_直.jpg` | hanfu-shenyi | `hanfu-shenyi/sources/直交一体/1_四形态_x_y_v_直.jpg` |
-| `证据/2_PPT_交叠为0即直领对襟.png` | hanfu-shenyi | `hanfu-shenyi/sources/直交一体/2_PPT_交叠为0即直领对襟.png` |
-| `证据/3_实物_对交穿_飞机袖.jpg` | hanfu-shenyi | `hanfu-shenyi/sources/直交一体/3_实物_对交穿_飞机袖.jpg` |
-| `证据/4_谱系_直领对襟与交领交襟.jpg` | hanfu-shenyi | `hanfu-shenyi/sources/直交一体/4_谱系_直领对襟与交领交襟.jpg` |
+| `证据/1_四形态_x_y_v_直.jpg` | hanfu-shenyi | `hanfu-shenyi/sources/直交一体/1_四形态_x_y_v_直.jpg`（原路径，文件已并入本包） |
+| `证据/2_PPT_交叠为0即直领对襟.png` | hanfu-shenyi | `hanfu-shenyi/sources/直交一体/2_PPT_交叠为0即直领对襟.png`（原路径，文件已并入本包） |
+| `证据/3_实物_对交穿_飞机袖.jpg` | hanfu-shenyi | `hanfu-shenyi/sources/直交一体/3_实物_对交穿_飞机袖.jpg`（原路径，文件已并入本包） |
+| `证据/4_谱系_直领对襟与交领交襟.jpg` | hanfu-shenyi | `hanfu-shenyi/sources/直交一体/4_谱系_直领对襟与交领交襟.jpg`（原路径，文件已并入本包） |
 
 > 出处与 sha1：`../MANIFEST.csv`；投放新素材：`../intake/README.md`

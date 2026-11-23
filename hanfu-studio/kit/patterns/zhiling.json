@@ -74,8 +74,8 @@
   "reference": [
    {
     "name": "三步图对照",
-    "cmd": "（harness 量图：sources/fig_原始直领交襟衣_三步.png）",
-    "where": "hanfu-shenyi/sources/",
+    "cmd": "（harness 量图：kit/sources/03-原始直领交襟衣_古制/三步图/fig_原始直领交襟衣_三步.png）",
+    "where": "hanfu-studio/kit/sources/02-深衣_古制/剪裁与平铺/",
     "last": "前中开口 160 贯通、领条＝平行弦的等带宽 30（立起≡带宽）"
    }
   ],

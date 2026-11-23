@@ -5,12 +5,14 @@
     python pattern/make.py --size 本案 --out out --dump-params
 
 产物（写进 `--out` 目录）：
-    竖领浅交襟_<size>.svg          裁片图（1:1，mm；5 片）
+    竖领浅交襟_<size>.svg          裁片图（1:1，mm；6 片）
     竖领浅交襟_<size>.pieces.json  几何侧车（studio 读它做排料 / DXF）
 
 口径：底＝厂商基准半臂 L770（`_base_vendor_L770.pieces.json`，**只读**）；
 领条＝**一条带状**——三段①前片左襟 / ②后片 / ③前片右襟沿共边 P₁A / P₁′A′ 相接，
 两端 P₂B / P₂′B′ 分开、**首尾不接**；展开为沿共边翻折（刚性），不自交。
+门襟缘边＝**通用构件**（`geo.placket_facing_piece`）：沿门襟边 V→H 内偏 30mm 的等宽带，
+宽＝后领条宽 COLLAR_H，左右各一（qty=2）。
 本版型是**定稿几何（第 6 步）**，暂无旋钮；`--params` 只接受空对象。
 """
 import argparse
@@ -67,6 +69,7 @@ def main():
         ["前片 ×2（右 / 左·镜像）：cmds 与模板逐项相同，几何未改",
          "后片半 ×2（右 / 左·镜像）：模板「后片半」原样 + 关于 x=0 镜像",
          "领条 ×1：一条带状 —— 段①前片左襟 / 段②后片 / 段③前片右襟，沿共边相接；两端 P₂B / P₂′B′ 分开不接",
+         "门襟缘边 ×2：沿门襟边 V→H 内偏 30mm 等宽带，宽＝后领条宽；左右镜像同形（通用构件）",
          "共边 2×30mm、端头 2×30mm；面积＝三段和 %.3f mm²；自交 0" % band["area_total"]])
 
     print(json.dumps(dict(size=a.size, sex=a.sex, svg=info["svg"], pieces_json=info["side"],

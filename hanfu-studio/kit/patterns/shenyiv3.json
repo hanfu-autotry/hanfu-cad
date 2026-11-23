@@ -89,8 +89,8 @@
   "reference": [
    {
     "name": "剪裁图对照（幅数/前中开口/领条）",
-    "cmd": "（harness 量图：sources/fig_深衣_剪裁与平铺.jpg）",
-    "where": "hanfu-shenyi/sources/",
+    "cmd": "（harness 量图：kit/sources/02-深衣_古制/剪裁与平铺/fig_深衣型矩领_剪裁与平铺.jpg）",
+    "where": "hanfu-studio/kit/sources/02-深衣_古制/剪裁与平铺/",
     "last": "2 段（上衣段 390 + 裳段 575）、裳 4 幅一条带左右折、领口宽 160 / 领条宽 30（古制统一算法）"
    }
   ],

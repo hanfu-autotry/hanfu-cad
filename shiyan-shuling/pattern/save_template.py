@@ -5,8 +5,9 @@
       → pattern/_tpl.pieces.json   几何侧车（结构对齐 _base_vendor_L770.pieces.json）
       → pattern/_tpl.svg           1:1 定稿图
 
-模板内容＝第 6 步定稿的 **5 片**：
+模板内容＝第 6 步定稿的 **6 片**：
     前片（右）／前片（左·镜像）／后片（右·半）／后片（左·半·镜像）／领条（一条带状，三段）
+    ／门襟缘边（qty=2，沿门襟边内偏 30mm 等宽带，宽＝后领条宽，布纹沿条长）
 领条是**一条带状裁片**：三段①前片左襟 / ②后片 / ③前片右襟沿共边 P₁A / P₁′A′ 相接，
 两端 P₂B / P₂′B′ 分开、首尾不接；展开为沿共边翻折（刚性），不自交。
 
@@ -35,7 +36,13 @@ GAP = 200.0          # 模板排版间距（仅排版，不碰几何）
 
 def layout(pieces, gap=GAP):
     """按行排版：每片算 ox/oy/box（页面坐标 y 向下：page_x = x + ox，page_y = oy − y）。"""
-    rows = [[0, 1], [2, 3], [4]] if len(pieces) == 5 else [[i] for i in range(len(pieces))]
+    n = len(pieces)
+    if n == 6:
+        rows = [[0, 1], [2, 3], [4, 5]]      # 前片 / 后片半 / (领条 + 门襟缘边)
+    elif n == 5:
+        rows = [[0, 1], [2, 3], [4]]
+    else:
+        rows = [[i] for i in range(n)]
     out, y_cur, canvas_w = [], 0.0, 0.0
     for row in rows:
         bbs = [sheet.real_bbox(pieces[i]["cmds"]) for i in row]
@@ -100,7 +107,7 @@ def build():
     })
 
     return dict(
-        _note="竖领浅交襟 v1 模板（第 6 步定稿）：底＝厂商基准 L770；领条＝一条带状，三段沿共边相接、首尾不接",
+        _note="竖领浅交襟 v1 模板（第 6 步定稿）：底＝厂商基准 L770；领条＝一条带状，三段沿共边相接、首尾不接；门襟缘边 qty=2",
         version="shuling-v1",
         source={
             "base_template": os.path.basename(geo.TPL_PATH),
@@ -140,16 +147,18 @@ def selftest(t, pieces, band):
         print("  %s %s %s" % ("PASS" if good else "FAIL", name, extra))
         return good
 
-    ck("★ 模板 5 片：前片 ×2 / 后片半 ×2 / 领条 1",
-       len(t["pieces"]) == 5 and
+    ck("★ 模板 6 片：前片 ×2 / 后片半 ×2 / 领条 1 / 门襟缘边 1(qty2)",
+       len(t["pieces"]) == 6 and
        [p["name"] for p in t["pieces"]] ==
-       ["前片（右）", "前片（左·镜像）", "后片（右·半）", "后片（左·半·镜像）", "领条"],
+       ["前片（右）", "前片（左·镜像）", "后片（右·半）", "后片（左·半·镜像）",
+        "领条", "门襟缘边"],
        " / ".join(p["name"] for p in t["pieces"]))
     ck("★ 每片 cmds 与 sheet_pieces_step6() 逐项相同",
-       all(t["pieces"][i]["cmds"] == pieces[i]["cmds"] for i in range(5)))
-    ck("★ 每片 qty = 1（合计 5）",
-       all(p["qty"] == 1 for p in t["pieces"]) and
-       sum(p["qty"] for p in t["pieces"]) == 5)
+       all(t["pieces"][i]["cmds"] == pieces[i]["cmds"] for i in range(6)))
+    ck("★ qty：前 5 片各 1、门襟缘边 2（合计 7）",
+       all(p["qty"] == 1 for p in t["pieces"][:5]) and
+       t["pieces"][5]["qty"] == 2 and
+       sum(p["qty"] for p in t["pieces"]) == 7)
     ck("★ 片结构字段齐备（name/qty/ox/oy/box/cmds/grain/grain_at/notches）",
        all(set(p) == {"name", "qty", "ox", "oy", "box", "cmds", "grain", "grain_at", "notches"}
            for p in t["pieces"]))
@@ -206,10 +215,11 @@ def main():
     params.update(t["resolved"])
     info = sheet.write_sheet(
         params, pieces, SVG_OUT,
-        "竖领浅交襟 v1 模板 · 完整裁片（前片 / 后片 / 领条一条带状）",
+        "竖领浅交襟 v1 模板 · 完整裁片（前片 / 后片 / 领条一条带状 / 门襟缘边）",
         "第 6 步定稿　｜　净版 mm　｜　领条＝一条带状：三段沿共边 P₁A / P₁′A′ 相接，两端分开、首尾不接",
         ["底＝厂商基准 L770（_base_vendor_L770.pieces.json，只读）；本模板只落定稿，不回写底",
          "领条 1 片：段①前片左襟 / 段②后片 / 段③前片右襟；沿共边翻折展开（刚性），不自交",
+         "门襟缘边 ×2：沿门襟边 V→H 内偏 30mm 等宽带（宽＝后领条宽 COLLAR_H＝30），左右镜像同形；布纹沿条长",
          "共边 2 × 30mm、端头 2 × 30mm（分开）；面积＝三段和 7023.330613 mm²",
          "cmds 仅 M/L/C/Z（曲边＝三次贝塞尔 C），与 sheet.py 出图定义一致"])
 

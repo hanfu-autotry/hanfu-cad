@@ -10,6 +10,6 @@
 
 | 文件 | 来自 | 原始路径 |
 |---|---|---|
-| `三步图/fig_原始直领交襟衣_三步.png` | hanfu-shenyi | `hanfu-shenyi/sources/fig_原始直领交襟衣_三步.png` |
+| `三步图/fig_原始直领交襟衣_三步.png` | hanfu-shenyi | `hanfu-shenyi/sources/fig_原始直领交襟衣_三步.png`（原路径，文件已并入本包） |
 
 > 出处与 sha1：`../MANIFEST.csv`；投放新素材：`../intake/README.md`

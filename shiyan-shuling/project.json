@@ -2,7 +2,7 @@
  "schema": "hanfu-studio/project@1",
  "id": "user:试验竖领浅交襟_abffeb",
  "name": "试验竖领浅交襟",
- "note": "第 6 步定稿（2026-11-11 16:00）：完整裁片 5 片（前片×2 / 后片半×2 / 领条 1＝一条带状，三段沿共边 P1A / P1'A' 相接、两端分开首尾不接、不自交）。定稿模板：pattern/_tpl.pieces.json（由 pattern/save_template.py 生成）",
+ "note": "第 6 步定稿（2026-11-11 16:00；2026-11-23 并入门襟缘边）：完整裁片 6 片（前片×2 / 后片半×2 / 领条 1＝一条带状，三段沿共边 P1A / P1'A' 相接、两端分开首尾不接、不自交 / 门襟缘边 1 qty=2＝沿门襟边内偏 30mm 等宽带，宽＝后领条宽，布纹沿条长）。定稿模板：pattern/_tpl.pieces.json（由 pattern/save_template.py 生成）",
  "created": "2026-11-10 18:25:00",
  "updated": "2026-11-18 18:58:00",
  "patterns": [

@@ -3,7 +3,7 @@
 ## 分类
 
 **有原型**：先跑参照闸门，再跑自洽/对账。
-- 三步图对照：`（harness 量图：sources/fig_原始直领交襟衣_三步.png）`（在 `hanfu-shenyi/sources/`）｜最近结果：前中开口 160 贯通、领条＝平行弦的等带宽 30（立起≡带宽）
+- 三步图对照：`（harness 量图：kit/sources/03-原始直领交襟衣_古制/三步图/fig_原始直领交襟衣_三步.png）`（现存 `hanfu-studio/kit/sources/`）｜最近结果：前中开口 160 贯通、领条＝平行弦的等带宽 30（立起≡带宽）
 
 ## 跑什么
 
@@ -36,7 +36,7 @@ PY
 | 结构自洽 | 前中开口 160 贯通 | PASS | 裁片轮廓上已找到 ±80 的开口边 |
 | 结构自洽 | 应有裁片 | PASS | 缺：无 |
 | 派生对账 | 父版型 | WARN | 未声明父版型（裁法级新根）：跳过对账，改走自洽 + 人审签收 |
-| 参照闸门 | 三步图对照 | PASS | 命令：（harness 量图：sources/fig_原始直领交襟衣_三步.png）（hanfu-shenyi/sources/）｜最近结果：前中开口 160 贯通、领条＝平行弦的等带宽 30（立起≡带宽） |
+| 参照闸门 | 三步图对照 | PASS | 命令：（harness 量图：kit/sources/03-原始直领交襟衣_古制/三步图/fig_原始直领交襟衣_三步.png）（现存 `hanfu-studio/kit/sources/`）｜最近结果：前中开口 160 贯通、领条＝平行弦的等带宽 30（立起≡带宽） |
 
 > 原始：`<ws>/hanfu-studio/out/batch/zhiling/V1_—_V1/形制核对/gates.json`
 

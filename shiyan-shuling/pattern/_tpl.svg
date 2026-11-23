@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="3240mm" height="3849mm" viewBox="0 0 3240 3849">
-<title>竖领浅交襟 v1 模板 · 完整裁片（前片 / 后片 / 领条一条带状）</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="3240mm" height="4515mm" viewBox="0 0 3240 4515">
+<title>竖领浅交襟 v1 模板 · 完整裁片（前片 / 后片 / 领条一条带状 / 门襟缘边）</title>
 <rect width="100%%" height="100%%" fill="#ffffff"/>
 <defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#8a8a8a" stroke-width="1.1"/></marker></defs>
 <g id="OUTLINE" stroke="#1a1a1a" stroke-width="2.2" fill="none" stroke-linejoin="round">
@@ -9,6 +9,7 @@
   <path id="后片（右·半）_ot" data-qty="1" d="M 420.0 2380.0 C 620.0 2375.0 820.0 2350.0 819.0 2320.0 L 722.8 1954.9 C 716.3 1930.0 723.7 1882.7 748.3 1874.7 C 823.7 1850.4 903.4 1812.4 952.8 1784.0 C 962.1 1778.6 970.0 1764.4 970.0 1753.7 L 970.0 1633.7 C 970.0 1625.0 958.7 1613.5 950.0 1613.4 L 705.0 1610.0 L 515.0 1610.0 L 420.0 1610.0 Z"/>
   <path id="后片（左·半·镜像）_ot" data-qty="1" d="M 1940.0 2380.0 C 1740.0 2375.0 1540.0 2350.0 1541.0 2320.0 L 1637.2 1954.9 C 1643.7 1930.0 1636.3 1882.7 1611.7 1874.7 C 1536.3 1850.4 1456.6 1812.4 1407.2 1784.0 C 1397.9 1778.6 1390.0 1764.4 1390.0 1753.7 L 1390.0 1633.7 C 1390.0 1625.0 1401.3 1613.5 1410.0 1613.4 L 1655.0 1610.0 L 1845.0 1610.0 L 1940.0 1610.0 Z"/>
   <path id="领条_ot" data-qty="1" d="M 649.2 2909.3 C 622.3 2904.5 600.0 2885.8 590.6 2860.0 L 496.6 2826.0 C 472.9 2839.8 443.8 2839.9 420.0 2826.4 L 442.9 2807.0 L 511.5 2800.0 L 595.8 2830.5 L 644.1 2879.7 L 649.2 2909.3 Z"/>
+  <path id="门襟缘边_ot" data-qty="2" d="M 1098.8 2800.0 L 1233.8 3570.0 L 1204.2 3575.2 L 1069.2 2805.2 Z"/>
 </g>
 <g id="OLD_EDGE" stroke="#1a1a1a" stroke-width="2.2" fill="none" stroke-dasharray="14 10" stroke-linejoin="round">
   <path d="M 970.0 420.0 L 978.6 469.2"/>
@@ -78,6 +79,7 @@
   <path d="M 695.0 2146.2 L 695.0 1843.8" marker-end="url(#ar)"/>
   <path d="M 1665.0 2146.2 L 1665.0 1843.8" marker-end="url(#ar)"/>
   <path d="M 490.6 2854.6 L 578.6 2854.6" marker-end="url(#ar)"/>
+  <path d="M 1143.7 3143.0 L 1159.3 3232.2" marker-end="url(#ar)"/>
 </g>
 <g id="DIM" stroke="#8a8a8a" stroke-width="0.9" fill="#8a8a8a" font-family="sans-serif" font-size="26">
 </g>
@@ -88,31 +90,34 @@
   <text x="1390.0" y="1564.0" font-size="34" font-weight="600">04 后片（左·半·镜像） ×1</text>
   <text x="420.0" y="2754.0" font-size="34" font-weight="600">05 领条 ×1</text>
   <text x="420.0" y="2786.0" font-size="24" fill="#8a8a8a">A=7023.33 mm²</text>
+  <text x="1069.2" y="2754.0" font-size="34" font-weight="600">06 门襟缘边 ×2</text>
+  <text x="1069.2" y="2786.0" font-size="24" fill="#8a8a8a">A=23452.35 mm²</text>
 </g>
 <g id="BLOCK" stroke="#1a1a1a" stroke-width="1.6" fill="none">
-  <rect x="420.0" y="3119.3" width="2400.0" height="410.0"/>
+  <rect x="420.0" y="3785.2" width="2400.0" height="410.0"/>
 </g>
 <g font-family="sans-serif" fill="#1a1a1a">
-  <text x="460.0" y="3197.3" font-size="44" font-weight="600">竖领浅交襟 v1 模板 · 完整裁片（前片 / 后片 / 领条一条带状）</text>
-  <text x="460.0" y="3247.3" font-size="26" fill="#8a8a8a">第 6 步定稿　｜　净版 mm　｜　领条＝一条带状：三段沿共边 P₁A / P₁′A′ 相接，两端分开、首尾不接</text>
-  <text x="460.0" y="3297.3" font-size="27">底＝厂商基准 L770（_base_vendor_L770.pieces.json，只读）；本模板只落定稿，不回写底</text>
-  <text x="460.0" y="3337.3" font-size="27">领条 1 片：段①前片左襟 / 段②后片 / 段③前片右襟；沿共边翻折展开（刚性），不自交</text>
-  <text x="460.0" y="3377.3" font-size="27">共边 2 × 30mm、端头 2 × 30mm（分开）；面积＝三段和 7023.330613 mm²</text>
-  <text x="460.0" y="3417.3" font-size="27">cmds 仅 M/L/C/Z（曲边＝三次贝塞尔 C），与 sheet.py 出图定义一致</text>
+  <text x="460.0" y="3863.2" font-size="44" font-weight="600">竖领浅交襟 v1 模板 · 完整裁片（前片 / 后片 / 领条一条带状 / 门襟缘边）</text>
+  <text x="460.0" y="3913.2" font-size="26" fill="#8a8a8a">第 6 步定稿　｜　净版 mm　｜　领条＝一条带状：三段沿共边 P₁A / P₁′A′ 相接，两端分开、首尾不接</text>
+  <text x="460.0" y="3963.2" font-size="27">底＝厂商基准 L770（_base_vendor_L770.pieces.json，只读）；本模板只落定稿，不回写底</text>
+  <text x="460.0" y="4003.2" font-size="27">领条 1 片：段①前片左襟 / 段②后片 / 段③前片右襟；沿共边翻折展开（刚性），不自交</text>
+  <text x="460.0" y="4043.2" font-size="27">门襟缘边 ×2：沿门襟边 V→H 内偏 30mm 等宽带（宽＝后领条宽 COLLAR_H＝30），左右镜像同形；布纹沿条长</text>
+  <text x="460.0" y="4083.2" font-size="27">共边 2 × 30mm、端头 2 × 30mm（分开）；面积＝三段和 7023.330613 mm²</text>
+  <text x="460.0" y="4123.2" font-size="27">cmds 仅 M/L/C/Z（曲边＝三次贝塞尔 C），与 sheet.py 出图定义一致</text>
 </g>
 <g id="SCALE" stroke="#1a1a1a" stroke-width="2.2" fill="none">
-  <path d="M 460.0 3489.3 L 460.0 3459.3"/>
-  <path d="M 560.0 3489.3 L 560.0 3473.3"/>
-  <path d="M 660.0 3489.3 L 660.0 3473.3"/>
-  <path d="M 760.0 3489.3 L 760.0 3473.3"/>
-  <path d="M 860.0 3489.3 L 860.0 3473.3"/>
-  <path d="M 960.0 3489.3 L 960.0 3459.3"/>
-  <path d="M 1060.0 3489.3 L 1060.0 3473.3"/>
-  <path d="M 1160.0 3489.3 L 1160.0 3473.3"/>
-  <path d="M 1260.0 3489.3 L 1260.0 3473.3"/>
-  <path d="M 1360.0 3489.3 L 1360.0 3473.3"/>
-  <path d="M 1460.0 3489.3 L 1460.0 3459.3"/>
-  <path d="M 460.0 3489.3 L 1460.0 3489.3"/>
+  <path d="M 460.0 4155.2 L 460.0 4125.2"/>
+  <path d="M 560.0 4155.2 L 560.0 4139.2"/>
+  <path d="M 660.0 4155.2 L 660.0 4139.2"/>
+  <path d="M 760.0 4155.2 L 760.0 4139.2"/>
+  <path d="M 860.0 4155.2 L 860.0 4139.2"/>
+  <path d="M 960.0 4155.2 L 960.0 4125.2"/>
+  <path d="M 1060.0 4155.2 L 1060.0 4139.2"/>
+  <path d="M 1160.0 4155.2 L 1160.0 4139.2"/>
+  <path d="M 1260.0 4155.2 L 1260.0 4139.2"/>
+  <path d="M 1360.0 4155.2 L 1360.0 4139.2"/>
+  <path d="M 1460.0 4155.2 L 1460.0 4125.2"/>
+  <path d="M 460.0 4155.2 L 1460.0 4155.2"/>
 </g>
-<text x="460.0" y="3533.3" font-family="sans-serif" font-size="25" fill="#1a1a1a">100mm 校验标尺（1:1 打印后实测，误差应 ≤0.5mm）</text>
+<text x="460.0" y="4199.2" font-family="sans-serif" font-size="25" fill="#1a1a1a">100mm 校验标尺（1:1 打印后实测，误差应 ≤0.5mm）</text>
 </svg>

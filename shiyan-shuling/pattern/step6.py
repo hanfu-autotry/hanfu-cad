@@ -2,7 +2,7 @@
 """试验竖领浅交襟 · 第 6 步（重做）：领条＝一条带状，三段沿共边相接、首尾不接
 
     python pattern/step6.py
-      → out/step6_完整裁片图.svg / .pieces.json / .png   （5 片）
+      → out/step6_完整裁片图.svg / .pieces.json / .png   （6 片：含门襟缘边 ×2）
         out/step6_领条一条带.svg / .png                   （带子放大）
         out/step6.json
 
@@ -38,6 +38,7 @@ NOTES = [
     "展开＝沿共边依次翻折（刚性铰接）：①不动、②关于 P₁A 反射、③两次反射；反射等距 ⇒ 形状 / 面积不变",
     "轮廓 8 条边：下缘 3（右 60° 弧 C / 后颈直线 / 左 60° 弧 C）+ 上缘 3（直线）+ 两端头 30mm；cmds 仅 M/L/C/Z",
     "首尾不接：两端 P₂B / P₂′B′ 各 30mm 落在带子两端、互不相连；展开后不自交（自交点 0）",
+    "门襟缘边 ×2：沿门襟边 V→H 内偏 30mm 等宽带（宽＝后领条宽 COLLAR_H＝30），左右镜像同形；布纹沿条长",
 ]
 
 
@@ -122,9 +123,11 @@ def selftest(b, pieces):
        ratio > 1.8, "%.3f（%.1f × %.1f mm）" % (ratio, gb[2] - gb[0], gb[3] - gb[1]))
 
     # ---- 片表 ----
-    ck("★ 完整裁片图 = 前片 2 + 后片 2 + 领条 1，共 5 片",
-       len(pieces) == 5 and sum(p["qty"] for p in pieces) == 5,
+    ck("★ 完整裁片图 = 前片 2 + 后片 2 + 领条 1 + 门襟缘边 1(qty2) = 6 片 / qty 7",
+       len(pieces) == 6 and sum(p["qty"] for p in pieces) == 7,
        "%d 片 / qty %d" % (len(pieces), sum(p["qty"] for p in pieces)))
+    ck("★ 门襟缘边片存在：qty=2、宽＝后领条宽、布纹沿条长",
+       any(p["name"] == "门襟缘边" and p["qty"] == 2 for p in pieces))
     ck("★ 领条片 qty=1、名称 = BAND_NAME",
        by[geo.BAND_NAME]["qty"] == 1 and
        len([p for p in pieces if p["name"].startswith("领条")]) == 1)
@@ -334,7 +337,7 @@ def main():
 
     data = {
         "step": 6,
-        "action": "领条＝一条带状裁片：三段沿共边 P₁A / P₁′A′ 翻折展开相接，两端分开、首尾不接；完整裁片图 5 片",
+        "action": "领条＝一条带状裁片：三段沿共边 P₁A / P₁′A′ 翻折展开相接，两端分开、首尾不接；完整裁片图 6 片（含门襟缘边 ×2）",
         "user_orders": [
             "2026-11-11 15:58「产物不会是这种两层的不明物体，而是一条由三部分组成的带状领子」",
             "2026-11-11 16:00「首尾相接　领条首尾不想接」",

@@ -1053,7 +1053,11 @@ def collar_band_piece(band=None):
 
 
 def sheet_pieces_step6():
-    """完整裁片图：前片 2 + 后片 2 + 领条 1（一条带状，三段）= **5 片**。"""
+    """完整裁片图：前片 2 + 后片 2 + 领条 1（一条带状，三段）+ 门襟缘边 1（qty=2）= **6 片**。
+
+    门襟缘边为试验竖领**通用构件**（见 placket_facing_piece），2026-11-23 并入定稿片表，
+    使 studio 视图与排料/DFF 都能看到它；几何只读、不影响其余 5 片。
+    """
     pieces = sheet_pieces_step3()
 
     rb = back_piece()
@@ -1072,5 +1076,103 @@ def sheet_pieces_step6():
     pieces += [rb, lb]
 
     pieces.append(collar_band_piece())
+    pieces.append(placket_facing_piece())
     return pieces
 
+
+
+# ---- 试验竖领通用构件：门襟缘边（facing along the lap edge）--------------------
+# 用户 2026-11-23 令：「补充一个试验竖领通用的东西：门襟缘边，宽度同后领条宽。」
+# 口径（不量图、无新数）：
+#   · 宽度 ≡ 后领条宽 ≡ COLLAR_H = 30mm（领子四条宽度边同为 30mm，见 collar_points）。
+#   · 外边＝门襟边 V→H（右片）；内边＝整条沿 U_LAP 的**内法向**等距偏 30mm。
+#   · 左右镜像同步（内襟 H′→V′ 同理）。
+# 这是通用构件，不绑变体：v1 与各变体都可调；本函数只出几何，不回写任何模板。
+def placket_facing(width=COLLAR_H):
+    """门襟缘边：沿门襟边 V→H 向衣身内偏 `width` 的等宽带（右片）。
+
+    返回 outer/inner 两条边、四个端点和可直接落 cmds 的闭合带；
+    `width` 默认取后领条宽 COLLAR_H，调用方不必另报数。
+    """
+    n_in = (U_LAP[1], -U_LAP[0])          # 内法向：与 U_LAP 垂直、指向衣身（−x）
+    Vo, Ho = V, H
+    Vi = (Vo[0] + width * n_in[0], Vo[1] + width * n_in[1])
+    Hi = (Ho[0] + width * n_in[0], Ho[1] + width * n_in[1])
+    Vi_m, Hi_m = mirror_x(Vi), mirror_x(Hi)
+    return dict(
+        width=width,
+        width_source="COLLAR_H（后领条宽，领子四条宽度边同为 30mm）",
+        normal_in=list(n_in),
+        outer=[list(Vo), list(Ho)],
+        inner=[list(Vi), list(Hi)],
+        inner_mirror=[list(Vi_m), list(Hi_m)],
+        # 闭合带裁片（4 条直线；供后续步骤并入，当前 STEP 1 只画线稿）
+        cmds=[["M", list(Vo)], ["L", list(Ho)], ["L", list(Hi)],
+              ["L", list(Vi)], ["Z"]],
+        note="门襟缘边：外边 V→H（门襟边），内边等距内偏 %.1fmm；宽＝后领条宽" % width,
+    )
+
+
+def placket_facing_piece(facing=None):
+    """门襟缘边＝**领条类带状裁片**：一条带状平面片（右），左片镜像同步。
+
+    与 collar_band_piece() 同规格：cmds 只含 M/L/C/Z、note 记面积；qty=2（左右两片
+    全等镜像，同裁片不同朝向）。纯解析、不回写模板。
+
+    布纹口径（2026-11-23 修正）：**grain ∥ 条长＝门襟边方向 U_LAP**。
+    依据模板「领缘条」1740×70 的 grain=[1,0] 恰好平行其长轴 —— 即「带状片布纹沿条长」。
+    缘边长 781.745、方向 −80.06°，若照抄 [1,0] 就成了布纹横穿 30mm 条宽（横裁走形），
+    故此处按同一规则取向，不照抄数值。
+    """
+    f = facing or placket_facing()
+    # 面积：格林线积分（直线段解析精确）＋ 鞋带公式独立交叉验证
+    pts = [tuple(c[1]) for c in f["cmds"] if c[0] in ("M", "L")]
+    I = sum(_line_green(pts[i], pts[(i + 1) % len(pts)]) for i in range(len(pts)))
+    area_green = abs(0.5 * I)
+    area_shoelace = _shoelace(pts)
+    return {
+        "name": "门襟缘边", "qty": 2,
+        "cmds": json.loads(json.dumps(f["cmds"])),
+        "grain": [U_LAP[0], U_LAP[1]],
+        "notches": [], "marks": [], "aux": [], "points": [], "dims": [],
+        "note": "A=%.2f mm²" % area_green,
+        "links": [], "dashed": [],
+        "_verify": dict(area_green=area_green, area_shoelace=area_shoelace,
+                        width=f["width"], base=LEN_LAP,
+                        closed=(pts[0] == pts[-1] or True),  # Z 隐式闭合
+                        cmds_only_MLCZ=all(c[0] in ("M", "L", "C", "Z") for c in f["cmds"])),
+    }
+
+
+def placket_facing_selftest(facing=None, piece=None):
+    """门襟缘边裁片自检：面积三算法一致、宽＝30、平行带、镜像、只 M/L/C/Z。"""
+    f = facing or placket_facing()
+    p = piece or placket_facing_piece(f)
+    v = p["_verify"]
+    oks = []
+
+    def ck(name, cond, extra=""):
+        good = bool(cond)
+        oks.append(good)
+        print("  %s %s %s" % ("PASS" if good else "FAIL", name, extra))
+        return good
+
+    ck("★ 宽＝后领条宽 COLLAR_H 30mm", abs(f["width"] - COLLAR_H) < 1e-9, "%gmm" % f["width"])
+    ck("★ 面积＝格林＝鞋带＝底×高",
+       abs(v["area_green"] - v["area_shoelace"]) < 1e-6 and
+       abs(v["area_green"] - v["base"] * v["width"]) < 1e-6,
+       "%.3f mm²" % v["area_green"])
+    ck("★ 两端宽各 30mm、内外边平行（长＝门襟边 781.745）",
+       abs(math.dist(f["outer"][0], f["inner"][0]) - f["width"]) < 1e-9 and
+       abs(math.dist(f["outer"][1], f["inner"][1]) - f["width"]) < 1e-9 and
+       abs(math.dist(f["inner"][0], f["inner"][1]) - LEN_LAP) < 1e-9)
+    ck("★ 左片＝右片镜像", f["inner_mirror"] == [list(mirror_x(q)) for q in f["inner"]])
+    ck("★ cmds 只含 M/L/C/Z", v["cmds_only_MLCZ"])
+    # 布纹沿条长：grain ∥ U_LAP（叉积 0），且与端宽方向（内法向）垂直
+    g = p["grain"]
+    cross = g[0] * U_LAP[1] - g[1] * U_LAP[0]
+    dot_n = g[0] * f["normal_in"][0] + g[1] * f["normal_in"][1]
+    ck("★ grain ∥ 条长 (U_LAP)、⊥ 条宽", abs(cross) < 1e-9 and abs(dot_n) < 1e-9,
+       "grain=(%.3f,%.3f)" % (g[0], g[1]))
+    ck("★ qty=2（左右各一）", p["qty"] == 2)
+    return sum(oks), len(oks) - sum(oks)
