@@ -9,7 +9,6 @@
   明制高交领_<size>.svg          裁片图（1:1，mm）
   明制高交领_<size>.pieces.json  几何侧车（studio 读它做排料/DXF）
   明制高交领_<size>.dxf          裁片 DXF
-  拼合平铺图.svg                 前视交襟 + 后视平铺（studio 会跳过这个名字）
 """
 import argparse
 import json
@@ -20,7 +19,6 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
-import assembly
 import geo
 import sheet
 import flat
@@ -58,7 +56,6 @@ def main():
     ap.add_argument("--size", default="本案")
     ap.add_argument("--out", default=os.path.join(os.path.dirname(HERE), "out"))
     ap.add_argument("--no-dxf", action="store_true")
-    ap.add_argument("--asm", action="store_true", help="连拼合平铺图一起出（裁片核对通过后再用）")
     ap.add_argument("--params", default=None,
                     help='旋钮覆盖（JSON），如 \'{"L":860,"JS":300}\'；在 CASE 上覆写')
     ap.add_argument("--dump-params", action="store_true",
@@ -94,7 +91,6 @@ def main():
          "领缘条（高交领·全衣一条）×1：长方形，长＝2×(L 弧−续衽 H 移动量)＋后领段；宽＝AA′＝PB＝97.1（B 重合）",
          "接袖、三角拼接、系带、下摆绢衬条已删除；本版共 6 片"])
 
-    asm = assembly.write(d, os.path.join(a.out, "拼合平铺图.svg")) if a.asm else None
     flatfig, collar_svg, collar_len = flat.write(d, os.path.join(a.out, "平铺线稿.svg"))
 
     dxf = None
@@ -108,7 +104,7 @@ def main():
             dxf = None
 
     print(json.dumps(dict(size=a.size, sex=a.sex, svg=info["svg"], pieces_json=info["side"],
-                          dxf=dxf, assembly=asm, canvas=info["size"],
+                          dxf=dxf, canvas=info["size"],
                           pieces=info["pieces"]), ensure_ascii=False, indent=1))
     return 0
 

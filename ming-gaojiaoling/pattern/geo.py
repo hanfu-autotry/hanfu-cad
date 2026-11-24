@@ -498,7 +498,14 @@ def pieces(d):
         return (o[0] + rr * math.cos(am), o[1] + rr * math.sin(am))
 
     # —— 三块拼起来：左外缘(l') / 前中段 / 右侧主体 ——
-    l_arc = arc3(P1, mid_arc((ox, oy), R, P1, PK), PK)          # l：P1 → 颈侧点
+    # 前片上边缘分段（工艺优化）：P1′→n 水平段 + n→PK 沿 L 弧段。
+    # 多出的曲边三角形 P1′-n-P1 并入裁片，被包裹在领缘条内；领缘条只由 L 决定，构造不变。
+    P1p = (P1[0], P1[1] + LIFT)                              # (0, 783)
+    _ny = P1p[1]
+    _nx = ox + math.sqrt(max(0.0, R * R - (_ny - oy) ** 2))  # 38.954（L 弧右交点 n）
+    N_PT = (_nx, _ny)
+    l_arc = arc3(P1, mid_arc((ox, oy), R, P1, PK), PK)       # l：P1 → PK（整条，留档）
+    top_arc = arc3(N_PT, mid_arc((ox, oy), R, N_PT, PK), PK)  # 分段 L 段：n → PK
     lp_arc = arc3(P2p, mid_arc((ox2, oy2), R, P2p, P1p), P1p)    # l'：P'2 → P'1
     cut = None
     for i2, c in enumerate(back):
@@ -534,7 +541,9 @@ def pieces(d):
 
     # 01 前片（中缝右边）：左缘＝中缝（x=0，实线）
     # 前片：左缘只到 P1 (0,y0)，不再往上有那段「冒尖」的线
-    right = [["M", [0.0, y0]]] + l_arc + right_body + [["Z"]]
+    # 前片左缘起点抬到 P1′，上边缘改两段：P1′→n 水平 + n→PK 弧。
+    right = ([["M", [0.0, y0 + LIFT]], ["L", list(N_PT)]] + top_arc
+             + right_body + [["Z"]])
     # 02 续衽（中缝左边）：右缘＝中缝；左缘＝HH1；上缘＝H→P1′
     left = ([["M", list(H)]] + lp_rest + [["L", [0.0, 0.0]]]
             + hem_head + [["L", list(H)], ["Z"]])

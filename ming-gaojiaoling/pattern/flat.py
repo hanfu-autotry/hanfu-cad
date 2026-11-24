@@ -209,6 +209,29 @@ def write(d, out_svg):
              '黑粗带＝领子（领缘条原位，一条跨后中不断）：下缘＝L、上缘＝同心 R−C（法向等宽 %.1f）、'
              '左端面沿 HH1、P 连顶点；两半缝线 %.1f×2＋后领 %.0f＝领条长 %.1f</text>'
              % (COLLAR_W, seg_len - geo.FRONT_NECK_W, geo.FRONT_NECK_W * 2, bx[2] - bx[0]))
+
+    # 一步一画辅助标注：过 L′∩中缝 P1′ 作水平线交 L 于 n；曲边三角形为并入裁片的工艺块
+    _mt = geo.pieces(d)[2]['meta']
+    _ox, _oy, _R = _mt['l_circle']
+    _y0 = _oy - math.sqrt(_R * _R - _ox * _ox)       # 715
+    _yp = _y0 + geo.UPPER_LIFT                        # 783 = P1′
+    _nx = _ox + math.sqrt(max(0.0, _R * _R - (_yp - _oy) ** 2))   # 38.954 = n
+    # 第一步：P1′→n 水平虚线 + 两点
+    s.append('<path d="M %.1f %.1f L %.1f %.1f" stroke="#c0392b" stroke-width="2.2" stroke-dasharray="9 6"/>' % (ox, oy-_yp, ox+_nx, oy-_yp))
+    for qx,lab,dx in ((ox,'P1′',-52),(ox+_nx,'n',10)):
+        s.append('<circle cx="%.1f" cy="%.1f" r="6" fill="#c0392b"/>' % (qx, oy-_yp))
+        s.append('<text x="%.1f" y="%.1f" font-family="sans-serif" font-size="26" fill="#c0392b">%s</text>' % (qx+dx, oy-_yp-12, lab))
+    # 第二步：曲边三角形 P1′-n-P1 阴影（并入裁片的那块，被包裹在领内）
+    _ns=240
+    _reg=[(ox,oy-_yp),(ox+_nx,oy-_yp)]
+    for _i in range(_ns,-1,-1):
+        _xx=_nx*_i/float(_ns); _yy=_oy-math.sqrt(max(0.0,_R*_R-(_xx-_ox)**2))
+        _reg.append((ox+_xx,oy-_yy))
+    s.append('<path d="M %s Z" fill="#a9dfbf" fill-opacity="0.55" stroke="none"/>' % ' L '.join('%.2f %.2f'%p for p in _reg))
+    def _F(u): return u/2.0*math.sqrt(max(0.0,_R*_R-u*u))+_R*_R/2.0*math.asin(max(-1.0,min(1.0,u/_R)))
+    _intL=_oy*_nx-(_F(_nx-_ox)-_F(0.0-_ox)); _area=_yp*_nx-_intL
+    s.append('<text x="%.1f" y="%.1f" font-family="sans-serif" font-size="22" fill="#1e8449">∫(P1′-L)dx = %.1f mm² 并入前片（领内）</text>' % (ox+62, oy-330, _area))
+    print('辅助标注: P1′=(0,%.3f) n=(%.4f,%.3f) 曲边三角形=%.3f mm² (领缘条未动)' % (_yp,_nx,_yp,_area))
     s.append('</svg>')
     open(out_svg, "w", encoding="utf-8").write("\n".join(s))
 
