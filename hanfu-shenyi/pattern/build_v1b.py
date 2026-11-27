@@ -38,10 +38,12 @@ import collar
 _DEF = dict(
     FAB_W=500.0,        # 幅宽（上古幅宽，锁死 500）
     N_PANEL=4,          # 总幅数：内侧 2 ＋ 外侧 2
-    L_BODY=770.0,       # ★衣身长（＝对折后衣长＝中缝长）—— 控内侧块
-    JS=277.2,           # ★接袖长（＝对折后袖口高＝袖根长）—— 控外侧块
-                        #   默认取厂商版袖根长：衣长 770 − 腋深 492.8（hanfu-cad vendor 男 M）
-                        #   ⇒ 袖底落在腋点高 492.8，袖管是直的（不再是 160 的细管）
+    L_BODY=825.0,       # ★衣身长（＝对折后衣长＝中缝长）—— 控内侧块
+    JS=313.0,           # ★接袖长（＝对折后袖口高＝袖根长）—— 控外侧块
+                        #   默认取**文物基准**（＝`../hanfu-zhidui` 同一基准）：
+                        #   衣长 825 − 腋点高 512 ＝ 袖根 313 ⇒ 袖底正好落在腋点 512。
+                        #   ⚠ 不要用厂商基准（770 − 492.8 ＝ 277.2）：换基准可以，但**同图不许混**，
+                        #   混了就会出现 55mm 的假"肩线差"（2026-11-27 修）。
     NECK_W=160.0,       # ★领口宽（＝前中剪开两道之间的间距）
     COLLAR_W=30.0,      # ★领条宽（＝立起高）
 )
@@ -118,12 +120,12 @@ PIECES = [body_inner(), body_outer(), collar_piece()]
 MARGIN = 170.0
 CANVAS_W = 3400.0
 MAIN_OX = CANVAS_W / 2.0
-MAIN_OY = 380.0
+MAIN_OY = 500.0
 LEG_H = 640.0
 FLAT_OY = MAIN_OY + CLOTH_H + LEG_H + 250
 FLAT_H = L_BODY
 COLLAR_OY = FLAT_OY + FLAT_H + 540
-TOTAL_H = COLLAR_OY + 320 + 300
+TOTAL_H = COLLAR_OY + max(OUT_H, 320.0) + 300
 
 placed = []
 for p in PIECES:
@@ -238,8 +240,8 @@ s.append('  <text x="%.1f" y="96" font-size="52" font-weight="600">四块布 · 
 s.append('  <text x="%.1f" y="152" font-size="30" fill="%s">幅宽 %.0f 不动 · 内侧块 ×2 经向 ＝ 2×衣身长 · 外侧块 ×2 经向 ＝ 2×接袖长 · '
          '四块共用同一条折线 · 沿中缝对称 · 通袖 %d</text>'
          % (MARGIN, GRAY, FAB_W, round(S)))
-s.append('  <text x="%.1f" y="200" font-size="30" fill="%s">默认：衣身长 ＝ 厂商版衣长 770（中缝长）／ 接袖长 ＝ 厂商版袖根长 277.2（衣长 770 − 腋深 492.8，袖底落在腋点）</text>'
-         % (MARGIN, GRAY))
+s.append('  <text x="%.1f" y="200" font-size="30" fill="%s">现用：衣身长 %d（中缝长）／接袖长 %d（袖根 ＝ 衣身长 − 腋点，袖底正落腋点）｜基准与 ../hanfu-zhidui 同一套</text>'
+         % (MARGIN, GRAY, round(L_BODY), round(JS)))
 s.append('</g>')
 
 # 图例
