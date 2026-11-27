@@ -125,7 +125,7 @@ LEG_H = 640.0
 FLAT_OY = MAIN_OY + CLOTH_H + LEG_H + 250
 FLAT_H = L_BODY
 COLLAR_OY = FLAT_OY + FLAT_H + 540
-TOTAL_H = COLLAR_OY + max(OUT_H, 320.0) + 300
+TOTAL_H = COLLAR_OY + 300
 
 placed = []
 for p in PIECES:
@@ -302,21 +302,14 @@ s.append('</g>')
 
 # ---- 领条 / 外侧布 / 内侧布 裁片 ----
 cp = [p for p in placed if p["name"] == "领条"][0]
-op = [p for p in placed if p["name"] == "外侧布"][0]
 s.append('<g id="CUT" stroke="%s" stroke-width="3" fill="none">' % BLACK)
 s.append('  <path d="M %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f Z"/>' % (
     cp["_ox"], cp["_oy"], cp["_ox"] + COLLAR_L, cp["_oy"],
     cp["_ox"] + COLLAR_L, cp["_oy"] + COLLAR_W, cp["_ox"], cp["_oy"] + COLLAR_W))
-s.append('  <path d="M %.1f %.1f L %.1f %.1f L %.1f %.1f L %.1f %.1f Z"/>' % (
-    op["_ox"], op["_oy"], op["_ox"] + FAB_W, op["_oy"],
-    op["_ox"] + FAB_W, op["_oy"] + OUT_H, op["_ox"], op["_oy"] + OUT_H))
 s.append('</g>')
 s.append('<text x="%.1f" y="%.1f" font-family="sans-serif" font-size="34" font-weight="600" fill="%s">'
          '④ 领条 ×1 ｜ %d × %d ｜ 跟着衣身长变（衣长变 → 弦长变 → 领条长变）</text>'
          % (MARGIN, cp["_oy"] - 34, BLACK, round(COLLAR_L), round(COLLAR_W)))
-s.append('<text x="%.1f" y="%.1f" font-family="sans-serif" font-size="32" font-weight="600" fill="%s">'
-         '⑤ 外侧布 ×2 ｜ %d × %d（对折后 袖口高 %d）</text>'
-         % (op["_ox"], cp["_oy"] + OUT_H + 60, BLACK, round(FAB_W), round(OUT_H), round(JS)))
 # 主图里的两种布直接标在图形上
 s.append(txt(-FAB_W + 40, CLOTH_H - 70, "内侧布 ×2 ｜ 幅宽 %d × 经向 %d（对折后 衣身长 %d）"
              % (round(FAB_W), round(CLOTH_H), round(L_BODY)), 28, BLACK))
