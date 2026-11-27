@@ -11,7 +11,7 @@
     python pattern/overlay_zhidui.py --variant v1b --grid    # V1B ＋ 网格
     python pattern/overlay_zhidui.py --variant v1b --grid --cell 50
 
-**这张图不参与出图口径**，是看稿；要数值看 `构造分步图说.md` 与两个项目各自的 README。
+**这张图不参与出图口径**，是看稿；要数值看两个项目各自的 README（hanfu-shenyi / hanfu-zhidui）。
 """
 import argparse
 import os
