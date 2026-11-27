@@ -54,8 +54,8 @@ def _moved(cmds, dx, dy):
 # ── 第 1 步 · 原图 ─────────────────────────────────────────────────
 def step1():
     f = Fig("第 1 步 · 原图（V1 现状，一处不改）",
-            "一块布 %d × %d ＝ 4 匹 × %.0f 拼幅 · 上下对折出肩线 · 前中剪开两道 · 领条另裁"
-            % (round(2 * HALF_S), round(CLOTH_H), B.FAB_W))
+            "四块布（每块一幅 %.0f）拼成 %d × %d · 上下对折出肩线 · 前中剪开两道 · 领条另裁"
+            % (B.FAB_W, round(2 * HALF_S), round(CLOTH_H)))
 
     # 布片
     f.path(BODY, INK, 3.0)
@@ -85,7 +85,7 @@ def step1():
     f.dim_h(-SLIT, SLIT, B.Y_FOLD + 100, "剪口 %d" % round(2 * SLIT), BLUE, 26, 34)
 
     # 文字注记
-    f.text(-HALF_S + 20, CLOTH_H + 300, "拼幅缝 ×3（┄┄ 蓝）：4 匹横拼成一块，横为通袖", 26, BLUE)
+    f.text(-HALF_S + 20, CLOTH_H + 300, "拼幅缝 ×3（┄┄ 蓝）：4 块布拼成一片料，横为通袖", 26, BLUE)
     f.text(-HALF_S + 20, CLOTH_H + 252, "对折线（┈ 橙）：肩线是折出来的，不另裁前后片", 26, ORANGE)
     f.text(-HALF_S + 20, CLOTH_H + 204, "剪开线（— 红）：两道，从对折线剪到下摆中点，不折、靠领条压住毛边", 26, RED)
     f.text(-HALF_S + 20, CLOTH_H + 156, "领条内缘（┈ 绿）：∥ 襟缘弦、内让一个带宽 %d" % round(COLLAR_W), 26, GREEN)

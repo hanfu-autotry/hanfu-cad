@@ -2,7 +2,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="3328mm" height="2610mm" viewBox="0 0 3328 2610">
 <rect x="0" y="0" width="3328" height="2610" fill="#ffffff"/>
 <text x="60" y="90" font-family="sans-serif" font-size="46" font-weight="600" fill="#1a1a1a">第 1 步 · 原图（V1 现状，一处不改）</text>
-<text x="60" y="146" font-family="sans-serif" font-size="28" fill="#555">一块布 2000 × 1248 ＝ 4 匹 × 500 拼幅 · 上下对折出肩线 · 前中剪开两道 · 领条另裁</text>
+<text x="60" y="146" font-family="sans-serif" font-size="28" fill="#555">四块布（每块一幅 500）拼成 2000 × 1248 · 上下对折出肩线 · 前中剪开两道 · 领条另裁</text>
 <path d="M 724.9 1854.0 L 2724.9 1854.0 L 2724.9 606.0 L 724.9 606.0 Z" stroke="#1a1a1a" stroke-width="3.0" fill="none" fill-opacity="1.00" stroke-linejoin="round"/>
 <path d="M 1224.9 1854.0 L 1224.9 606.0" stroke="#1f5fa8" stroke-width="1.6" fill="none" fill-opacity="1.00" stroke-dasharray="26 10" stroke-linejoin="round"/>
 <path d="M 1724.9 1854.0 L 1724.9 606.0" stroke="#1f5fa8" stroke-width="1.6" fill="none" fill-opacity="1.00" stroke-dasharray="26 10" stroke-linejoin="round"/>
@@ -41,7 +41,7 @@
 <text x="2878.9" y="1230.0" font-family="sans-serif" font-size="28" fill="#1f5fa8" text-anchor="start">布片高 1248</text>
 <text x="3078.9" y="1542.0" font-family="sans-serif" font-size="28" fill="#1f5fa8" text-anchor="start">对折后衣长 624</text>
 <text x="1724.9" y="1096.0" font-family="sans-serif" font-size="26" fill="#1f5fa8" text-anchor="middle">剪口 160</text>
-<text x="744.9" y="306.0" font-family="sans-serif" font-size="26" fill="#1f5fa8" text-anchor="start">拼幅缝 ×3（┄┄ 蓝）：4 匹横拼成一块，横为通袖</text>
+<text x="744.9" y="306.0" font-family="sans-serif" font-size="26" fill="#1f5fa8" text-anchor="start">拼幅缝 ×3（┄┄ 蓝）：4 块布拼成一片料，横为通袖</text>
 <text x="744.9" y="354.0" font-family="sans-serif" font-size="26" fill="#b85400" text-anchor="start">对折线（┈ 橙）：肩线是折出来的，不另裁前后片</text>
 <text x="744.9" y="402.0" font-family="sans-serif" font-size="26" fill="#c0392b" text-anchor="start">剪开线（— 红）：两道，从对折线剪到下摆中点，不折、靠领条压住毛边</text>
 <text x="744.9" y="450.0" font-family="sans-serif" font-size="26" fill="#1e7a4a" text-anchor="start">领条内缘（┈ 绿）：∥ 襟缘弦、内让一个带宽 30</text>
