@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="3400mm" height="4740mm" viewBox="0 0 3400 4740">
+<title>原始直领交襟衣 V1B · 四块布双长（衣身长 / 接袖长）</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g id="CLOTH" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linejoin="round">
+  <path d="M 1200.0 1920.0 L 2200.0 1920.0 L 2200.0 380.0 L 1200.0 380.0 Z"/>
+  <path d="M 1200.0 1427.2 L 700.0 1427.2 L 700.0 872.8 L 1200.0 872.8 Z"/>
+  <path d="M 2200.0 1427.2 L 2700.0 1427.2 L 2700.0 872.8 L 2200.0 872.8 Z"/>
+</g>
+<g id="FOLD" stroke="#b85400" stroke-width="2.6" fill="none" stroke-dasharray="46 16 10 16">
+  <path d="M 660.0 1150.0 L 2740.0 1150.0"/>
+</g>
+<g id="SEAM" stroke="#1a4d8f" stroke-width="2.2" fill="none" stroke-dasharray="26 10">
+  <path d="M 1700.0 1920.0 L 1700.0 380.0"/>
+  <path d="M 1200.0 1427.2 L 1200.0 872.8"/>
+  <path d="M 2200.0 1427.2 L 2200.0 872.8"/>
+</g>
+<g id="FREEEDGE" stroke="#6f6f6f" stroke-width="1.6" fill="none">
+  <path d="M 1200.0 1920.0 L 1200.0 1427.2"/>
+  <path d="M 1200.0 872.8 L 1200.0 380.0"/>
+  <path d="M 2200.0 1920.0 L 2200.0 1427.2"/>
+  <path d="M 2200.0 872.8 L 2200.0 380.0"/>
+</g>
+<g id="SLIT" stroke="#b3241c" stroke-width="3.4" fill="none">
+  <path d="M 1620.0 1150.0 L 1700.0 1920.0"/>
+  <path d="M 1780.0 1150.0 L 1700.0 1920.0"/>
+</g>
+<g id="LAPELFOLD" stroke="#1d6b3a" stroke-width="2.4" fill="none" stroke-dasharray="18 12">
+  <path d="M 1649.8 1146.9 L 1729.8 1916.9"/>
+  <path d="M 1750.2 1146.9 L 1670.2 1916.9"/>
+</g>
+<g id="DIM">
+<path d="M 700.0 280.0 L 2700.0 280.0" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><path d="M 700.0 302.0 L 700.0 258.0" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><path d="M 2700.0 302.0 L 2700.0 258.0" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><text x="1700.0" y="244.0" font-family="sans-serif" font-size="28" fill="#1a4d8f" text-anchor="middle">通袖 2000 ＝ 4 幅 × 500（幅宽锁死，不动）</text>
+<path d="M 1200.0 2070.0 L 2200.0 2070.0" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><path d="M 1200.0 2092.0 L 1200.0 2048.0" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><path d="M 2200.0 2092.0 L 2200.0 2048.0" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><text x="1700.0" y="2088.0" font-family="sans-serif" font-size="26" fill="#1a4d8f" text-anchor="middle">衣身宽 1000（内侧 2 幅）</text>
+<path d="M 580.0 1427.2 L 580.0 1150.0" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><path d="M 558.0 1427.2 L 602.0 1427.2" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><path d="M 558.0 1150.0 L 602.0 1150.0" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><text x="556.0" y="1288.6" font-family="sans-serif" font-size="26" fill="#1a4d8f" text-anchor="end">袖口高 277</text>
+<path d="M 280.0 1920.0 L 280.0 1150.0" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><path d="M 258.0 1920.0 L 302.0 1920.0" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><path d="M 258.0 1150.0 L 302.0 1150.0" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><text x="256.0" y="1535.0" font-family="sans-serif" font-size="26" fill="#1a4d8f" text-anchor="end">衣身长 770</text>
+<path d="M 1620.0 1060.0 L 1780.0 1060.0" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><path d="M 1620.0 1082.0 L 1620.0 1038.0" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><path d="M 1780.0 1082.0 L 1780.0 1038.0" stroke="#1a4d8f" stroke-width="1.2" fill="none"/><text x="1700.0" y="1030.0" font-family="sans-serif" font-size="24" fill="#1a4d8f" text-anchor="middle">剪口 160</text>
+</g>
+<g font-family="sans-serif" fill="#1a1a1a">
+  <text x="170.0" y="96" font-size="52" font-weight="600">四块布 · V1B（衣身长 770 ／ 接袖长 277）</text>
+  <text x="170.0" y="152" font-size="30" fill="#6f6f6f">幅宽 500 不动 · 内侧块 ×2 经向 ＝ 2×衣身长 · 外侧块 ×2 经向 ＝ 2×接袖长 · 四块共用同一条折线 · 沿中缝对称 · 通袖 2000</text>
+  <text x="170.0" y="200" font-size="30" fill="#6f6f6f">默认：衣身长 ＝ 厂商版衣长 770（中缝长）／ 接袖长 ＝ 厂商版袖根长 277.2（衣长 770 − 腋深 492.8，袖底落在腋点）</text>
+</g>
+<g font-family="sans-serif" font-size="28" fill="#1a4d8f">
+  <text x="170.0" y="2180.0">┄ 拼幅缝：中缝 x=0（通高）、内外缝 x=±500（只在外侧块那一段）</text>
+</g>
+<g font-family="sans-serif" font-size="28" fill="#b85400">
+  <text x="170.0" y="2228.0">┈ 对折线（肩线）y=770：四块共用一条，外侧块骑在两侧、两头各短 493（短在袖口一头）</text>
+</g>
+<g font-family="sans-serif" font-size="28" fill="#b3241c">
+  <text x="170.0" y="2276.0">— 前中剪开：颈侧点 (±80, 770) → 下摆中点 (0, 0)，两道</text>
+</g>
+<g font-family="sans-serif" font-size="28" fill="#6f6f6f">
+  <text x="170.0" y="2324.0">— 细灰：内侧块布边（外侧块没盖到的上下两段）→ 折后就是侧缝段 y 0…493</text>
+</g>
+<g id="FLAT" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linejoin="round">
+  <path d="M 700.0 3087.2 L 700.0 2810.0 L 2700.0 2810.0 L 2700.0 3087.2 L 2200.0 3087.2 L 2200.0 3580.0 L 1200.0 3580.0 L 1200.0 3087.2 Z"/>
+</g>
+<g id="FSEAM" stroke="#1a1a1a" stroke-width="1.8" fill="none">
+  <path d="M 1200.0 3580.0 L 1200.0 2810.0"/>
+  <path d="M 2200.0 3580.0 L 2200.0 2810.0"/>
+  <path d="M 1700.0 3580.0 L 1700.0 2810.0" stroke-dasharray="24 14"/>
+  <path d="M 1620.0 2810.0 L 1700.0 3580.0" stroke-width="3"/>
+  <path d="M 1780.0 2810.0 L 1700.0 3580.0" stroke-width="3"/>
+  <path d="M 1649.8 2806.9 L 1729.8 3583.1" stroke-width="1.8"/>
+  <path d="M 1750.2 2806.9 L 1670.2 3583.1" stroke-width="1.8"/>
+</g>
+<g id="FCOLLAR" stroke="#1a1a1a" stroke-width="3" fill="none">
+  <path d="M 1620.0 2810.0 L 1647.0 2780.0 L 1753.0 2780.0 L 1780.0 2810.0 Z"/>
+</g>
+<g font-family="sans-serif" fill="#1a1a1a">
+  <text x="170.0" y="2690.0" font-size="52" font-weight="600">③ 成衣平铺：身长 770、袖口高 277，袖在肩上</text>
+  <text x="170.0" y="2742.0" font-size="30" fill="#6f6f6f">平铺 2000（通袖）× 高 770（衣长）｜ 袖 500 长 × 袖口 277 高 ｜ 侧缝 y 0…493，接袖缝 y 493…770</text>
+</g>
+<g id="CUT" stroke="#1a1a1a" stroke-width="3" fill="none">
+  <path d="M 170.0 4120.0 L 1878.3 4120.0 L 1878.3 4150.0 L 170.0 4150.0 Z"/>
+  <path d="M 2198.3 4120.0 L 2698.3 4120.0 L 2698.3 4674.4 L 2198.3 4674.4 Z"/>
+</g>
+<text x="170.0" y="4086.0" font-family="sans-serif" font-size="34" font-weight="600" fill="#1a1a1a">④ 领条 ×1 ｜ 1708 × 30 ｜ 跟着衣身长变（衣长变 → 弦长变 → 领条长变）</text>
+<text x="2198.3" y="4734.4" font-family="sans-serif" font-size="32" font-weight="600" fill="#1a1a1a">⑤ 外侧布 ×2 ｜ 500 × 554（对折后 袖口高 277）</text>
+<text x="1240.0" y="450.0" font-family="sans-serif" font-size="28" fill="#1a1a1a" text-anchor="start">内侧布 ×2 ｜ 幅宽 500 × 经向 1540（对折后 衣身长 770）</text>
+<text x="730.0" y="817.8" font-family="sans-serif" font-size="26" fill="#1a1a1a" text-anchor="start">外侧布 ×2 ｜ 经向 554（对折后 袖口高 277）</text>
+<g id="SCALE" stroke="#1a1a1a" stroke-width="2.4" fill="none">
+  <path d="M 170.0 4630.0 L 170.0 4600.0"/>
+  <path d="M 270.0 4630.0 L 270.0 4614.0"/>
+  <path d="M 370.0 4630.0 L 370.0 4614.0"/>
+  <path d="M 470.0 4630.0 L 470.0 4614.0"/>
+  <path d="M 570.0 4630.0 L 570.0 4614.0"/>
+  <path d="M 670.0 4630.0 L 670.0 4600.0"/>
+  <path d="M 770.0 4630.0 L 770.0 4614.0"/>
+  <path d="M 870.0 4630.0 L 870.0 4614.0"/>
+  <path d="M 970.0 4630.0 L 970.0 4614.0"/>
+  <path d="M 1070.0 4630.0 L 1070.0 4614.0"/>
+  <path d="M 1170.0 4630.0 L 1170.0 4600.0"/>
+  <path d="M 170.0 4630.0 L 1170.0 4630.0"/>
+</g>
+<text x="170.0" y="4676.0" font-family="sans-serif" font-size="26" fill="#1a1a1a">100mm 校验标尺（打印后实测，误差应 ≤0.5mm）</text>
+</svg>

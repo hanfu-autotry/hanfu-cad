@@ -829,6 +829,111 @@
    }
   },
   {
+   "id": "zhilingv1b",
+   "label": "原始直领交襟衣 V1B（双长）",
+   "cut": "古制",
+   "project": "hanfu-shenyi",
+   "script": "pattern/build_v1b.py",
+   "run": {
+    "kind": "params",
+    "fixtures": {
+     "V1B": {
+      "L_BODY": 770.0,
+      "JS": 277.2,
+      "NECK_W": 160.0,
+      "COLLAR_W": 30.0
+     }
+    }
+   },
+   "sexes": [
+    "—"
+   ],
+   "sizes": {
+    "—": [
+     "V1B"
+    ]
+   },
+   "knobs": [
+    {
+     "key": "L_BODY",
+     "label": "衣身长（内侧布，＝中缝长）",
+     "min": 400,
+     "max": 900,
+     "step": 4,
+     "unit": "mm"
+    },
+    {
+     "key": "JS",
+     "label": "接袖长（＝袖根长，控外侧布与袖口高）",
+     "min": 100,
+     "max": 500,
+     "step": 1,
+     "unit": "mm"
+    },
+    {
+     "key": "NECK_W",
+     "label": "领口宽",
+     "min": 80,
+     "max": 240,
+     "step": 10,
+     "unit": "mm"
+    },
+    {
+     "key": "COLLAR_W",
+     "label": "领条宽（＝立起高）",
+     "min": 20,
+     "max": 60,
+     "step": 5,
+     "unit": "mm"
+    }
+   ],
+   "product": "①四块布 ②各自对折 ③前中剪开 ④平铺（台阶）⑤领条 —— 由脚本一次画全",
+   "modes": [
+    {
+     "id": "V1B",
+     "label": "V1B（衣身 770 ／ 接袖 277.2）",
+     "note": "衣身长＝厂商 M 衣长（中缝长）；接袖长＝厂商 M 袖根长（770 − 腋深 492.8，袖底落在腋点）；幅宽锁死 500、通袖仍 2000"
+    }
+   ],
+   "mode_kind": "fixture",
+   "mode_note": "V1 的双长变体：四块布，内侧块经向＝2×衣身长、外侧块经向＝2×接袖长，沿中缝对称。接袖长不许超过衣身长。",
+   "gates": {
+    "fab_w": 500,
+    "max_panels": 4,
+    "min_radius": 10,
+    "invariants": [
+     {
+      "name": "panels",
+      "n": 4,
+      "fab_w": 500
+     },
+     {
+      "name": "slit",
+      "width": 160
+     },
+     {
+      "name": "piece_names",
+      "expect": [
+       "内侧布",
+       "外侧布",
+       "领条"
+      ]
+     }
+    ],
+    "reference": [
+     {
+      "name": "三步图对照",
+      "cmd": "（harness 量图：sources/fig_原始直领交襟衣_三步.png）",
+      "where": "hanfu-shenyi/sources/",
+      "last": "前中开口 160 贯通、领条＝平行弦的等带宽 30（立起≡带宽）"
+     }
+    ],
+    "parent": null,
+    "delta": {},
+    "seam_ledger": []
+   }
+  },
+  {
    "id": "minggaojiaoling",
    "label": "明制高交领（高交领·默认）",
    "cut": "默认",

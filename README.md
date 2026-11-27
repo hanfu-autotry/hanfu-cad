@@ -27,7 +27,7 @@
 
 两套底层逻辑不同，**不硬合并**：几何留在各自项目里，壳只认「脚本 ＋ 参数 ＋ 产物」。
 
-已注册版型（`hanfu-studio/patterns.json`，共 9 个）：
+已注册版型（`hanfu-studio/patterns.json`，共 11 个）：
 
 | id | 口径 | 项目 | 脚本 | 号型 |
 |---|---|---|---|---|
@@ -36,6 +36,8 @@
 | `shenyi` | 古制 | `hanfu-shenyi` | `pattern/build_shenyi.py` | V2 |
 | `shenyiv3` | 古制 | `hanfu-shenyi` | `pattern/build_v3.py` | V3 |
 | `zhiling` | 古制 | `hanfu-shenyi` | `pattern/build.py` | V1 |
+| `zhilingv1b` | 古制 | `hanfu-shenyi` | `pattern/build_v1b.py` | V1B（双长） |
+| `shenyiv4` | 古制 | `hanfu-shenyi` | `pattern/build_v4.py` | V4 ／ V4B |
 | `minggaojiaoling` | 默认 | `ming-gaojiaoling` | `pattern/make.py` | 本案 |
 | `tangyuanling` | 默认 | `tang-yuanling` | `pattern/make.py` | 本案 |
 | `zhilingduijin` | 默认 | `hanfu-zhidui` | `pattern/make.py` | 本案 |
